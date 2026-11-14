@@ -1,0 +1,44 @@
+# Local coding-agent configuration and development workflows.
+# Root /agents is development tooling; product runtime agents remain trackable
+# under product source directories (for example src/agents or app/agents).
+/.agents/
+/.codex/
+/.cursor/
+/.claude/
+/.kiro/
+/.opencode/
+/.windsurf/
+/agents/
+AGENTS.md
+AGENTS.override.md
+CLAUDE.md
+GEMINI.md
+.cursorrules
+.cursorignore
+.clinerules
+.aider*
+/scripts/start-spec-agent.ps1
+/docs/team/
+/docs/spec/tasks/
+
+# Local environments, credentials, and disposable caches.
+.env
+.env.*
+!.env.example
+!.env.sample
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Vivado session state; keep RTL, constraints, Tcl, and project sources eligible.
+.Xil/
+vivado*.jou
+vivado*.log
+vivado*.str
+
+# Product source, tests, docs/spec/, and docs/PROGRESS.md are not excluded.
+# Ignored files already in Git must also be untracked with git rm --cached.
