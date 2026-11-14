@@ -1,6 +1,16 @@
 # FabZero
 CPVC x CPOCB x CPE AI Hackathon Nov 13-15
 
+## Working with coding assistants
+
+Start every coding session at [AGENTS.md](AGENTS.md). It is the shared guidance for Codex, Cursor, and Kiro; [CLAUDE.md](CLAUDE.md) imports it for Claude Code. Our tool preference is Codex, then Claude Code, then Cursor, then Kiro.
+
+These shared working rules apply before a product spec is agreed: reuse established components, build the smallest complete change, add agents or dependencies only for a concrete need, and preserve required checks and hardware evidence. Exploratory spec drafts do not authorize product implementation. See [working before an agreed spec](docs/team/WORKFLOW.md#working-before-an-agreed-product-spec).
+
+Read [current status](docs/team/STATUS.md), the [parallel-work and handoff workflow](docs/team/WORKFLOW.md), and the saved product spec when present before editing. Give concurrent writers separate branches and worktrees, agree file ownership, and leave a checkpoint using the [task template](docs/team/TASK_TEMPLATE.md). Assign one integration owner; task files in separate branches are not shared locks.
+
+This setup is local until deliberately shared through Git. New clones and worktrees do not inherit uncommitted or untracked instructions. See the workflow for startup verification in each tool and the official documentation used to design this arrangement.
+
 ## Specification agent
 
 The `fabzero-spec` agent helps specify FabZero itself before the build. Give it an idea and customer; it challenges the proposal, recommends changes, saves a working spec, and waits for your feedback. Repeat until you accept a revision for building.
