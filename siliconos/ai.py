@@ -58,6 +58,8 @@ def generate_rtl(spec, prompt):
         "Generate synthesizable SystemVerilog for the validated signed INT8 square matrix "
         "multiplication specification. Return ONLY raw source: no Markdown, explanation, "
         "testbench, measurements or system tasks. Do not substitute a different workload. "
+        "If the request requires unsupported operations (including cameras/full neural models) "
+        "or conflicts with the validated specification, refuse and return no RTL. "
         "Use exactly one module with this ANSI header (wire/reg may be logic):\n"
         "module matmul #(parameter N=8, parameter LANES=1)(\n"
         " input wire clk, reset, start, load, operand_b,\n"

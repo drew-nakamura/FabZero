@@ -2,6 +2,7 @@
 import json
 import os
 import re
+import shutil
 import sqlite3
 import threading
 import uuid
@@ -9,8 +10,8 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai, asic
-from siliconos.engine import explore, simulate
+from siliconos import ai, asic, rtlgen
+from siliconos.engine import explore, simulate, validate
 
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"siliconos.db"
@@ -58,7 +59,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=False,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
         if path=="/api/runs":
             with connect() as db: rows=db.execute("SELECT payload FROM runs ORDER BY rowid DESC LIMIT 20").fetchall()
-            heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics'}
+            heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics','synthesis'}
             return self.reply(200,[{k:v for k,v in json.loads(r[0]).items() if k not in heavy} for r in rows])
         if path.startswith("/api/runs/"):
             with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(path.rsplit("/",1)[-1],)).fetchone()
@@ -82,6 +83,36 @@ class Handler(BaseHTTPRequestHandler):
             if path=="/api/explore": result=explore(data.get("spec"))
             elif path=="/api/spec": result=ai.generate(data.get("prompt"))
             elif path=="/api/pilot": result=save_pilot(data)
+            elif path=="/api/generate-rtl":
+                if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
+                try:
+                    spec=validate(data.get('spec'))
+                    prompt=data.get('prompt')
+                    if not isinstance(prompt,str) or not 1<=len(prompt.strip())<=4000:
+                        raise ValueError('Enter a request of 1–4000 characters.')
+                    # The objective selects a supported lane count, not a proven optimum for new RTL.
+                    lanes=data.get('lanes',1 if spec['objective']=='minimize_lanes' else spec['max_lanes'])
+                    seed=data.get('seed',42)
+                    if type(lanes) is not int or lanes not in (1,4) or lanes>spec['max_lanes']:
+                        raise ValueError('Candidate exceeds the lane limit or is unsupported.')
+                    if type(seed) is not int or not 0<=seed<=2**31-1:
+                        raise ValueError('Seed must be an integer between 0 and 2147483647.')
+                    required=('iverilog','vvp','yosys') if spec['target']=='asic' else ('iverilog','vvp')
+                    missing=[name for name in required if not shutil.which(name)]
+                    if missing: raise ValueError('RTL generation and verification require: '+', '.join(missing))
+                    source=ai.generate_rtl(spec,prompt)
+                    rtlgen.gate(source)
+                    result=simulate(spec,lanes,seed,source_override=source)
+                    if spec['target']=='asic':
+                        result['synthesis']=asic.synthesize(spec,lanes,source_override=source)
+                        result['synthesis_verified']=True
+                    result.update(id=str(uuid.uuid4()),created_at=now(),prompt=prompt)
+                    # Commit the whole pipeline and its event atomically; no partial RTL run.
+                    with connect() as db:
+                        db.execute('INSERT INTO runs VALUES (?,?)',(result['id'],json.dumps(result)))
+                        db.execute('INSERT INTO events VALUES (?,?)',(now(),path))
+                finally: RUN_LOCK.release()
+                return self.reply(200,result)
             elif path in ("/api/simulate","/api/asic/synthesize"):
                 if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
                 try:
