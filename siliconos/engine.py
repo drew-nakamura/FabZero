@@ -49,18 +49,24 @@ def explore(spec):
 def reference(a,b,n):
     return [sum(a[i*n+k]*b[k*n+j] for k in range(n)) for i in range(n) for j in range(n)]
 
-def simulate(spec, lanes, seed=42, vectors=None):
+def simulate(spec, lanes, seed=42, vectors=None, source_override=None):
     spec=validate(spec)
     if type(lanes) is not int or lanes not in (1,4) or lanes>spec["max_lanes"]:
         raise ValueError("Candidate exceeds the lane limit or is unsupported.")
     if type(seed) is not int or not 0<=seed<=2**31-1:
         raise ValueError("Seed must be an integer between 0 and 2147483647.")
+    if source_override is not None:
+        from .rtlgen import gate, CYCLE_MONITOR
+        gate(source_override)
     if not shutil.which("iverilog") or not shutil.which("vvp"):
         raise ValueError("Icarus Verilog is unavailable. Install iverilog to run RTL simulation.")
     n=spec["size"]; rng=random.Random(seed)
     a,b=vectors or ([rng.randrange(-128,128) for _ in range(n*n)], [rng.randrange(-128,128) for _ in range(n*n)])
     expected=reference(a,b,n)
     source_bytes={name:(ROOT/"hardware"/name).read_bytes() for name in ("matmul.sv","tb.sv")}
+    if source_override is not None:
+        source_bytes['matmul.sv'] = source_override.encode('utf-8')
+        source_bytes['rtl_monitor.sv'] = CYCLE_MONITOR.encode('utf-8')
     sources={name:hashlib.sha256(content).hexdigest() for name,content in source_bytes.items()}
     with tempfile.TemporaryDirectory(prefix="siliconos-") as td:
         path=Path(td)
@@ -69,15 +75,33 @@ def simulate(spec, lanes, seed=42, vectors=None):
             (path/name).write_bytes(content)
         command=["iverilog","-g2012","-s","tb",f"-Ptb.N={n}",f"-Ptb.LANES={lanes}","-o",str(path/"sim"),"matmul.sv","tb.sv"]
         begin=time.monotonic()
-        subprocess.run(command,cwd=td,check=True,capture_output=True,timeout=20)
-        run=subprocess.run(["vvp",str(path/"sim")],cwd=td,check=True,capture_output=True,text=True,timeout=20)
+        if source_override is None:
+            subprocess.run(command,cwd=td,check=True,capture_output=True,timeout=20)
+            run=subprocess.run(["vvp",str(path/"sim")],cwd=td,check=True,capture_output=True,text=True,timeout=20)
+        else:
+            command[1:1] = ['-s', 'rtl_monitor']
+            command.append('rtl_monitor.sv')
+            try:
+                subprocess.run(command,cwd=td,check=True,capture_output=True,text=True,timeout=20)
+                run=subprocess.run(["vvp",str(path/"sim")],cwd=td,check=True,capture_output=True,text=True,timeout=20)
+            except subprocess.TimeoutExpired as exc:
+                raise ValueError('Generated RTL tool run timed out; no result accepted.') from exc
+            except subprocess.CalledProcessError as exc:
+                detail = (exc.stderr or exc.stdout or 'No diagnostics')[-2000:]
+                raise ValueError('Generated RTL compilation/simulation failed; no result accepted.\n' + detail) from exc
         wall=time.monotonic()-begin
-    outputs=[int(line.split()[1]) for line in run.stdout.splitlines() if line.startswith("OUT ")]
-    cycles=[int(line.split()[1]) for line in run.stdout.splitlines() if line.startswith("CYCLES ")]
+    try:
+        outputs=[int(line.split()[1]) for line in run.stdout.splitlines() if line.startswith("OUT ")]
+        cycles=[int(line.split()[1]) for line in run.stdout.splitlines() if line.startswith("CYCLES ")]
+    except (ValueError, IndexError) as exc:
+        if source_override is None: raise
+        raise ValueError('Generated RTL produced unknown or malformed outputs/cycles; no result accepted.') from exc
     if outputs != expected or len(cycles)!=1:
         raise ValueError("RTL correctness failed. No performance result accepted.")
     version=subprocess.run(["iverilog","-V"],capture_output=True,text=True,timeout=5).stdout.splitlines()[0]
-    return dict(evidence="rtl_simulation",correct=True,spec=spec,lanes=lanes,seed=seed,cycles=cycles[0],
+    if source_override is not None and cycles[0] <= 0:
+        raise ValueError('Generated RTL must have positive observed execution cycles; no result accepted.')
+    return dict(evidence="rtl_simulation" if source_override is None else "ai_generated_rtl",correct=True,spec=spec,lanes=lanes,seed=seed,cycles=cycles[0],
         projected_us=cycles[0]/spec["frequency_mhz"],clock_status="assumed target; not measured",physical_fpga=False,physical_asic=False,
         simulator=version,simulator_wall_seconds=wall,source_sha256=sources,
         simulator_stdout=run.stdout,parameters={"N":n,"LANES":lanes},

@@ -7,6 +7,39 @@ It is not an OS sandbox for hostile compiler inputs.
 import re
 
 MAX_SOURCE_BYTES = 65536
+# Trusted second simulation root. The checked-in tb.sv stays byte-for-byte intact.
+# Observe actual execution clocks instead of trusting a candidate's cycle register.
+CYCLE_MONITOR = '''`timescale 1ns/1ps
+module rtl_monitor;
+ reg [63:0] counted=0;
+ reg active=0, completed=0;
+ always @(posedge tb.clk) begin
+   if(tb.reset) begin
+     counted=0; active=0; completed=0;
+     #1;
+     if(tb.busy!==0 || tb.done!==0 || tb.cycles!==0) $fatal(1,"generated RTL reset protocol failed");
+   end else if(tb.start && !tb.busy) begin
+     if(active) $fatal(1,"generated RTL dropped busy before completion");
+     counted=0; active=1; completed=0;
+     #1;
+     if(tb.busy!==1 || tb.done!==0 || tb.cycles!==0) $fatal(1,"generated RTL start protocol failed");
+   end else if(active) begin
+     if(tb.busy!==1) $fatal(1,"generated RTL busy protocol failed");
+     counted=counted+1;
+     #1;
+     if(tb.cycles!==counted) $fatal(1,"generated RTL cycle counter disagrees with observed clocks");
+     if(tb.done===1) begin
+       if(tb.busy!==0) $fatal(1,"generated RTL completion protocol failed");
+       active=0; completed=1;
+     end else if(tb.done!==0 || tb.busy!==1) $fatal(1,"generated RTL execution protocol failed");
+   end else begin
+     #1;
+     if(tb.busy!==0 || tb.done!==completed || tb.cycles!==counted)
+       $fatal(1,"generated RTL idle protocol failed");
+   end
+ end
+endmodule
+'''
 PORTS = {
     'clk': ('input', False, None), 'reset': ('input', False, None),
     'start': ('input', False, None), 'load': ('input', False, None),
