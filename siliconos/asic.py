@@ -12,7 +12,7 @@ import tempfile
 import time
 from pathlib import Path
 
-from .engine import ROOT, reference, validate
+from .engine import ROOT, reference, validate, simulate
 
 
 def _hash(content):
@@ -30,18 +30,26 @@ def _run(command, cwd, timeout):
         raise ValueError(f"{Path(command[0]).name} failed; no synthesis result accepted.\n{detail}") from exc
 
 
-def synthesize(spec, lanes):
+def synthesize(spec, lanes, source_override=None):
     spec = validate(spec)
     if spec['target'] != 'asic':
         raise ValueError('Generic ASIC synthesis requires target=asic.')
     if type(lanes) is not int or lanes not in (1, 4) or lanes > spec['max_lanes']:
         raise ValueError('Candidate exceeds the lane limit or is unsupported.')
+    if source_override is not None:
+        from .rtlgen import gate, CYCLE_MONITOR
+        gate(source_override)
     binaries = {name: shutil.which(name) for name in ('yosys', 'iverilog', 'vvp')}
     missing = [name for name, path in binaries.items() if not path]
     if missing:
         raise ValueError('Generic synthesis and netlist verification require: ' + ', '.join(missing))
+    # Direct callers must also prove the candidate before running synthesis.
+    verified_rtl = simulate(spec, lanes, source_override=source_override) if source_override is not None else None
     n = spec['size']
     sources = {name: (ROOT / 'hardware' / name).read_bytes() for name in ('matmul.sv', 'tb.sv')}
+    if source_override is not None:
+        sources['matmul.sv'] = source_override.encode('utf-8')
+        sources['rtl_monitor.sv'] = CYCLE_MONITOR.encode('utf-8')
     # Yosys specializes the kernel parameters; the harness still needs N for input loading.
     tb = sources['tb.sv'].decode().replace('matmul #(.N(N),.LANES(LANES)) dut(.*);', 'matmul dut(.*);')
     if tb == sources['tb.sv'].decode():
@@ -72,15 +80,20 @@ def synthesize(spec, lanes):
         if not cell_count or sum(cell_counts.values()) != cell_count:
             raise ValueError('Invalid generic cell statistics; no result accepted.')
         netlist = (path / 'netlist.v').read_text()
-        compilation = _run([binaries['iverilog'], '-g2012', '-s', 'tb', f'-Ptb.N={n}',
-                           f'-Ptb.LANES={lanes}', '-o', 'netlist_sim', 'netlist.v', 'netlist_tb.sv'], td, 30)
+        command = [binaries['iverilog'], '-g2012', '-s', 'tb', f'-Ptb.N={n}',
+                   f'-Ptb.LANES={lanes}', '-o', 'netlist_sim', 'netlist.v', 'netlist_tb.sv']
+        if source_override is not None:
+            command[1:1] = ['-s', 'rtl_monitor']
+            command.append('rtl_monitor.sv')
+        compilation = _run(command, td, 30)
         simulation = _run([binaries['vvp'], 'netlist_sim'], td, 60)
         outputs = [int(line.split()[1]) for line in simulation.stdout.splitlines() if line.startswith('OUT ')]
         cycles = [int(line.split()[1]) for line in simulation.stdout.splitlines() if line.startswith('CYCLES ')]
-        if outputs != expected or cycles != [n**3 // lanes]:
+        expected_cycles = verified_rtl['cycles'] if verified_rtl is not None else n**3 // lanes
+        if outputs != expected or cycles != [expected_cycles]:
             raise ValueError('Synthesized-netlist correctness/cycle check failed; no synthesis result accepted.')
         simulator = _run([binaries['iverilog'], '-V'], td, 5).stdout.splitlines()[0]
-    return dict(
+    result = dict(
         evidence='generic_synthesis', correct=True, spec=spec, lanes=lanes, seed=seed,
         cycles=cycles[0], parameters={'N': n, 'LANES': lanes},
         cell_count=cell_count, cell_counts=cell_counts,
@@ -106,3 +119,8 @@ def synthesize(spec, lanes):
             'Operand/output arrays map to generic logic; no SRAM macros are inferred or characterized.',
             'Requested frequency is an unverified specification; no achieved ASIC clock is claimed.',
         ])
+    if verified_rtl is not None:
+        result['source_origin'] = 'ai_generated_rtl'
+        result['rtl_verification'] = {key: verified_rtl[key] for key in
+                                      ('evidence', 'cycles', 'input_sha256', 'output_sha256', 'source_sha256')}
+    return result
