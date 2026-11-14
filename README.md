@@ -54,3 +54,15 @@ For the Windows build owner, start with the [partner FPGA gameplan](docs/PARTNER
 Select **Custom ASIC** to retain RTL verification and enable **Synthesize generic logic**. Requires `yosys`, `iverilog`, and `vvp` on PATH. The server runs Yosys, then simulates the generated netlist against the integer reference before accepting a result. Download the Verilog netlist, synthesis script or complete JSON evidence bundle. The script expects the matching `matmul.sv` source included in that bundle.
 
 Both sizes (8/16) and lane choices (1/4) have passed actual generic synthesis and netlist simulation locally. Generic cell counts are not physical area; no PDK mapping, layout, power, timing closure or fabrication signoff is claimed. See [ASIC workflow](docs/ASIC_WORKFLOW.md) for the remaining physical stages.
+
+### Reusable RTL catalog
+
+The **Reusable RTL** section lists the two executable compute recipes and a separately qualified upstream utility. **Build recipe** exports deterministic selection, parameter values, exact source snapshots and hashes without calling AI. `/api/catalog` exposes metadata; `/api/plan` accepts a supported spec and optional allowlisted block ID/lane choice. Unknown IDs and unqualified compositions are rejected. New curated simulation/synthesis reports include the build recipe. Groq receives only compact executable catalog metadata, not whole repositories.
+
+`hardware/vendor/wb2axip/skidbuffer.v` is an unmodified upstream ZipCPU utility pinned in its adjacent manifest, with its Apache-2.0 license retained. Our local test qualifies only DW=8, registered outputs, initialization disabled, low-power mode disabled and passthrough disabled. It tests ordering, backpressure, drain, reset and restart. The block is **not** inserted into the matrix datapath and is not board- or ASIC-implementation-qualified. Run `python3 -m unittest tests.test_catalog -v` to check provenance and the local protocol regression. See [IP shortlist](docs/RTL_IP_SHORTLIST.md) before adding other blocks.
+
+### One-click verified builds
+
+Select Custom ASIC, then **Build verified design** under Reusable RTL. `/api/build` selects an allowlisted recipe, simulates RTL, runs Yosys generic synthesis and verifies the resulting netlist. The operation saves one atomic evidence bundle only after success, with matching source hashes. FPGA-target builds stop at RTL simulation. The activity bar is indeterminate; it does not estimate tool completion. Neither route establishes physical timing or produces GDSII.
+
+Groq transient connection, rate-limit and server errors receive at most one automatic retry. Authentication, model/schema rejection and malformed responses fail visibly without weakening validation. Configure `GROQ_API_KEY` and `GROQ_MODEL` in the server process; a key saved in another terminal/app or an unloaded `.env` is not automatically inherited.

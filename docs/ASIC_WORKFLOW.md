@@ -46,3 +46,25 @@ Choose a supported **research/demo platform** and compatible tool versions first
 Then install/configure a compatible OpenROAD Flow Scripts environment and the platform's verification tools; run a tiny reference design to establish the installation before porting the kernel. Save mapped utilization/timing separately from post-route area/timing. Record corners and constraints with every metric. DRC/LVS/STA failures are actionable findings, not completed stages.
 
 For the current demo, finish the generic synthesis/export loop and show the stage boundary directly in the UI. A concise claim is: **“We simulated the kernel and synthesized its RTL to an inspectable generic netlist. Technology mapping and physical implementation are the next stages.”** Do not spend the remaining FPGA preparation time on an unpinned physical-design installation unless the team deliberately expands scope.
+
+
+## Selected physical platform: SKY130
+
+The selected process is **SkyWater SKY130A**, using **sky130_fd_sc_hd** standard cells. LibreLane 2.4.10 and a Ciel-managed PDK revision `0fe599b2afb6708d281543108caf8310912f54af` were found locally. The first physical baseline uses the existing default N=8, LANES=1 kernel, a provisional 20 ns clock period and 35% target core utilization. These are flow inputs, not achieved metrics. Storage remains flip-flops rather than SRAM macros.
+
+Prepare a new isolated source/config snapshot:
+
+```sh
+python3 hardware/physical/prepare.py --output build/sky130-baseline
+librelane --manual-pdk --pdk-root /path/to/pinned/pdk-parent --run-tag baseline -j 4 build/sky130-baseline/config.json
+```
+
+The PDK parent must contain `sky130A`; retain its SOURCES/version information with reports. `librelane` may need to be invoked from the installed Nix environment. Do not install a Python-only package and assume the EDA tools are included. The prepared manifest hashes the RTL/config; retain LibreLane's resolved config, tool versions, logs, metrics, netlists, DEF/GDS, DRC and LVS outputs. Review interface delays, output loads, operating corners and switching assumptions before presenting timing or power as representative of a product.
+
+Mapping alone gives a sum of library cell areas, not routed core/die area. A failed later stage does not establish a finished physical design. Generic app builds remain generic; the standalone SKY130 flow does not retroactively change their evidence.
+
+References: [LibreLane official repository](https://github.com/librelane/librelane), [PDK management](https://librelane.readthedocs.io/en/stable/usage/about_pdks.html).
+
+### First technology-mapped baseline
+
+The standalone mapper completed N=8/LANES=1 using SKY130 HD TT 25°C 1.80 V Liberty: 6,899 cells, summed cell area 121,722.992 µm². Official zero-delay cell-model simulation matched 64 outputs and 512 cycles for seed 42. See `docs/evidence/sky130-n8-l1.json` for hashes and qualifications, and `hardware/sky130/README.md` for reproduction. This single-vector mapped-netlist check supplements the existing RTL regression; it is not exhaustive equivalence or timing simulation. This mapped area must not be compared directly to generic Yosys cell counts.

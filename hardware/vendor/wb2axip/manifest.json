@@ -1,0 +1,16 @@
+{
+  "repository": "https://github.com/ZipCPU/wb2axip",
+  "commit": "2e8d3bc2d26ddc33d1881022a2a2b9d3f0c16b9b",
+  "module": "skidbuffer",
+  "license": "Apache-2.0",
+  "source_sha256": "ed1fda9192563fd7fd7033b564e8cf47ad6cb63ba4f578ed2c302037d47a5389",
+  "modifications": "none",
+  "qualified_parameters": {
+    "DW": 8,
+    "OPT_OUTREG": 1,
+    "OPT_LOWPOWER": 0,
+    "OPT_PASSTHROUGH": 0,
+    "OPT_INITIAL": 0
+  },
+  "integration": "standalone utility; not inserted in matrix datapath"
+}

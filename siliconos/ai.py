@@ -2,18 +2,70 @@
 import json
 import os
 import urllib.request
+import urllib.error
+import time
 from .engine import DEFAULT, validate
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
+# At most two attempts, each with a 20-second socket timeout.
+# Never retry authentication, model selection, schema rejection or invalid output.
+def _completion(body):
+    request = urllib.request.Request(GROQ_URL, data=json.dumps(body).encode(), headers={
+        "Authorization": "Bearer " + os.environ["GROQ_API_KEY"],
+        "Content-Type": "application/json"})
+    for attempt in range(2):
+        try:
+            with urllib.request.urlopen(request, timeout=20) as response:
+                payload = json.load(response)
+            if not isinstance(payload, dict):
+                raise ValueError("Groq returned an invalid response. No result accepted; retry or use a verified preset.")
+            return payload
+        except urllib.error.HTTPError as exc:
+            status = exc.code
+            retry_after = exc.headers.get('Retry-After') if exc.headers else None
+            exc.close()
+            if status in (401, 403):
+                message = "Groq authentication/access failed. Check the server's GROQ_API_KEY and model access."
+            elif status == 404:
+                message = "Groq model or endpoint was not found. Check GROQ_MODEL against models available to this account."
+            elif status in (400, 422):
+                message = ("Groq rejected the request. Check GROQ_MODEL and its support for strict JSON-schema structured outputs "
+                           "for specification generation. Validation has not been relaxed; use a verified preset meanwhile.")
+            elif status == 429:
+                message = "Groq rate limit reached. Wait before retrying, check account limits, or use a verified preset."
+            else:
+                message = "Groq provider unavailable. Retry later or use a verified preset."
+            if attempt == 0 and (status == 429 or 500 <= status <= 599):
+                try:
+                    delay = max(0.0, float(retry_after)) if retry_after else 0.5
+                except (ValueError, TypeError):
+                    delay = 3.0  # Date-based/unknown hints: do not retry too early.
+                if delay <= 2.0:
+                    time.sleep(delay)
+                    continue
+            raise ValueError(message) from None
+        except (urllib.error.URLError, OSError):
+            if attempt == 0:
+                time.sleep(0.5)
+                continue
+            raise ValueError("Groq provider unavailable: connection failed or timed out. Retry later or use a verified preset.") from None
+        except (json.JSONDecodeError, UnicodeError):
+            raise ValueError("Groq returned invalid JSON. No result accepted; retry or use a verified preset.") from None
+
+
 def configured():
     return bool(os.environ.get("GROQ_API_KEY") and os.environ.get("GROQ_MODEL"))
 
-def generate(prompt):
+def generate(prompt, target=None):
     if not configured():
         raise ValueError("AI is not configured. Set GROQ_API_KEY and GROQ_MODEL on the server, or use the editable specification.")
     if not isinstance(prompt,str) or not 1<=len(prompt.strip())<=4000:
         raise ValueError("Enter a request of 1–4000 characters.")
+    if target is not None and target not in ('kv260','asic'):
+        raise ValueError('Unsupported implementation target.')
+    from .catalog import prompt_catalog
+    defaults={**DEFAULT, **({'target':target} if target else {})}
     fields={k:{"type":"integer" if type(v) is int else "string"} for k,v in DEFAULT.items()}
     schema={"type":"object","properties":{
         "supported":{"type":"boolean"},"explanation":{"type":"string"},
@@ -24,26 +76,41 @@ def generate(prompt):
     instructions=("Extract a hardware specification, never measurements. Supported: signed INT8 square GEMM sizes 8 or 16, INT32 outputs, targets kv260 or asic, 1 or 4 lanes; objectives minimize_latency or minimize_lanes. "
       "Preserve explicit requirements, including unsupported ones. If unsupported, set supported=false and explain; do not silently substitute. "
       "A camera/object detector or full neural inference is unsupported, even though it could use GEMM. "
-      "For unspecified fields use defaults and label provenance default. Record ambiguity in unresolved. ASIC target is generic logic exploration without a process choice or physical signoff; max_dsps is FPGA-only. No claims of power savings or DSP mappings. Defaults: "+json.dumps(DEFAULT))
+      "For unspecified fields use defaults and label provenance default. Record ambiguity in unresolved. ASIC target is generic logic exploration without a process choice or physical signoff; max_dsps is FPGA-only. No claims of power savings or DSP mappings. Defaults: "+json.dumps(defaults)+" Qualified compute catalog: "+json.dumps(prompt_catalog())+" Select specifications supported by this catalog. Never propose unqualified IP as executable.")
     body={"model":os.environ["GROQ_MODEL"],
         "messages":[{"role":"system","content":instructions},{"role":"user","content":prompt}],
         "response_format":{"type":"json_schema","json_schema":{"name":"hardware_spec","strict":True,"schema":schema}}}
-    request=urllib.request.Request(GROQ_URL,data=json.dumps(body).encode(),
-       headers={"Authorization":"Bearer "+os.environ["GROQ_API_KEY"],"Content-Type":"application/json"})
-    with urllib.request.urlopen(request,timeout=45) as response:
-        payload=json.load(response)
-    choices=payload.get("choices") or []
-    if not choices:
+    payload = _completion(body)
+    choices = payload.get("choices")
+    if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
         raise ValueError("AI response was incomplete; please retry or edit the spec manually.")
     message=choices[0].get("message",{})
+    if not isinstance(message, dict):
+        raise ValueError("AI response was incomplete; please retry or edit the spec manually.")
     if message.get("refusal"):
         raise ValueError("AI declined this request; please edit the spec manually.")
     content=message.get("content")
     finish=choices[0].get("finish_reason")
-    if finish not in (None,"stop") or not content:
+    if finish not in (None,"stop") or not isinstance(content, str) or not content:
         raise ValueError("AI response was incomplete; please retry or edit the spec manually.")
-    result=json.loads(content)
-    if result["supported"]: result["spec"]=validate(result["spec"])
+    try:
+        result=json.loads(content)
+    except json.JSONDecodeError:
+        raise ValueError("AI returned invalid specification JSON. No result accepted; retry or edit manually.") from None
+    if not isinstance(result,dict) or set(result)!={'supported','explanation','spec','provenance','unresolved'}:
+        raise ValueError('AI returned an invalid specification envelope.')
+    if type(result['supported']) is not bool or not isinstance(result['explanation'],str):
+        raise ValueError('AI returned invalid support or explanation fields.')
+    if not isinstance(result['provenance'],dict) or set(result['provenance'])!=set(DEFAULT) or any(v not in ('user','inferred','default','unresolved') for v in result['provenance'].values()):
+        raise ValueError('AI returned invalid field provenance.')
+    if not isinstance(result['unresolved'],list) or any(not isinstance(v,str) for v in result['unresolved']):
+        raise ValueError('AI returned invalid unresolved requirements.')
+    if not isinstance(result['spec'],dict) or set(result['spec'])!=set(DEFAULT):
+        raise ValueError('AI returned incomplete specification fields.')
+    if result['supported']:
+        result['spec']=validate(result['spec'])
+        if target and result['spec']['target']!=target:
+            raise ValueError('AI changed the selected implementation target. Review the request.')
     return result
 
 
@@ -86,14 +153,7 @@ def generate_rtl(spec, prompt):
     )
     body = {"model": os.environ["GROQ_MODEL"], "messages": [
         {"role": "system", "content": instructions}, {"role": "user", "content": prompt}]}
-    request = urllib.request.Request(GROQ_URL, data=json.dumps(body).encode(), headers={
-        "Authorization": "Bearer " + os.environ["GROQ_API_KEY"], "Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(request, timeout=45) as response:
-            payload = json.load(response)
-    except Exception as exc:
-        # Provider diagnostics may contain request data; never expose them or credentials.
-        raise ValueError("AI RTL generation failed: provider unavailable or invalid response. No result accepted.") from exc
+    payload = _completion(body)
     choices = payload.get("choices") if isinstance(payload, dict) else None
     if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
         raise ValueError("AI RTL response was incomplete; no result accepted.")

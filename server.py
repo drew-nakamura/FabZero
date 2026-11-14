@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai, asic, rtlgen
+from siliconos import ai, asic, rtlgen, catalog
 from siliconos.engine import explore, simulate, validate
 
 ROOT=Path(__file__).resolve().parent
@@ -57,14 +57,16 @@ class Handler(BaseHTTPRequestHandler):
         if path=="/api/status":
             import shutil
             return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=False,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
+        if path=="/api/catalog":
+            return self.reply(200,{"blocks":catalog.blocks()})
         if path=="/api/runs":
             with connect() as db: rows=db.execute("SELECT payload FROM runs ORDER BY rowid DESC LIMIT 20").fetchall()
-            heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics','synthesis'}
+            heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics','synthesis','build_recipe'}
             return self.reply(200,[{k:v for k,v in json.loads(r[0]).items() if k not in heavy} for r in rows])
         if path.startswith("/api/runs/"):
             with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(path.rsplit("/",1)[-1],)).fetchone()
             return self.reply(200,json.loads(row[0])) if row else self.reply(404,{"error":"Run not found"})
-        files={"/":("index.html","text/html"),"/app.js":("app.js","application/javascript"),"/style.css":("style.css","text/css")}
+        files={"/":("index.html","text/html"),"/app.js":("app.js","application/javascript"),"/catalog.js":("catalog.js","application/javascript"),"/style.css":("style.css","text/css")}
         if path not in files: return self.reply(404,{"error":"Not found"})
         name,mime=files[path]; body=(ROOT/"web"/name).read_bytes()
         self.send_response(200); self.send_header("Content-Type",mime); self.send_header("Content-Length",str(len(body)))
@@ -81,8 +83,30 @@ class Handler(BaseHTTPRequestHandler):
             if not isinstance(data,dict): raise ValueError("Request must be an object")
             path=urlparse(self.path).path
             if path=="/api/explore": result=explore(data.get("spec"))
-            elif path=="/api/spec": result=ai.generate(data.get("prompt"))
+            elif path=="/api/spec": result=ai.generate(data.get("prompt"),data.get("target"))
+            elif path=="/api/plan": result=catalog.plan(data.get("spec"),data.get("lanes"),data.get("block_id"))
             elif path=="/api/pilot": result=save_pilot(data)
+            elif path=="/api/build":
+                if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
+                try:
+                    recipe=catalog.plan(data.get('spec'),data.get('lanes'),data.get('block_id'))
+                    spec=recipe['spec']; lanes=recipe['parameters']['LANES']
+                    result=simulate(spec,lanes,42)
+                    expected={Path(k).name:v for k,v in recipe['source_sha256'].items()}
+                    if result['source_sha256']!=expected:
+                        raise ValueError('Sources changed during the build. Retry with a fresh recipe.')
+                    if spec['target']=='asic':
+                        synthesis=asic.synthesize(spec,lanes)
+                        if synthesis['source_sha256']!=expected:
+                            raise ValueError('Sources changed between verification and synthesis. No build accepted.')
+                        result['synthesis']=synthesis
+                        result['synthesis_verified']=True
+                    result.update(build_recipe=recipe,id=str(uuid.uuid4()),created_at=now())
+                    with connect() as db:
+                        db.execute('INSERT INTO runs VALUES (?,?)',(result['id'],json.dumps(result)))
+                        db.execute('INSERT INTO events VALUES (?,?)',(now(),path))
+                finally: RUN_LOCK.release()
+                return self.reply(200,result)
             elif path=="/api/generate-rtl":
                 if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
                 try:
@@ -118,6 +142,7 @@ class Handler(BaseHTTPRequestHandler):
                 try:
                     result=(asic.synthesize(data.get("spec"),data.get("lanes")) if path=="/api/asic/synthesize" else simulate(data.get("spec"),data.get("lanes"),data.get("seed",42)))
                 finally: RUN_LOCK.release()
+                result["build_recipe"]=catalog.plan(result["spec"],result["lanes"])
                 result.update(id=str(uuid.uuid4()),created_at=now())
                 with connect() as db: db.execute("INSERT INTO runs VALUES (?,?)",(result["id"],json.dumps(result)))
             else: return self.reply(404,{"error":"Not found"})
