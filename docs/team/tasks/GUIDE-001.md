@@ -1,6 +1,6 @@
 # GUIDE-001: shared simplicity and verification rules
 
-- Status: ready (guidance applied and checked locally; publication pending)
+- Status: done (guidance integrated locally and published on drew-branch)
 - Updated: 2026-11-14 (America/Los_Angeles)
 - Owner and bounded integration owner: Codex, Assess ECC for FPGA startup workflow chat, acting on Drew's explicit request.
 - Source checkout: `C:\Users\drewa\FabZero`; branch `main`; base/HEAD `5ea8480d34980210b42d83279d1e45475c99af19`, with pre-existing local work.
@@ -24,6 +24,9 @@
 - Initial checks: source Git status/HEAD/worktrees and active chat inventory inspected. Publication worktree was clean at the recorded HEAD.
 - Git reads outside the source sandbox required execution as the repository owner; no global safe-directory exception was added.
 - Documentation checks passed across seven guidance files: six local Markdown links resolve, no trailing whitespace, Claude import remains exactly `@AGENTS.md`, and no spec handoff is present. `git diff --check` passed for tracked changes.
-- Pending: scoped publication diff inspection and drew-branch remote verification.
+- Publication diff inspected: seven intended files only; no `docs/spec/` artifacts or other chats' task records staged. The isolated checkout's local Markdown links and staged whitespace checks passed.
 - No product test, FPGA build, or board action is appropriate for this instruction-only change.
-- Current work exists locally; commit and publication evidence will be recorded after checks. No new background writer was started.
+- Guidance commit: `2e2a5acddac97a727e90bdd1267f2cebf5555416` (`Add shared guidance for small complete changes`). Push to `origin/drew-branch` succeeded; `git ls-remote --heads origin refs/heads/drew-branch` matched that exact commit. Worktree was clean afterward.
+- Closure updates only this record and shared status in a follow-up documentation commit. No new background writer was started; ownership of this bounded task is released after publication.
+- Source checkout remains on `main` with pre-existing local work preserved. The spec chat still owns `docs/spec/`; no draft or user decision was edited, accepted, deleted, or published by this task.
+- Next: new sessions and future build agents read root `AGENTS.md`; continue product discovery independently until the founder accepts an executable build slice.

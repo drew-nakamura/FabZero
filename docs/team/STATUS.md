@@ -23,9 +23,9 @@ Snapshot date: 2026-11-14 (America/Los_Angeles). Recheck files and Git before re
 ## Coordination and work
 
 - Integration owner: not yet assigned. Choose one of the students or one active agent before concurrent implementation/integration.
-- `tasks/TEAM-001.md`: shared guidance and handoff setup, ready locally; no commit or merge performed.
+- Original `TEAM-001` setup produced the shared guidance locally. The shared startup files and updated rules are now published by `GUIDE-001`; its original task record remains in the source checkout.
 - `tasks/GIT-001.md`: completed publication of the spec-agent setup on `drew-branch`.
-- `tasks/GUIDE-001.md`: adoption of the project-wide simplicity and verification rules; its checkpoint records checks and publication state.
+- `tasks/GUIDE-001.md`: completed adoption of the project-wide simplicity and verification rules, published and remotely verified at `2e2a5acddac97a727e90bdd1267f2cebf5555416` on `drew-branch`. Its closure is recorded in a follow-up documentation commit.
 - The spec chat owns `docs/spec/` and remains independent of this guidance change. This task does not edit its drafts, reviews, research, or accepted decisions. Confirm live assignments before parallel editing.
 - Shared KV260/build-runner ownership: unassigned; reserve actual shared resources before use.
 
