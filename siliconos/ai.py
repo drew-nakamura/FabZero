@@ -13,7 +13,8 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 def _completion(body):
     request = urllib.request.Request(GROQ_URL, data=json.dumps(body).encode(), headers={
         "Authorization": "Bearer " + os.environ["GROQ_API_KEY"],
-        "Content-Type": "application/json"})
+        "Content-Type": "application/json",
+        "User-Agent": "SiliconOS/1.0"})
     for attempt in range(2):
         try:
             with urllib.request.urlopen(request, timeout=20) as response:
@@ -49,7 +50,7 @@ def _completion(body):
             if attempt == 0:
                 time.sleep(0.5)
                 continue
-            raise ValueError("Groq provider unavailable: connection failed or timed out. Retry later or use a verified preset.") from None
+            raise ValueError("Groq provider unavailable: connection failed or timed out. Check network access or try another network, retry later, or use a verified preset.") from None
         except (json.JSONDecodeError, UnicodeError):
             raise ValueError("Groq returned invalid JSON. No result accepted; retry or use a verified preset.") from None
 

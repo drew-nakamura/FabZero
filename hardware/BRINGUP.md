@@ -4,13 +4,13 @@ Current evidence: portable SystemVerilog kernel, tested with Icarus Verilog. Inc
 
 ## Partner on Windows
 
-1. Record Vivado/Vitis versions and check whether the KV260 board preset is installed.
+1. Use the user-confirmed **Vivado/Vitis 2025.2** installation on **Windows 11** (approximately **32 GB RAM**); this supersedes the earlier 2026.1.1 report. The KV260 preset is reported visible. Capture actual tool output with `version -short` for the build record. Reported hardware is **SK-KV260-G** with accessory pack **HW-BACCP01-SK-G**; still confirm board revision and exact FPGA part against the physical board and installed preset.
 2. Run the supplied `hardware/matmul.sv` and `hardware/tb.sv` in Vivado simulation, with matching N=8 and LANES=1 or 4. Generate inputs using the Python simulation runner or use the exported report's signed input values converted to two-digit hex. The testbench expects `inputs.hex`, A then B in row-major order.
 3. Create a board-matched block design with Zynq PS, clock/reset and AXI interconnect. Integrate `matmul_axi.sv`, the generic AXI4-Lite wrapper, using Vivado interface mapping or IP packaging. Connect the 8-bit byte-addressed slave into an allocated PS address segment. Verify reset polarity and clock domain; this wrapper does not cross clock domains.
 4. Implemented generic register contract: see the AXI section below. There is still no allocated physical base address or usable board driver until the PS block design and board image are built.
 5. The initial RTL uses local arrays with asynchronous reads. Inspect memory inference and critical paths. For a real BRAM implementation, bank B by output lane and account for synchronous read latency in the schedule/counter. Regenerate simulation expectations whenever the schedule changes.
 6. Implement separate 1- and 4-lane images. Save whole-design and kernel utilization, timing, part, actual clock configuration, tool versions, source/bitstream hashes. Reject timing failures. Do not equate lane count to DSP allocation.
-7. Tomorrow identify the board OS/firmware and use its compatible PYNQ or xmutil loader. Package matching metadata/device-tree artifacts. Prove a scratch register before arithmetic. Check identical exported inputs and outputs with the Python oracle.
+7. When the board is available, identify its Linux image, kernel and boot firmware versions; these remain unknown. Select a compatible loading flow only after that check (for example, the image-specific PYNQ or xmutil flow). Package matching metadata/device-tree artifacts. Prove a scratch register before arithmetic. Check identical exported inputs and outputs with the Python oracle.
 
 No board connection or FPGA run button is enabled in the web app until this path exists. No physical measurements may be imported as live without artifact identity, correctness, clock and provenance validation.
 

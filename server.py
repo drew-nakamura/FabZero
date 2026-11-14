@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai, asic, rtlgen, catalog
+from siliconos import ai, asic, rtlgen, catalog, handoff
 from siliconos.engine import explore, simulate, validate
 
 ROOT=Path(__file__).resolve().parent
@@ -63,6 +63,20 @@ class Handler(BaseHTTPRequestHandler):
             with connect() as db: rows=db.execute("SELECT payload FROM runs ORDER BY rowid DESC LIMIT 20").fetchall()
             heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics','synthesis','build_recipe'}
             return self.reply(200,[{k:v for k,v in json.loads(r[0]).items() if k not in heavy} for r in rows])
+        match=re.fullmatch(r'/api/runs/([a-f0-9-]{36})/handoff.zip',path)
+        if match:
+            with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(match.group(1),)).fetchone()
+            if not row: return self.reply(404,{"error":"Run not found"})
+            try: body=handoff.archive(json.loads(row[0]))
+            except (ValueError,TypeError,KeyError):
+                return self.reply(400,{"error":"This run lacks valid handoff evidence. Create a new verified run."})
+            self.send_response(200)
+            self.send_header('Content-Type','application/zip')
+            self.send_header('Content-Disposition','attachment; filename="siliconos-'+match.group(1)+'-handoff.zip"')
+            self.send_header('Content-Length',str(len(body)))
+            self.send_header('Cache-Control','no-store')
+            self.end_headers();self.wfile.write(body)
+            return
         if path.startswith("/api/runs/"):
             with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(path.rsplit("/",1)[-1],)).fetchone()
             return self.reply(200,json.loads(row[0])) if row else self.reply(404,{"error":"Run not found"})

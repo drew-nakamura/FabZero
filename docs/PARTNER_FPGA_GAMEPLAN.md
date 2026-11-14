@@ -2,12 +2,13 @@
 
 **Goal: one verified N=8 hardware run first, then compare one and four lanes.** Tonight's synthesis work does not need the board. Board deployment does require its exact hardware, running image and supported loading flow. Our kernel and AXI wrapper pass directed simulation; Vivado synthesis, implementation and physical execution are still unverified.
 
-## Send back these facts first — 10 minutes
+## Confirmed setup and remaining checks — 10 minutes
 
-- Vivado and Vitis versions from Help → About. Keep the installed versions initially.
-- Exact board model/revision when available; an existing working board project is especially useful.
+- User-confirmed build tools: **Vivado/Vitis 2025.2** on **Windows 11**, approximately **32 GB RAM**. This supersedes the earlier 2026.1.1 report. Keep this installation; capture `version -short` in the build evidence.
+- Reported hardware: **SK-KV260-G** starter kit and **HW-BACCP01-SK-G** accessory pack. A KV260 board preset is visible. These catalog identifiers do not establish the exact installed FPGA device part or board revision.
+- Confirm physical board revision and exact device part from the board/preset; an existing working board project is especially useful.
 - In Vivado Tcl Console: run `version -short`, `get_board_parts *kv260*`, and `get_parts *xck26*`; copy results. Matching names are discovery results, not permission to select an unverified part.
-- Tomorrow: board Linux image/distribution, kernel version, SSH hostname/login (no password), and any already-working overlay/application example. `cat /etc/os-release` and `uname -a` are useful read-only checks. Is this a PYNQ image, an AMD accelerated-application image, or something else?
+- When the board is available: board Linux image/distribution, kernel version, boot firmware version, SSH hostname/login (no password), and any already-working overlay/application example. `cat /etc/os-release` and `uname -a` are useful read-only checks. Is this a PYNQ image, an AMD accelerated-application image, or something else?
 
 Do not spend the first hour upgrading tools. If device support or a board preset is missing, identify the exact missing component. Vitis is not needed for our existing RTL synthesis path; its role depends on the eventual host/boot flow.
 
@@ -46,7 +47,7 @@ Get-FileHash hardware/matmul_axi.sv -Algorithm SHA256
 Use an existing working project matched to this board and software image when possible. Otherwise establish the correct PS configuration before creating a new design.
 
 1. Add the two RTL sources to a Vivado project using the verified device/board. Create an IP Integrator block design containing the correctly configured Zynq UltraScale+ processing system. AMD documents processor Block Automation and Connection Automation; available presets depend on installed board support. [AMD UG994: designer assistance](https://docs.amd.com/r/2024.1-English/ug994-vivado-ip-subsystems/Using-the-Designer-Assistance-Feature)
-2. Add `matmul_axi` as a module reference with N=8 and LANES=1. Check that the `s_axi_*` ports form one AXI4-Lite slave interface. AMD supports interface inference from conventional port names; if inference is incomplete, package the existing RTL as custom IP and explicitly map its ports. Do not replace its tested logic with an unrelated generated peripheral. [AMD UG994: AXI inference](https://docs.amd.com/r/en-US/ug994-vivado-ip-subsystems/Inferring-AXI-Interfaces), [AMD UG1118: custom IP](https://docs.amd.com/r/2026.1-English/ug1118-vivado-creating-packaging-custom-ip/Introduction)
+2. Add `matmul_axi` as a module reference with N=8 and LANES=1. Check that the `s_axi_*` ports form one AXI4-Lite slave interface. AMD supports interface inference from conventional port names; if inference is incomplete, package the existing RTL as custom IP and explicitly map its ports. Do not replace its tested logic with an unrelated generated peripheral. [AMD UG994: AXI inference](https://docs.amd.com/r/en-US/ug994-vivado-ip-subsystems/Inferring-AXI-Interfaces), [AMD UG1118: custom IP](https://docs.amd.com/r/en-US/ug1118-vivado-creating-packaging-custom-ip/Introduction)
 3. Connect an enabled PS-to-PL AXI master through the appropriate interconnect/conversion to the slave. Connect wrapper, interconnect and associated PS AXI clock inputs to the intended clock domain. Drive the wrapper's synchronous active-low `aresetn` from the correctly synchronized peripheral reset. This RTL has no clock-domain crossing logic. Review clock/reset associations instead of assuming automatic inference completed them.
 4. In Address Editor, assign an accessible non-overlapping segment and **record the actual base address**. The slave exposes 8 address bits, with implemented offsets through 0x24; use the allocated segment's documented accesses only. Do not guess a base address or treat an alias as another peripheral.
 5. Validate the design; resolve errors and relevant clock/reset/address warnings. Generate output products and the HDL wrapper, then synthesize, implement and generate the bitstream. Inspect final timing and design-rule reports. A successful synthesis alone is insufficient. These are standard IP Integrator stages; match documentation to the installed release. [AMD UG994](https://docs.amd.com/r/2024.1-English/ug994-vivado-ip-subsystems)
