@@ -1,6 +1,6 @@
 # SiliconOS implementation contract
 
-This document separates the current software/RTL prototype from tomorrow's proposed board integration. It is a handoff contract, not evidence that synthesis, deployment, or customer validation succeeded. The current two-person team has a Windows Vivado/Vitis host of unknown version and expects KV260 access tomorrow.
+This document separates the current software/RTL prototype from proposed board integration. It is a handoff contract; completed evidence belongs to an exact artifact and run. The two-person team has user-confirmed Vivado/Vitis 2025.2 on Windows 11, a visible KV260 board preset, and board SKU SK-KV260-G. Vivado synthesis and board execution remain unverified.
 
 ## Supported experiment
 
@@ -30,13 +30,17 @@ AI extraction must preserve unsupported explicit requirements. “Detect defects
 | State | Permitted claim | Required provenance |
 |---|---|---|
 | Analytical | Ideal schedule projection | Spec, lane count, equation, assumed frequency |
-| RTL simulation | RTL produced correct outputs for these vectors and counted these cycles | Simulator version, source hashes, input/output vectors and hashes, seed, correctness |
+| Checked-in RTL simulation (`rtl_simulation`) | Checked-in RTL produced correct outputs for these vectors and counted these cycles | Simulator version, source hashes, input/output vectors and hashes, seed, correctness |
+| AI-generated RTL (`ai_generated_rtl`) | AI-generated RTL, verified by simulation against an integer oracle | Exact generated source, unchanged testbench and trusted cycle-monitor snapshots/hashes; simulator version, parameters, input/output vectors and hashes, seed, observed cycles |
+| Generic synthesis (`generic_synthesis`) | Yosys produced generic cells and its netlist passed seeded integer-oracle simulation | Source hashes, tool versions, synthesis script/log, statistics, netlist/hash, specialized netlist testbench, verification inputs/outputs/log; `source_origin=ai_generated_rtl` for generated source |
 | Implemented | This exact design mapped to these resources and met this clock constraint | Vivado version, target part, source/build hashes, top/parameters, clock constraint, timing and utilization reports |
 | Board measured | This artifact executed correctly on this physical board | Prior build identity plus board/image identity, bitstream hash, run timestamp, complete output check, cycles, actual configured clock, timing boundaries |
 
 Missing values remain unknown (`null`), not zero. A simulated microsecond value is a cycle count divided by an assumed clock. It is not measured FPGA latency. An implementation report is not proof of deployment. A successful historical run is labeled recorded when the board is disconnected.
 
-For the existing schedule, ideal kernel cycles are N³/L; the run's RTL counter is authoritative for simulation. Four lanes spend more arithmetic capacity. They do not demonstrate a fixed-resource optimization. Full-job timing must include operand staging and result retrieval; keep programming time separately visible. CPU comparisons require identical numerical semantics and explicit timing boundaries.
+For the checked-in schedule, ideal kernel cycles are N³/L. A generated design may have a different schedule: its reported counter must agree with a trusted monitor counting execution clocks, and its outputs must match the Python integer oracle. Neither a requested lane count nor the checked-in schedule proves the generated design's architecture or resource usage. Four lanes spend more arithmetic capacity. They do not demonstrate a fixed-resource optimization. Full-job timing must include operand staging and result retrieval; keep programming time separately visible. CPU comparisons require identical numerical semantics and explicit timing boundaries.
+
+The [generated-RTL workflow](AI_RTL_GENERATION.md) uses the reviewed supported specification and workload prompt to request a new module, applies a conservative static gate, then runs actual tools. On ASIC requests, a separate `generic_synthesis` report is nested within the `ai_generated_rtl` result; synthesis does not replace its source-origin label. Any generation, gate, compilation, simulation, oracle or synthesis failure rejects the entire request without saving a run or success event. A successful seeded run is evidence for those vectors and configuration, not exhaustive verification or formal equivalence.
 
 ## Critical implementation gaps and gates
 
@@ -45,7 +49,7 @@ For the existing schedule, ideal kernel cycles are N³/L; the run's RTL counter 
 3. **Memory and resource mapping:** current flat local arrays and asynchronous reads may map to muxes/registers/distributed RAM. They are not evidence of banked BRAM or a specific DSP count. Keep the tiny arrays if timing/resource results are acceptable; avoid redesigning memory solely for presentation. In a banked implementation, document how all lanes receive operands each cycle.
 4. **Measured constraint enforcement:** associate reports with a concrete artifact, N, L and clock. Rank only candidates with verified timing and resources as feasible hardware recommendations. If none qualify, say no verified feasible candidate. Zero-DSP requests can only be accepted after an actual zero-DSP implementation exists.
 5. **Runner integration:** a single local runner owns programming and MMIO, checks identity, loads inputs while idle, starts, times out, reads every result and checks correctness. Never accept arbitrary RTL, shell commands or register addresses from public users. Board loading is serialized.
-6. **Product claim:** AI drafts specs; deterministic code validates/ranks; tools produce evidence. No generated explanation overrides a failed check or invents resource/performance measurements.
+6. **Product claim:** AI drafts specs and candidate RTL; deterministic code validates/ranks; tools produce evidence. Generated RTL becomes an accepted result only after real simulation and integer-oracle checks, with netlist verification also required for ASIC requests. No generated explanation overrides a failed check or invents resource/performance measurements.
 
 ## Two-person execution order
 

@@ -17,8 +17,8 @@ These runs are developer QA, not customer usage. The 4× cycle ratio spends four
 
 ## Not yet verified or implemented
 
-- Live AI requests: adapter exists but API credentials/model are not configured. Provider/API eligibility question is pending. Mocked adapter tests do not establish live service availability or extraction quality.
-- Vivado synthesis: script exists, but no available Vivado execution on this Mac. Need partner's Windows tool version and installed part/board definition.
+- Live AI requests: no successful live generation is recorded here. Mocked adapter tests do not establish current service availability, extraction quality or generated-RTL quality.
+- Vivado synthesis: script exists, but no available Vivado execution on this Mac. The user confirmed Vivado/Vitis 2025.2 on Windows 11, a visible KV260 board preset and SK-KV260-G board SKU; actual synthesis and board execution remain unverified.
 - Board block design, clock/reset/address map, bitstream, OS/firmware packaging, loader and physical measurements. KV260 available tomorrow.
 - Real DSP/LUT/BRAM mapping and timing closure. Budgets are preserved but not certified.
 - Resource-matched optimization beyond lane scaling; full inference/camera workloads; power or energy measurement.
@@ -47,4 +47,14 @@ Coordinator-reported QA: one-click paired execution produced 512/128 simulated c
 
 ## ASIC exploration added
 
-The workbench now switches between KV260 FPGA deployment and custom ASIC exploration. Actual Yosys generic synthesis and seeded synthesized-netlist simulation passed for N=8/16 and LANES=1/4. N=8 produced 10,082 generic cells for one lane and 16,119 for four; N=16 produced 27,515 and 40,470 respectively with the installed Yosys 0.57. These are generic logic counts, not process-specific standard-cell area or timing. Exports retain source snapshots, script, netlist, statistics, logs and verification inputs/outputs. Physical ASIC mapping, layout, power, STA, DRC/LVS and signoff remain pending. Full automated suite: 14 test methods passed.
+The workbench now switches between KV260 FPGA deployment and custom ASIC exploration. Actual Yosys generic synthesis and seeded synthesized-netlist simulation passed for N=8/16 and LANES=1/4. N=8 produced 10,082 generic cells for one lane and 16,119 for four; N=16 produced 27,515 and 40,470 respectively with the installed Yosys 0.57. These are generic logic counts, not process-specific standard-cell area or timing. Exports retain source snapshots, script, netlist, statistics, logs and verification inputs/outputs. The original integration suite passed 14 test methods. Later standalone SKY130 mapping and physical-run evidence is recorded in [ASIC workflow](ASIC_WORKFLOW.md); unresolved checks prevent a closure/signoff claim and do not upgrade app generic results.
+
+## AI-generated RTL acceptance flow
+
+**Generate & verify RTL** sends the reviewed supported specification and workload prompt to the server. Groq supplies candidate SystemVerilog; a static gate checks its interface and allowed constructs before tools run. Icarus compiles it with the unchanged checked-in testbench, a trusted monitor checks protocol/cycle observations, and Python checks every output against the integer oracle. ASIC requests additionally require Yosys synthesis and seeded netlist verification before the whole result is saved.
+
+Accepted reports use `ai_generated_rtl`, with the visible label **“AI-generated RTL, verified by simulation against an integer oracle.”** Any nested synthesis report remains `generic_synthesis` with `source_origin=ai_generated_rtl`. Source snapshots/hashes identify the actual candidate, testbench and monitor. Compilation, protocol, oracle or synthesis failures produce visible errors without new run/event records. Editing the specification or workload prompt marks prior generated results stale.
+
+Developer tests cover provider fixtures, static-gate rejection, real Icarus arithmetic/cycle checks, real Yosys/netlist checks, API failure/persistence behavior, and UI rendering/control behavior. Provider fixtures and UI fixtures do not establish live Groq generation quality. Each accepted candidate's recorded seeded simulation is bounded evidence, not an exhaustive test of all inputs or configurations. DSP/LUT/BRAM remain unknown; generic cells are not silicon area. See [AI RTL generation](AI_RTL_GENERATION.md) for the full acceptance contract.
+
+Coordinator-reported browser QA passed with a provider fixture and actual Icarus/Yosys execution: generated success/export, rejection without persistence, nested ASIC synthesis, prompt/spec stale markers, capability-dependent controls, and checked-in RTL comparison. Checks at 1440 and 390 pixel widths found no horizontal document overflow or JavaScript errors. All 10 UI tests passed. These are developer checks using fixture source, not a successful live Groq generation claim.
