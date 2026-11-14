@@ -12,9 +12,9 @@ class ServiceTests(unittest.TestCase):
     def test_ai_response_validation_and_unsupported_intent(self):
         result={'supported':True,'explanation':'Test fixture', 'spec':DEFAULT,
                 'provenance':{k:'default' for k in DEFAULT},'unresolved':[]}
-        def response(value,status='completed'):
-            return io.BytesIO(json.dumps({'status':status,'output':[{'content':[{'type':'output_text','text':json.dumps(value)}]}]}).encode())
-        with patch.dict('os.environ',{'OPENAI_API_KEY':'test-placeholder','OPENAI_MODEL':'test-model'}):
+        def response(value,finish_reason='stop'):
+            return io.BytesIO(json.dumps({'choices':[{'finish_reason':finish_reason,'message':{'role':'assistant','content':json.dumps(value)}}]}).encode())
+        with patch.dict('os.environ',{'GROQ_API_KEY':'test-placeholder','GROQ_MODEL':'test-model'}):
             with patch('urllib.request.urlopen',return_value=response(result)):
                 self.assertEqual(ai.generate('matrix multiply')['spec'],DEFAULT)
             unsupported={**result,'supported':False,'spec':{**DEFAULT,'operation':'object_detection'}}
@@ -23,7 +23,7 @@ class ServiceTests(unittest.TestCase):
             bad={**result,'spec':{**DEFAULT,'size':128}}
             with patch('urllib.request.urlopen',return_value=response(bad)):
                 with self.assertRaises(ValueError): ai.generate('128 square')
-            with patch('urllib.request.urlopen',return_value=response(result,'incomplete')):
+            with patch('urllib.request.urlopen',return_value=response(result,'length')):
                 with self.assertRaisesRegex(ValueError,'incomplete'): ai.generate('matrix multiply')
 
     def test_pilot_consent_validation_and_private_persistence(self):

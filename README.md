@@ -20,7 +20,7 @@ python3 -m unittest discover -s tests -v
 
 ## AI configuration
 
-Set `OPENAI_API_KEY` and `OPENAI_MODEL` in the server environment, then restart. `.env.example` lists the settings; `.env` is not automatically loaded. Never commit the key or put it in frontend code. The app uses OpenAI Responses with a strict JSON schema, then validates supported parameters server-side. Without credentials it explicitly disables AI functionality; manual editing and JSON import remain usable. API integration has not been validated against a live account yet.
+Set `GROQ_API_KEY` and `GROQ_MODEL` in the server environment, then restart. `.env.example` lists the settings; `.env` is not automatically loaded. Never commit the key or put it in frontend code. The app uses the Groq chat completions API with a strict JSON schema, then validates supported parameters server-side. Choose a model that supports strict structured outputs (for example `openai/gpt-oss-120b` or `openai/gpt-oss-20b`). Without credentials it explicitly disables AI functionality; manual editing and JSON import remain usable. API integration has not been validated against a live account yet.
 
 ## Evidence and limitations
 
@@ -39,7 +39,7 @@ Set `OPENAI_API_KEY` and `OPENAI_MODEL` in the server environment, then restart.
 
 ## Credits
 
-Icarus Verilog is an external simulator; AMD Vivado/Vitis are external proprietary build tools. OpenAI API provides optional specification generation. DM Sans and Space Grotesk are loaded from Google Fonts with system fallbacks. No third-party accelerator RTL is included. See LICENSE for the original project source.
+Icarus Verilog is an external simulator; AMD Vivado/Vitis are external proprietary build tools. The Groq API provides optional specification generation. DM Sans and Space Grotesk are loaded from Google Fonts with system fallbacks. No third-party accelerator RTL is included. See LICENSE for the original project source.
 
 ### Judging rehearsal
 

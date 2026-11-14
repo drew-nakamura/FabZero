@@ -57,4 +57,4 @@ Minimum convincing physical demo: one fresh job, correct outputs, hardware cycle
 
 ## AI-credit handoff
 
-Ask only for provider, whether credits cover product API requests, and chosen model availability. The current adapter expects server-side `OPENAI_API_KEY` and `OPENAI_MODEL`; other providers need a compatible adapter. The owner enters secrets locally, never in chat or browser code. Make one successful supported extraction and one unsupported-request rejection before calling the integration live. Credits are optional to the deterministic demo.
+Ask only for provider, whether credits cover product API requests, and chosen model availability. The current adapter expects server-side `GROQ_API_KEY` and `GROQ_MODEL` and calls the Groq chat completions API; other providers need a compatible adapter. The owner enters secrets locally, never in chat or browser code. Make one successful supported extraction and one unsupported-request rejection before calling the integration live. Credits are optional to the deterministic demo.

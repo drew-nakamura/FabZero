@@ -121,7 +121,7 @@ Optimization: exhaustive enumeration over the implemented lane/schedule choices,
 
 Flow: Idea / engineer prompt / supported JSON or YAML → AI extraction → editable typed specification → deterministic validation → candidate registry and search → serialized board job → immutable result → comparison and explanation.
 
-Next.js/Tailwind UI; Python service for search/validation/runner; OpenAI server-side API for spec extraction and result explanation. Use schema-constrained output with explicit handling for refusal, incomplete response and timeout. Schema conformance does not establish semantic correctness. [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs).
+Next.js/Tailwind UI; Python service for search/validation/runner; a server-side LLM API for spec extraction and result explanation (now implemented against Groq chat completions). Use schema-constrained output with explicit handling for refusal, incomplete response and timeout. Schema conformance does not establish semantic correctness. [Groq Structured Outputs](https://console.groq.com/docs/structured-outputs).
 
 Every field carries value, source (`user`, `inferred`, `default`, `unresolved`) and supporting user text when applicable. Preserve explicit requirements; never silently replace an impossible DSP budget. Suggested defaults: matrix size 16, INT8, INT32 accumulation, KV260, 100 MHz target, minimize latency; label all as defaults unless supplied. Exact numbers are editable within the advertised supported set.
 

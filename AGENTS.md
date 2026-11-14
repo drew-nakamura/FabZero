@@ -21,7 +21,7 @@ Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation,
 
 - `hardware/`: RTL, testbenches, synthesis preparation and Windows/board handoff.
 - `siliconos/engine.py`: supported spec validation, deterministic search, simulator execution and provenance.
-- `siliconos/ai.py`: optional server-side OpenAI Responses adapter.
+- `siliconos/ai.py`: optional server-side Groq chat-completions adapter.
 - `server.py`: loopback development API and local SQLite persistence.
 - `web/`: buildless HTML/CSS/JS workbench. The initial stack deliberately avoids Node dependency setup; Next.js is a future choice, not an implemented claim.
 - `tests/`: meaningful arithmetic, lifecycle, API and constraint tests.
@@ -40,7 +40,7 @@ python3 -m unittest discover -s tests -v
 git diff --check
 ```
 
-Python 3.10+; Icarus `iverilog` and `vvp` must be on PATH. No Python dependencies are required. Server binds to 127.0.0.1:8000; this is not a production hosting configuration. Set OPENAI_API_KEY and OPENAI_MODEL in the process environment to enable AI; `.env` is not auto-loaded.
+Python 3.10+; Icarus `iverilog` and `vvp` must be on PATH. No Python dependencies are required. Server binds to 127.0.0.1:8000; this is not a production hosting configuration. Set GROQ_API_KEY and GROQ_MODEL in the process environment to enable AI; `.env` is not auto-loaded.
 
 Test signed extremes, zero/identity and random matrices, repeated jobs/reset behavior, unsupported spec rejection, and unverified resource budgets. Preserve raw simulator/implementation artifacts where practical. Any schedule change must update projections and cycle assertions together. Browser-check the main flow and mobile layout after substantive UI changes. Do not claim live API, Vivado, or board validation without actually running it.
 
