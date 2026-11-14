@@ -20,8 +20,8 @@ def validate(spec):
     for key in ("size", "frequency_mhz", "max_dsps", "max_lanes"):
         if type(result[key]) is not int:
             raise ValueError(key + " must be an integer.")
-    if result["operation"] != "matrix_multiply" or result["precision"] != "int8" or result["target"] != "kv260":
-        raise ValueError("Currently supported: INT8 matrix multiplication targeting KV260 only.")
+    if result["operation"] != "matrix_multiply" or result["precision"] != "int8" or result["target"] not in ("kv260","asic"):
+        raise ValueError("Currently supported: INT8 matrix multiplication targeting KV260 or a custom ASIC.")
     if result["size"] not in (8,16) or result["max_lanes"] not in (1,4):
         raise ValueError("Supported sizes are 8/16; lane limits are 1/4.")
     if not 1 <= result["frequency_mhz"] <= 200 or not 0 <= result["max_dsps"] <= 1248:
@@ -44,7 +44,7 @@ def explore(spec):
     key = "cycles" if spec["objective"] == "minimize_latency" else "lanes"
     provisional = min(allowed, key=lambda c:c[key])["id"]
     return dict(spec=spec,candidates=candidates,provisional=provisional,hardware_recommendation=None,
-        warning="DSP budget and clock feasibility are unverified until Vivado implementation. Lane count is not DSP count.")
+        warning=("DSP budget and clock feasibility are unverified until Vivado implementation. Lane count is not DSP count." if spec["target"]=="kv260" else "Generic ASIC logic only. DSP budget does not apply; process-specific area, power and timing require a PDK and physical implementation."))
 
 def reference(a,b,n):
     return [sum(a[i*n+k]*b[k*n+j] for k in range(n)) for i in range(n) for j in range(n)]
@@ -78,7 +78,7 @@ def simulate(spec, lanes, seed=42, vectors=None):
         raise ValueError("RTL correctness failed. No performance result accepted.")
     version=subprocess.run(["iverilog","-V"],capture_output=True,text=True,timeout=5).stdout.splitlines()[0]
     return dict(evidence="rtl_simulation",correct=True,spec=spec,lanes=lanes,seed=seed,cycles=cycles[0],
-        projected_us=cycles[0]/spec["frequency_mhz"],clock_status="assumed target; not measured",physical_fpga=False,
+        projected_us=cycles[0]/spec["frequency_mhz"],clock_status="assumed target; not measured",physical_fpga=False,physical_asic=False,
         simulator=version,simulator_wall_seconds=wall,source_sha256=sources,
         simulator_stdout=run.stdout,parameters={"N":n,"LANES":lanes},
         source_files={name:content.decode("utf-8") for name,content in source_bytes.items()},
@@ -86,4 +86,4 @@ def simulate(spec, lanes, seed=42, vectors=None):
         output_sha256=hashlib.sha256(json.dumps(outputs).encode()).hexdigest(),
         inputs={"a":a,"b":b},outputs=outputs,operations=2*n**3,
         resources={"dsp":None,"lut":None,"bram":None},
-        limitations=["Generic AXI wrapper is simulated separately; board integration and deployment are pending.","Local operand arrays are not validated BRAM banking.","Parallel speedup spends more arithmetic capacity; no fixed-resource optimization claim.","Input loading, host transfer, and deployment are excluded from kernel cycles."])
+        limitations=[("Generic AXI wrapper is simulated separately; board integration and deployment are pending." if spec["target"]=="kv260" else "ASIC RTL simulation only; synthesis and physical implementation are separate evidence stages."),"Local operand arrays are not validated BRAM banking.","Parallel speedup spends more arithmetic capacity; no fixed-resource optimization claim.","Input loading, host transfer, and deployment are excluded from kernel cycles."])

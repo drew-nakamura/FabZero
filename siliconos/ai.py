@@ -19,10 +19,10 @@ def generate(prompt):
         "provenance":{"type":"object","properties":{k:{"type":"string","enum":["user","inferred","default","unresolved"]} for k in fields},"required":list(fields),"additionalProperties":False},
         "unresolved":{"type":"array","items":{"type":"string"}}},
         "required":["supported","explanation","spec","provenance","unresolved"],"additionalProperties":False}
-    instructions=("Extract a hardware specification, never measurements. Supported: signed INT8 square GEMM sizes 8 or 16, INT32 outputs, KV260, 1 or 4 lanes; objectives minimize_latency or minimize_lanes. "
+    instructions=("Extract a hardware specification, never measurements. Supported: signed INT8 square GEMM sizes 8 or 16, INT32 outputs, targets kv260 or asic, 1 or 4 lanes; objectives minimize_latency or minimize_lanes. "
       "Preserve explicit requirements, including unsupported ones. If unsupported, set supported=false and explain; do not silently substitute. "
       "A camera/object detector or full neural inference is unsupported, even though it could use GEMM. "
-      "For unspecified fields use defaults and label provenance default. Record ambiguity in unresolved. No claims of power savings or DSP mappings. Defaults: "+json.dumps(DEFAULT))
+      "For unspecified fields use defaults and label provenance default. Record ambiguity in unresolved. ASIC target is generic logic exploration without a process choice or physical signoff; max_dsps is FPGA-only. No claims of power savings or DSP mappings. Defaults: "+json.dumps(DEFAULT))
     body={"model":os.environ["OPENAI_MODEL"],"instructions":instructions,"input":prompt,
         "text":{"format":{"type":"json_schema","name":"hardware_spec","strict":True,"schema":schema}}}
     request=urllib.request.Request("https://api.openai.com/v1/responses",data=json.dumps(body).encode(),

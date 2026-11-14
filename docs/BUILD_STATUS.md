@@ -44,3 +44,7 @@ The supplied rubric weights execution/design 25%, real problem/user 25%, path to
 ## Latest integration QA
 
 Coordinator-reported QA: one-click paired execution produced 512/128 simulated cycles with matching outputs; the no-AI sample path works; editing the spec immediately marks the displayed result stale; lane limit 1 disables paired comparison. Browser checks at 390 and 1440 pixels found no horizontal overflow. Export now contains exact source snapshots, raw simulator stdout and parameters; its replay test passed. A hardware regression for the stale-done race passed. These remain developer/simulation checks, not live AI, physical hardware or customer evidence.
+
+## ASIC exploration added
+
+The workbench now switches between KV260 FPGA deployment and custom ASIC exploration. Actual Yosys generic synthesis and seeded synthesized-netlist simulation passed for N=8/16 and LANES=1/4. N=8 produced 10,082 generic cells for one lane and 16,119 for four; N=16 produced 27,515 and 40,470 respectively with the installed Yosys 0.57. These are generic logic counts, not process-specific standard-cell area or timing. Exports retain source snapshots, script, netlist, statistics, logs and verification inputs/outputs. Physical ASIC mapping, layout, power, STA, DRC/LVS and signoff remain pending. Full automated suite: 14 test methods passed.

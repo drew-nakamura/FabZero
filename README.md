@@ -48,3 +48,9 @@ Use **Load example · no AI needed**, then **Run both & compare** to execute bot
 See [judging readiness](docs/JUDGING_READINESS.md) for the weighted rubric, four-minute demo script and outstanding customer, live-AI and board evidence gates.
 
 For the Windows build owner, start with the [partner FPGA gameplan](docs/PARTNER_FPGA_GAMEPLAN.md): tool discovery, tonight's synthesis checkpoint, tomorrow's board integration, register smoke test and live-demo fallback.
+
+### Custom ASIC exploration
+
+Select **Custom ASIC** to retain RTL verification and enable **Synthesize generic logic**. Requires `yosys`, `iverilog`, and `vvp` on PATH. The server runs Yosys, then simulates the generated netlist against the integer reference before accepting a result. Download the Verilog netlist, synthesis script or complete JSON evidence bundle. The script expects the matching `matmul.sv` source included in that bundle.
+
+Both sizes (8/16) and lane choices (1/4) have passed actual generic synthesis and netlist simulation locally. Generic cell counts are not physical area; no PDK mapping, layout, power, timing closure or fabrication signoff is claimed. See [ASIC workflow](docs/ASIC_WORKFLOW.md) for the remaining physical stages.

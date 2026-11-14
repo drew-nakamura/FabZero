@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai
+from siliconos import ai, asic
 from siliconos.engine import explore, simulate
 
 ROOT=Path(__file__).resolve().parent
@@ -55,10 +55,11 @@ class Handler(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         if path=="/api/status":
             import shutil
-            return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=False))
+            return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=False,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
         if path=="/api/runs":
             with connect() as db: rows=db.execute("SELECT payload FROM runs ORDER BY rowid DESC LIMIT 20").fetchall()
-            return self.reply(200,[json.loads(r[0]) for r in rows])
+            heavy={'source_files','netlist_verilog','netlist_testbench','synthesis_log','verification_log','simulator_stdout','statistics'}
+            return self.reply(200,[{k:v for k,v in json.loads(r[0]).items() if k not in heavy} for r in rows])
         if path.startswith("/api/runs/"):
             with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(path.rsplit("/",1)[-1],)).fetchone()
             return self.reply(200,json.loads(row[0])) if row else self.reply(404,{"error":"Run not found"})
@@ -81,9 +82,10 @@ class Handler(BaseHTTPRequestHandler):
             if path=="/api/explore": result=explore(data.get("spec"))
             elif path=="/api/spec": result=ai.generate(data.get("prompt"))
             elif path=="/api/pilot": result=save_pilot(data)
-            elif path=="/api/simulate":
-                if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A simulation is already running. Try again shortly."})
-                try: result=simulate(data.get("spec"),data.get("lanes"),data.get("seed",42))
+            elif path in ("/api/simulate","/api/asic/synthesize"):
+                if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
+                try:
+                    result=(asic.synthesize(data.get("spec"),data.get("lanes")) if path=="/api/asic/synthesize" else simulate(data.get("spec"),data.get("lanes"),data.get("seed",42)))
                 finally: RUN_LOCK.release()
                 result.update(id=str(uuid.uuid4()),created_at=now())
                 with connect() as db: db.execute("INSERT INTO runs VALUES (?,?)",(result["id"],json.dumps(result)))

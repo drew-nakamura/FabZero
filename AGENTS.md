@@ -4,7 +4,7 @@
 
 Build an open-source hardware architecture workbench for the November 13–15, 2026 CPVC × OCOB × CPE hackathon. Read README.md for current capability and SILICONOS_PLAN.md for strategy. The human team has two members, a KV260 available Saturday, and a partner's Windows machine with Vivado/Vitis; versions are not yet known.
 
-Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1 or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency.
+Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1 or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency. Targets now include KV260 FPGA and custom ASIC exploration. ASIC generic Yosys synthesis is not PDK mapping, layout, timing closure or tapeout; DSP budgets apply only to FPGA.
 
 ## Evidence rules
 

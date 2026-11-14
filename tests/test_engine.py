@@ -26,6 +26,17 @@ class EngineTests(unittest.TestCase):
             replay=subprocess.run(['vvp','sim'],cwd=root,check=True,capture_output=True,text=True,timeout=20)
             self.assertEqual(replay.stdout,result['simulator_stdout'])
 
+    def test_asic_target_preserves_unverified_physical_metrics(self):
+        spec={**DEFAULT,'target':'asic'}
+        data=explore(spec)
+        self.assertEqual(data['spec']['target'],'asic')
+        self.assertIn('DSP budget does not apply',data['warning'])
+        self.assertIsNone(data['hardware_recommendation'])
+        result=simulate(spec,1)
+        self.assertFalse(result['physical_asic'])
+        self.assertEqual(result['cycles'],512)
+        with self.assertRaises(ValueError): validate({**spec,'target':'unknown'})
+
     def test_constraints(self):
         self.assertEqual(explore({**DEFAULT,"max_lanes":1})['provisional'],'mac1')
         for patch in ({'size':9},{'size':True},{'operation':'convolution'},{'precision':'fp32'},{'frequency_mhz':0},{'max_dsps':-1},{'objective':'minimize_power'}):
