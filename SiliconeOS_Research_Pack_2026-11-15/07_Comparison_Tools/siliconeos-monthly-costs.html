@@ -1,0 +1,148 @@
+<div id="siliconeos-monthly-costs" aria-label="SiliconeOS monthly cost assumptions">
+  <style>
+    #siliconeos-monthly-costs { display:grid; gap:calc(var(--font-size-base) * 1); }
+    #siliconeos-monthly-costs .so-heading { display:grid; gap:calc(var(--font-size-base) * .25); }
+    #siliconeos-monthly-costs .so-advanced { display:grid; gap:calc(var(--font-size-base) * 1); margin-top:calc(var(--font-size-base) * .5); }
+    #siliconeos-monthly-costs .so-field { display:grid; gap:calc(var(--font-size-base) * .25); min-width:0; }
+  </style>
+  <div class="so-heading">
+    <h3>Monthly cost assumptions</h3>
+    <span class="text-small text-muted">USD per engineer · hypothetical mature product · rates checked November 14, 2026</span>
+  </div>
+  <div class="viz-controls">
+    <label class="form-label so-field" for="so-model">Model rate
+      <select class="form-select" id="so-model">
+        <option value="sol">GPT-6.1 Sol · $2 input / $10 output per million</option>
+        <option value="terra">GPT-6.1 Terra · $1 / $5 per million</option>
+        <option value="astra">GPT-6 Astra · $10 / $50 per million</option>
+        <option value="sonnet">Claude Sonnet 5.5 · $2 / $10 per million</option>
+        <option value="opus">Claude Opus 5.5 · $4 / $20 per million</option>
+        <option value="groq">Groq GPT-OSS 120b · $0.15 / $0.60 per million</option>
+      </select>
+    </label>
+    <label class="form-label so-field" for="so-subscription">Subscription / month ($)
+      <input class="form-control" type="number" id="so-subscription" min="0" max="10000" step="1" value="149">
+    </label>
+  </div>
+  <div class="viz-controls">
+    <label class="form-label so-field" for="so-template">Template attempts / month
+      <input class="form-control" type="number" id="so-template" min="0" max="10000" step="1" value="16" data-tooltip="Assumed cumulative usage per attempt: 50,000 input and 10,000 output tokens across four calls.">
+    </label>
+    <label class="form-label so-field" for="so-integration">Integration attempts / month
+      <input class="form-control" type="number" id="so-integration" min="0" max="10000" step="1" value="4" data-tooltip="Assumed cumulative usage per attempt: 1 million input and 200,000 output tokens across 20 calls, including repairs.">
+    </label>
+    <label class="form-label so-field" for="so-stress">Stress attempts / month
+      <input class="form-control" type="number" id="so-stress" min="0" max="10000" step="1" value="0" data-tooltip="Assumed cumulative usage per attempt: 10 million input and 2 million output tokens across 100 calls, including repairs. Success is not guaranteed.">
+    </label>
+  </div>
+  <div class="viz-grid" aria-live="polite">
+    <div class="card viz-stat">
+      <div>Model API spend / month</div>
+      <div class="viz-stat-value tabular-nums" id="so-api">$19.20</div>
+      <div class="text-small tabular-nums" id="so-units">192 internal AI-cost units</div>
+    </div>
+    <div class="card viz-stat">
+      <div>Direct delivery cost / month</div>
+      <div class="viz-stat-value tabular-nums" id="so-total">$43.67</div>
+      <div class="text-small">Includes selected support, infrastructure and fees</div>
+    </div>
+    <div class="card viz-stat">
+      <div>Contribution at base price</div>
+      <div class="viz-stat-value tabular-nums" id="so-margin">70.7%</div>
+      <div class="text-small tabular-nums" id="so-contribution">$105.33 before fixed costs</div>
+    </div>
+  </div>
+  <output class="text-small tabular-nums" id="so-budget" aria-live="polite">API allowance remaining: $10.80 · internal unit = $0.10 provider spend</output>
+  <details>
+    <summary>Cost and allowance assumptions</summary>
+    <div class="so-advanced">
+      <div class="viz-controls">
+        <label class="form-label so-field" for="so-infra">Shared infrastructure allocation / month ($)
+          <input class="form-control" type="number" id="so-infra" min="0" max="100000" step="1" value="5">
+        </label>
+        <label class="form-label so-field" for="so-allowance">Included provider-cost allowance / month ($)
+          <input class="form-control" type="number" id="so-allowance" min="0" max="100000" step="1" value="30">
+        </label>
+      </div>
+      <div class="viz-controls">
+        <label class="form-label so-field" for="so-supportMinutes">Support minutes / month
+          <input class="form-control" type="number" id="so-supportMinutes" min="0" max="100000" step="5" value="15">
+        </label>
+        <label class="form-label so-field" for="so-supportRate">Assumed internal support cost / hour ($)
+          <input class="form-control" type="number" id="so-supportRate" min="0" max="100000" step="5" value="60">
+        </label>
+      </div>
+      <div class="viz-controls">
+        <label class="form-label so-field" for="so-cloudHours">Optional allocated cloud build hours / month
+          <input class="form-control" type="number" id="so-cloudHours" min="0" max="100000" step="1" value="0">
+        </label>
+        <label class="form-label so-field" for="so-cloudRate">Cloud CPU rate / hour ($)
+          <input class="form-control" type="number" id="so-cloudRate" min="0" max="1000" step="0.001" value="0.504" data-tooltip="East US Linux Azure E8s_v5 retail example. Disk, egress, idle allocation, licenses and operations are separate.">
+        </label>
+        <label class="form-label so-field" for="so-feePercent">Assumed payment fee (% of base price)
+          <input class="form-control" type="number" id="so-feePercent" min="0" max="100" step="0.1" value="3">
+        </label>
+      </div>
+    </div>
+  </details>
+  <div class="text-small text-muted">Unmeasured usage assumptions · standard uncached model rates · reasoning and retries included in token footprints · no paid model tools or extra-usage revenue · excludes R&amp;D, sales, tax and fixed overhead</div>
+  <div class="text-small"><a href="https://developers.openai.com/api/docs/pricing.md" target="_blank" rel="noopener noreferrer">OpenAI rates</a> · <a href="https://platform.claude.com/docs/en/about-claude/pricing" target="_blank" rel="noopener noreferrer">Claude rates</a> · <a href="https://console.groq.com/docs/model/openai/gpt-oss-120b" target="_blank" rel="noopener noreferrer">Groq rates</a></div>
+  <script>
+    (() => {
+      const root = document.getElementById('siliconeos-monthly-costs');
+      const rates = {sol:[2,10],terra:[1,5],astra:[10,50],sonnet:[2,10],opus:[4,20],groq:[0.15,0.6]};
+      const defaults = {model:'sol',template:16,integration:4,stress:0,subscription:149,infra:5,supportMinutes:15,supportRate:60,cloudHours:0,cloudRate:0.504,allowance:30,feePercent:3};
+      const keys = Object.keys(defaults);
+      const fields = Object.fromEntries(keys.map(key => [key,root.querySelector('#so-' + key)]));
+      const money = value => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(value);
+      const number = value => new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(value);
+      function clean(values) {
+        const state = {...defaults};
+        for (const key of keys) {
+          if (key === 'model') { state.model = Object.hasOwn(rates,values.model) ? values.model : defaults.model; continue; }
+          const value = Number(values[key]);
+          const ceiling = key === 'feePercent' ? 100 : key === 'cloudRate' ? 1000 : key === 'subscription' || ['template','integration','stress'].includes(key) ? 10000 : 100000;
+          state[key] = Number.isFinite(value) ? Math.min(ceiling,Math.max(0,value)) : defaults[key];
+          if (['template','integration','stress'].includes(key)) state[key] = Math.floor(state[key]);
+        }
+        return state;
+      }
+      function calculate(state) {
+        const rate = rates[state.model];
+        const input = state.template*50000 + state.integration*1000000 + state.stress*10000000;
+        const output = state.template*10000 + state.integration*200000 + state.stress*2000000;
+        const api = input/1000000*rate[0] + output/1000000*rate[1];
+        const total = api + state.infra + state.supportMinutes/60*state.supportRate + state.cloudHours*state.cloudRate + state.subscription*state.feePercent/100;
+        const contribution = state.subscription-total;
+        return {api,total,contribution,margin:state.subscription>0 ? contribution/state.subscription*100 : null,units:api/0.1,remaining:state.allowance-api};
+      }
+      function render(state) {
+        for (const key of keys) fields[key].value = String(state[key]);
+        const result = calculate(state);
+        root.querySelector('#so-api').textContent = money(result.api);
+        root.querySelector('#so-units').textContent = number(result.units) + ' internal AI-cost units';
+        root.querySelector('#so-total').textContent = money(result.total);
+        root.querySelector('#so-margin').textContent = result.margin === null ? 'N/A at $0 price' : number(result.margin) + '%';
+        root.querySelector('#so-contribution').textContent = money(result.contribution) + ' before fixed costs';
+        root.querySelector('#so-budget').textContent = (result.remaining>=0 ? 'API allowance remaining: ' + money(result.remaining) : 'API spend above allowance: ' + money(-result.remaining)) + ' · internal unit = $0.10 provider spend';
+      }
+      function savedInputs(snapshot) {
+        return snapshot && typeof snapshot === 'object' ? snapshot.modelContent?.inputs || snapshot.privateContent?.inputs || snapshot.inputs || {} : {};
+      }
+      let state = clean({...defaults,...savedInputs(window.openai?.widgetState)});
+      render(state);
+      root.addEventListener('input', event => {
+        if (!Object.values(fields).includes(event.target)) return;
+        const values = Object.fromEntries(keys.map(key => [key,fields[key].value]));
+        state = clean(values);
+        render(state);
+        if (window.openai?.setWidgetState) Promise.resolve(window.openai.setWidgetState({modelContent:{inputs:state},privateContent:null})).catch(() => {});
+      });
+      window.addEventListener('openai:set_globals', event => {
+        if (!event.detail?.globals || !Object.hasOwn(event.detail.globals,'widgetState')) return;
+        state = clean({...defaults,...savedInputs(event.detail.globals.widgetState)});
+        render(state);
+      });
+    })();
+  </script>
+</div>

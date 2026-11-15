@@ -1,0 +1,63 @@
+{
+  "round": 4,
+  "packet_sha256": "6e0b4b8524f82c4dbff92d3ef0433547aa364dfc9c691a765859f220f6ba7cde",
+  "judges": {
+    "technical": {
+      "execution_design": 19,
+      "real_problem_user": 12,
+      "path_to_customers": 12,
+      "pitch_demo": 8,
+      "creative_ai": 7,
+      "total": 58
+    },
+    "customer": {
+      "execution_design": 19,
+      "real_problem_user": 13,
+      "path_to_customers": 12,
+      "pitch_demo": 9,
+      "creative_ai": 8,
+      "total": 61
+    },
+    "pitch_ai": {
+      "execution_design": 19,
+      "real_problem_user": 13,
+      "path_to_customers": 12,
+      "pitch_demo": 9,
+      "creative_ai": 7,
+      "total": 60
+    }
+  },
+  "mean": {
+    "execution_design": 19,
+    "real_problem_user": 12.666666666666666,
+    "path_to_customers": 12,
+    "pitch_demo": 8.666666666666666,
+    "creative_ai": 7.333333333333333,
+    "total": 59.666666666666664
+  },
+  "range_total": [
+    58,
+    61
+  ],
+  "prior_full_round": 2,
+  "prior_full_mean": {
+    "execution_design": 15,
+    "real_problem_user": 10,
+    "path_to_customers": 9.333333333333334,
+    "pitch_demo": 6,
+    "creative_ai": 6,
+    "total": 46.333333333333336
+  },
+  "delta_vs_prior_full": {
+    "execution_design": 4,
+    "real_problem_user": 2.666666666666666,
+    "path_to_customers": 2.666666666666666,
+    "pitch_demo": 2.666666666666666,
+    "creative_ai": 1.333333333333333,
+    "total": 13.333333333333329
+  },
+  "official": false,
+  "probability_estimate": false,
+  "awaiting_user": true,
+  "next_iteration_authorized": false
+}

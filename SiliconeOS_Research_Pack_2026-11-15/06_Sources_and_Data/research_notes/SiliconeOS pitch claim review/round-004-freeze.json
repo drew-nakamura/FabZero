@@ -1,0 +1,17 @@
+{
+  "round": 4,
+  "packet_sha256": "6e0b4b8524f82c4dbff92d3ef0433547aa364dfc9c691a765859f220f6ba7cde",
+  "rubric_url": "https://cpvc-ai-hackathon-guide.vercel.app/#judging",
+  "files": {
+    "round-004-claims.md": "6e0b4b8524f82c4dbff92d3ef0433547aa364dfc9c691a765859f220f6ba7cde",
+    "round-004-app-evidence.json": "7a25f70bb16c0c780e9b725401e45fd0d16540f087028e64961b14a39686ec59",
+    "round-004-test-summary.json": "7b6b0848a5c5e4449eae76c43172d4cb8b5b702fd096bc54e7c6e9593515795c",
+    "round-004-rubric.txt": "219167f3958c80439aeb5c0330a8b49e540b78325580bbef660ae3b9b896a68d",
+    "sources/hackathon-guide-round-004.html": "e571b56974b3a800ff3351df7a70d726a4b4af1d617258757acf3bce3bc732db"
+  },
+  "app_commit": "ff1e060",
+  "scope": "one full five-row independent review",
+  "judges": 3,
+  "awaiting_user_after_report": true,
+  "next_iteration_authorized": false
+}

@@ -1,0 +1,61 @@
+# Price SiliconeOS for repeatable FPGA outcomes
+
+**Test US$149 per engineer per month for the mature product**, with a clearly bounded AI allowance, one editing seat and locally orchestrated execution on the customer's machine. A sensible research band is US$99–199; US$149 is a concrete starting hypothesis, not a discovered optimal price or accepted founder decision. Include about **US$30 of provider-cost AI usage** and require an explicit top-up or stop when a costly attempt exceeds its budget. In one illustrative 20-attempt month, model usage is **US$19.20** and allocated direct delivery cost is **US$43.67**; neither is measured telemetry. This assumes reliable, tested board/interface/accessory combinations and a complete reviewed specification-to-artifact workflow. It does not describe today's matrix prototype as if that future product already existed.
+
+November 14, 2026, America/Los_Angeles. The customer's latest direction is that users own their FPGA, sensors and accessories while SiliconeOS handles Vivado integration. **Local execution is our costing assumption, not something that follows automatically from hardware ownership.** If compilation runs in our cloud, add the hosted charges below. No price, feature, deployment architecture or new product scope is approved by this research.
+
+## A specialist outcome can test a premium
+
+Ordinary coding subscriptions establish a lower adjacent reference point: GitHub lists Business at US$19/seat/month and Enterprise at US$39, with usage allowances and additional consumption distinct. They do not provide a verified FPGA integration outcome. AllSpice's broader Enterprise Core hardware-collaboration package starts at US$34,800 annually for 5+ designers and unlimited collaborators. Its US$2,900 monthly equivalent is annual-plan arithmetic, not a monthly cancellation offer or published individual-seat rate. ([GitHub](https://docs.github.com/en/copilot/get-started/plans), [AllSpice](https://allspice.io/plans))
+
+Direct semiconductor-agent comparators are harder to price publicly. The inspected official ChipAgents IC-star materials and Cadence ChipStack release provide no numerical subscription offer; they establish a competitive capability bar, not a price anchor. Current Cursor plans also separate some third-party-model usage from access, making an unlimited comparison misleading. Public seller prices reveal offers, not what a qualified SiliconeOS buyer would pay. ([ChipAgents](https://chipagents.ai/ic-star), [Cadence](https://newsroom.cadence.com/press-releases/press-release-details/2026/Cadence-Expands-ChipStack-AI-Super-Agent-with-a-New-Agent-for-RTL-Generation-and-Early-PPA-Optimization/default.aspx), [Cursor](https://cursor.com/pricing))
+
+The proposed premium buys a repeatable supported engineering workflow: requirements reviewed against the actual board, compatible integration, independent checks, implementation reports and retained artifact identity across revisions. Free tools already perform substantial parts of that work. FuseSoC combines freely available build automation with professional paid assistance, so the subscription must demonstrate a useful complete experience rather than claim invention of FPGA packaging or configuration. ([FuseSoC](https://github.com/olofk/fusesoc))
+
+The earlier **US$250 one-time assisted prototype evaluation** is a different offer and billing unit. It tests a bounded service before mature automation. It is not evidence that the future software should charge US$250/month, and a successful one-off service would not establish recurring subscription demand.
+
+## Bound the subscription to combinations we can support
+
+The US$149 proposal covers one creating engineer, one concurrent local pipeline and a versioned catalogue of tested board/interface/accessory combinations. The customer supplies its computer, actual board and accessories, and required tool/IP entitlements. Read-only evidence recipients should not need another creating seat merely to inspect a result. These are proposed commercial boundaries, not implemented controls or current capabilities.
+
+Sensor support requires more than knowing a product name. Board definitions, presets and I/O data are part of the tool flow; electrical compatibility, pinout, protocol, clocks/resets, drivers and test conditions still need evidence. A new unsupported board or sensor enters a separate qualification and engineering quote. Its price should follow the actual work, rather than an invented flat fee or unlimited support promise. ([AMD board flow](https://docs.amd.com/r/2025.2-English/ug994-vivado-ip-subsystems/Using-the-Platform-Board-Flow-in-IP-Integrator))
+
+Tool eligibility also varies. The current official AMD table includes Linux and Windows in free BASIC and Kria SOM support. Some other device/features require paid tiers; current CORE annual listings are US$1,200 node-locked and US$1,800 floating. IP licenses and hosted rights are separate checks. An earlier Windows-only search lead was superseded by the current official table and is excluded. Our subscription does not replace AMD entitlements. ([AMD licensing](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html), [FAQ](https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/licensing-faq.html))
+
+A later US$499/month workspace for five editors, with a pooled US$100 provider-cost allowance, is a hypothesis only if collaboration/history/review actually exist and support costs fit. Launching one clear engineer plan gives cleaner evidence than advertising several unbuilt tiers. Customers who only need one board setup could fit a one-time assisted offer better than a subscription.
+
+## API spend depends on attempts and context
+
+For a transparent baseline, standard uncached gpt-6.1-sol costs US$2 per million input tokens and US$10 per million output tokens. gpt-6.1-terra is US$1/US$5. Reasoning counts as output, and a response can consume budget without producing a useful result. Our examples assume no cache saving or paid hosted tools, and each request stays below the long-context rate threshold. A million cumulative tokens across many calls is different from one million-token prompt. ([OpenAI pricing](https://developers.openai.com/api/docs/pricing.md), [Terra](https://developers.openai.com/api/docs/models/gpt-6.1-terra.md), [reasoning billing](https://developers.openai.com/api/docs/guides/reasoning))
+
+We model three **unmeasured attempted-workflow classes**, including all model planning, reviewing and repairing calls. An established-template attempt uses 50,000 input / 10,000 output tokens and costs US$0.20 on Sol. An integration attempt uses 1 million / 200,000 and costs US$4. A stress attempt uses 10 million / 2 million and costs US$40, without guaranteeing success. Those cumulative footprints represent four, 20 and 100 calls respectively; output includes reasoning. Local simulation and compilation consume no model tokens by themselves, although sending their logs to a model does.
+
+| Illustrative monthly usage | Sol API cost | Terra, same token footprint |
+|---|---:|---:|
+| 8 template + 2 integration attempts | $9.60 | $4.80 |
+| 16 template + 4 integration attempts | $19.20 | $9.60 |
+| 40 template + 10 integration attempts | $48.00 | $24.00 |
+| 20 integration attempts | $80.00 | $40.00 |
+| 16 template + 4 integration + 2 stress attempts | $99.20 | $49.60 |
+
+These are workload assumptions, not forecasts of typical behavior. Equal-token prices do not establish equal capability: a cheaper model can need more repairs or fail more often. Sonnet 5.5 has the same listed input/output rates as Sol; Opus 5.5 is US$4/US$20 and Astra is US$10/US$50. Groq's GPT-OSS120b is US$0.15/US$0.60, but its price does not prove sufficient integration quality. Production routing should follow independently accepted task results and actual cost per accepted outcome. ([Claude](https://platform.claude.com/docs/en/about-claude/pricing), [OpenAI](https://developers.openai.com/api/docs/pricing.md), [Groq](https://console.groq.com/docs/model/openai/gpt-oss-120b))
+
+For accounting, define **one internal AI-cost unit as US$0.10 of provider-rated model and paid-tool spending**. The proposed US$30 allowance equals 300 units; the default US$19.20 case uses 192. This is our denomination, not a provider credit, retail top-up price or conversion from desktop Codex balances. If customers supply their own API key, the bill moves to them; the model work does not become free.
+
+Do not promise 100 unlimited jobs: attempt costs differ sharply. Meter consumed calls, retries and reasoning, retain fractional units, quote a budget before expensive repairs, and ask for authorized additional spend or return an honest needs-review/failure state at the limit. Budget limits cannot weaken correctness checks. Cost per accepted result must include spend on unsuccessful attempts as well.
+
+## Local builds leave support as a major cost
+
+In the 20-attempt mixed example, add **US$5 shared backend/storage allocation**, **15 support minutes at an assumed US$60 internal hour**, and an assumed payment-fee allowance of 3% of US$149. These are planning inputs, not supplier quotes, researched wages or actual support statistics. The resulting cost is 19.20 + 5 + 15 + 4.47 = **US$43.67/month**. Contribution is US$105.33, or **70.7%**, before R&D, sales, tax, compliance, fixed overhead and salaries outside the support allocation. It is not net profit.
+
+At the full US$30 API allowance, the same model costs US$54.47 and leaves 63.4% contribution. If support rises from 15 minutes to one hour, the default case costs US$88.67 and leaves 40.5%. Twenty complex integration attempts cost US$80 in API alone; repeated stress attempts can exceed the subscription before support. This is why the allowance and separately scoped engineering matter. Actual acquisition cost, retention, catalogue maintenance and support distribution remain unknown.
+
+For local Vivado, **our cloud build CPU cost is US$0**, while the customer bears local capacity and electricity. Hosting compilation changes the model. Microsoft's official retail API returns East US Linux E8s_v5 at US$0.504/hour and E16s_v5 at US$1.008; their 8 vCPU/64 GiB and 16 vCPU/128 GiB specifications do not guarantee every design fits or scales. ([Exact retail query](https://prices.azure.com/api/retail/prices?%24filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20armRegionName%20eq%20%27eastus%27%20and%20%28armSkuName%20eq%20%27Standard_E8s_v5%27%20or%20armSkuName%20eq%20%27Standard_E16s_v5%27%29&currencyCode=USD), [VM specifications](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/memory-optimized/esv5-series?tabs=sizebasic))
+
+A separate assumed month of 20 requests, two uncached candidates each, one hour per build and 1.25 attempts averages 50 worker-hours: **US$25.20 or US$50.40 CPU**, plus disks, egress, idle allocation, licences and operations. A continuously allocated E8 worker costs US$367.92 over 730 hours even without useful jobs. Cloud CPU compilation still produces an artifact that requires programming and validation on the customer's actual board. Validated cache reuse, bounded attempts and queues can reduce cost; no cloud benchmark was run.
+
+## Test the price against repeated value
+
+The commercially useful experiment is a qualified engineer and budget owner's decision at the exact US$149 month-to-month offer, after observing a supported task against their existing process. Retain failed fits, integration corrections, support time and continued use after onboarding. Reject the subscription hypothesis if work is episodic, essential accessories are unsupported, the engineer must repair every result, or existing scripts plus a general agent are equally convenient.
+
+This research supports a testable price and a cost envelope, not a market-clearing answer. Preserve the distinction between supported self-serve software, optional metered model/build usage and separately quoted new integration work. That lets actual usage change the allowances without implying every sensor or FPGA can be supported for the same fee.

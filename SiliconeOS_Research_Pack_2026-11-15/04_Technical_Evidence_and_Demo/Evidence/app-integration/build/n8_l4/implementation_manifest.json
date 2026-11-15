@@ -1,0 +1,109 @@
+{
+  "schema": "fabzero.matmul_board.implementation_manifest/1",
+  "created_at": "2026-11-14T16:05:31-08:00",
+  "build_started_at": "2026-11-14T15:53:25-08:00",
+  "task": "MATMUL-BOARD-001",
+  "vivado_version": "2025.2",
+  "target_part": "xck26-sfvc784-2LV-c",
+  "board_part": "xilinx.com:kv260_som:part0:1.4",
+  "logical_top": "matmul_axi",
+  "board_top": "matmul_board_top",
+  "kernel_instance": "u_matmul",
+  "parameters": {
+    "N": 8,
+    "LANES": 4
+  },
+  "elaborated_parameters": {
+    "N": "unknown",
+    "LANES": "unknown"
+  },
+  "configured_clock_hz": 99999001,
+  "clock_source": "zynq_ultra_ps_e_0/pl_clk0 (KV260 board preset), constraint from the PS IP",
+  "reset": "rst_pl_clk0 (proc_sys_reset) peripheral_aresetn, synchronous to pl_clk0",
+  "address_map": {
+    "segment": "/SEG_M_AXI_Reg",
+    "base_address": "0xA0000000",
+    "range": "0x00001000",
+    "decoded_bits": "matmul_axi decodes address[7:0]; map repeats every 0x100 in the segment"
+  },
+  "expected_compute_cycles": 128,
+  "rtl": {
+    "commit": "84fcae1000f056f869b6b84a28804b98cb7b6a48",
+    "origin": "origin/codex/siliconos-demo (identical files on origin/codex/ai-rtl-generation b8d9fca)",
+    "sha256": {
+      "matmul.sv": "f81498d1fdb9a73a32e7f70a5d55c09b6198d2f03f00ab27d9099a63d82f418c",
+      "matmul_axi.sv": "26d5eca5ea16bf81336cece4f9a76617cfaf5444cc4b92a734a656cff4dc080c"
+    }
+  },
+  "build_sources_sha256": {
+    "hw/matmul_board/matmul_board_top.sv": "a2c1e5027edde768364a30f34e806427122fd8051180352fcdafa79081f1dec4",
+    "hw/matmul_board/build.tcl": "68f0f1953022399fd1b2de823aba7337ea0a88562e0b2db37b5dd81daba21cf6",
+    "hw/matmul_board/build.py": "a58145b5b318e22f22f6eec1523069bdae8fa91c1c22b2bb6b937dcee3c858ae",
+    "hw/tools/collect_reports.tcl": "01f6f7369e311a4939987b806b2182b028dfb7def13841a45c58a37ebac7fab4",
+    "hw/tools/vivado_summary.py": "e4c617329fc076040218919fbad5ab634708f6e6018198a8bbe557b2b8caa5ef"
+  },
+  "repository": {
+    "fabzero_head": "5ea8480d34980210b42d83279d1e45475c99af19",
+    "matmul_board_paths_status": [
+      "?? hw/matmul_board/.gitignore",
+      "?? hw/matmul_board/README.md",
+      "?? hw/matmul_board/build.py",
+      "?? hw/matmul_board/build.tcl",
+      "?? hw/matmul_board/matmul_board_top.sv",
+      "?? hw/matmul_board/rtl/matmul.sv",
+      "?? hw/matmul_board/rtl/matmul_axi.sv",
+      "?? hw/matmul_board/run_board.py",
+      "?? hw/matmul_board/run_matmul.tcl",
+      "?? hw/matmul_board/tests/mock_board.tcl",
+      "?? hw/matmul_board/tests/test_run_board.py"
+    ]
+  },
+  "timing": {
+    "timing_met": true,
+    "constraints_met": true,
+    "WNS_ns": 3.885,
+    "TNS_ns": 0.0,
+    "WHS_ns": 0.035,
+    "THS_ns": 0.0,
+    "WPWS_ns": 3.5,
+    "TPWS_ns": 0.0,
+    "failing_endpoints": {
+      "TNS_failing": 0,
+      "THS_failing": 0,
+      "TPWS_failing": 0
+    },
+    "findings": []
+  },
+  "drc_clean": true,
+  "drc_by_severity": {},
+  "methodology_by_severity": {},
+  "report_sha256": {
+    "check_timing.rpt": "97db1f83ab57e14eb9e0f9ff38f103710f4e4794ccb91933fb71733b5d801101",
+    "clocks.rpt": "1c220b3afc30a729d6bc01da6c33103c20d10c30564855550c0dd5f2617db712",
+    "design_info.txt": "d0c58be4c38fb3d74bceada20100ba5769a01496ff307b7c221673152523f8de",
+    "drc.rpt": "be4b9888ca33bdb04dd01013b880cf24d68afea6196e4219ea23da47b9243a35",
+    "kernel_paths.rpt": "3c3e12e46e946d253af1c5d1dc5ff39b177c1cd337acdfaf066a9715b2aa6b4b",
+    "methodology.rpt": "1ef12799299437cc46f0f66077114ddefa4dbfbf72e7748b9d8a7bd4f8d26489",
+    "power.rpt": "4b6533c34244c8e9fa99c964da53f34a56328bce4ef1bcb2820a8bcc1142cd90",
+    "pulse_width.rpt": "82ba606a1718db730b3cdf1344f026a9cac10aab6ced5f5e9a5be14f37ac9d1b",
+    "route_status.rpt": "d91139e88c02012d5df99796bc8f11d056ce8b75dd36134cfb1552c302985014",
+    "timing_summary.rpt": "4af09be7e103b484a0734882a6b50060d07192f981c6f7b8cb9926c75f71b259",
+    "utilization.rpt": "6fb971a2ac216476271863ee263804af74484b55c0859b54566eae05d18c5277",
+    "utilization_hier.rpt": "443cfce06c44591f087e3525b9b56a091b898c3249d0b276fbf3ca34bd53831b"
+  },
+  "artifacts_sha256": {
+    "matmul_board_n8_l4.bit": "500cc93bf500fc0b3f8fbe19f727ecf7493f97f8886a31bb709a8934155ce770",
+    "matmul_board_n8_l4.xsa": "26085b5ee917f1955163a45a3b7634a59a9326baa53729d1fb3b6f8b03d16355",
+    "psu_init.tcl": "fdeb679df6a25d6773004dfed041e43860d47797b0aac73eff1e20231aa24cee",
+    "addresses.tcl": "72b8b389f46339e29ad9e062c9b581f01741882924fa9471fa629ad7eca5b6c3",
+    "build_info.txt": "93193a7b3510643bbb2bf1711988f90ff963c2d46c883bd72c658ee18d15d569",
+    "matmul_board_bd_export.tcl": "a43a623a49c479d7c1fc7d8ec2407768dd93eba55ecf7a3c36fda3169cc3e034",
+    "summary.json": "56315080a356a1da230d1602d536e872ee17071b4197d7cca880a951643b52c8"
+  },
+  "bitstream_sha256": "500cc93bf500fc0b3f8fbe19f727ecf7493f97f8886a31bb709a8934155ce770",
+  "limitations": [
+    "Implementation evidence only: no board load or execution is implied.",
+    "Cycle count is the checked-in schedule expectation (N^3/LANES), not a measurement.",
+    "configured_clock_hz is the PS PLL setting from the block design; actual board frequency is unmeasured."
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "checked_on": "2026-11-14 America/Los_Angeles",
+  "source_snapshots_downloaded": false,
+  "sources": [
+    {
+      "id": "S1",
+      "title": "First-person FPGA release/handoff problems",
+      "url": "https://www.starwaredesign.com/fpga-meets-devops-introduction/",
+      "version_date": "Starware Design; author field admin; date not displayed",
+      "evidence_limit": "Experienced source-tag/bitstream/environment/release-owner drift; motivates handoff investigation, not prevalence or SiliconeOS demand.",
+      "inspection": "Researcher and root opened original."
+    },
+    {
+      "id": "S2",
+      "title": "Zynq command-line reproducibility alternative",
+      "url": "https://www.electrickoala.dev/posts/zynq-7000-command-line/",
+      "version_date": "Wouter van Verre, 2022-01-02; Zynq-7000/Vivado2021.1",
+      "evidence_limit": "Tcl/Git help clean recreation/sharing. Different board; scripts are a credible inexpensive alternative.",
+      "inspection": "Buyer researcher opened original."
+    },
+    {
+      "id": "S3",
+      "title": "Existing variant-aware build framework",
+      "url": "https://github.com/missinglinkelectronics/fpga-vbs",
+      "version_date": "Missing Link Electronics rolling README; no fixed publication date",
+      "evidence_limit": "Variants/flavors, arguments, reports and Git/dirty identity already handled; no claim our prototype invents them or supports this Linux framework.",
+      "inspection": "Researcher and root opened original."
+    },
+    {
+      "id": "S4",
+      "title": "Free tools and professional paid support precedent",
+      "url": "https://github.com/olofk/fusesoc",
+      "version_date": "FuseSoC rolling README; no fixed publication date",
+      "evidence_limit": "Freely available build tool also offers paid professional assistance. Precedent for a model only, not our price or buyer willingness.",
+      "inspection": "Offer researcher and root opened original."
+    },
+    {
+      "id": "S5",
+      "title": "Native project archive alternative",
+      "url": "https://docs.amd.com/r/2025.2-English/ug835-vivado-tcl-commands/archive_project",
+      "version_date": "AMD UG8352025.2, 2025-11-20",
+      "evidence_limit": "Native archives package sources/constraints/results; packaging alone is not differentiation.",
+      "inspection": "Offer researcher; previously independently opened by root."
+    },
+    {
+      "id": "S6",
+      "title": "Kria developer community route",
+      "url": "https://community.element14.com/technologies/fpga-group/f/forum/55068/seeking-feedback-on-your-preference-for-an-amd-kria-workshop",
+      "version_date": "element14 original thread, plans early2025 workshop; relative date shown",
+      "evidence_limit": "Actual Kria/KV260 audience. Historical thread not a current event/engagement; follow current group rules. Replies include objections to limited menus/cloud.",
+      "inspection": "Channel researcher and root opened original."
+    },
+    {
+      "id": "S7",
+      "title": "Kria service firm and public inquiry route",
+      "url": "https://logictronix.com/fpga-design-services/",
+      "version_date": "LogicTronix original services page; date not displayed",
+      "evidence_limit": "Explicit KV260/Kria/RTL/verification expertise and inquiry form. Expert/design-partner lead and competitor; no inferred buyer or interest.",
+      "inspection": "Channel researcher and root opened original."
+    },
+    {
+      "id": "S8",
+      "title": "K26/KV260 platform firm and contact route",
+      "url": "https://www.hema.de/loesungen/amd-fpga-plattform",
+      "version_date": "hema electronic original platform page; date not displayed",
+      "evidence_limit": "KV260/K26 platform and engineering services with contact link. K26 carrier is not automatically compatible with our design; potential expert/referral source.",
+      "inspection": "Channel researcher and root opened original."
+    },
+    {
+      "id": "S9",
+      "title": "KV260 research demonstrations",
+      "url": "https://github.com/AISeQLab/RESEARCH---Demos_on_KV260_FPGA",
+      "version_date": "AISeQ Lab original repository; rolling",
+      "evidence_limit": "Actual KV260 accelerator examples; different kernels/Linux environment. Potential evaluator of evidence, not compatible workload/customer proof.",
+      "inspection": "Channel researcher opened original."
+    },
+    {
+      "id": "S10",
+      "title": "Lab-owned contact route",
+      "url": "https://aiseqlab.github.io/",
+      "version_date": "AISeQ Lab original website; no publication date",
+      "evidence_limit": "Links its GitHub/community and explicitly states fanpage contact. No invitation or response has occurred.",
+      "inspection": "Channel researcher and root opened original."
+    },
+    {
+      "id": "S11",
+      "title": "Official secondary Kria community referral",
+      "url": "https://www.amd.com/en/products/system-on-modules/kria/k26.html",
+      "version_date": "AMD K26 original resources page; rolling",
+      "evidence_limit": "Official Kria forum referral verified; direct anonymous forum page failed loading. Access/rules/activity must be checked before using.",
+      "inspection": "Channel researcher opened original; destination not independently usable."
+    },
+    {
+      "id": "S12",
+      "title": "Broader engineering-service competitor",
+      "url": "https://www.enclustra.com/en/design-services/",
+      "version_date": "Enclustra original services page; rolling",
+      "evidence_limit": "Broad consulting/implementation/verification/prototyping services; no public fixed price found. Our supported slice is far narrower.",
+      "inspection": "Offer researcher opened original."
+    },
+    {
+      "id": "S13",
+      "title": "Tool-license cost countercheck",
+      "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html",
+      "version_date": "AMD current licensing page; 2026.1tier change versus project2025.2",
+      "evidence_limit": "No basis to sell our KV260 service as avoiding mandatory expensive Vivado licenses. Confirm version-specific terms before delivery.",
+      "inspection": "Offer researcher opened original."
+    }
+  ]
+}

@@ -1,0 +1,950 @@
+{
+  "assembled_on": "2026-11-15 America/Los_Angeles",
+  "report_count": 11,
+  "reader_links_checked": 85,
+  "copies": [
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\Edge AI FPGA customer market.md",
+      "pack_path": "99_Original_Reports/Edge AI FPGA customer market.md",
+      "sha256": "26a1c2bafe5720aac75192e0dbdda73b3d2c76adf67d1902fe3ed8bbffe56338",
+      "bytes": 37492,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\FabZero customers and RTL value.md",
+      "pack_path": "99_Original_Reports/FabZero customers and RTL value.md",
+      "sha256": "3c67aa5adb74068376aeaeb55d43c5e7879eb60249dd2a496dfd0e890512891c",
+      "bytes": 14936,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS customer path iteration 001.md",
+      "pack_path": "99_Original_Reports/SiliconeOS customer path iteration 001.md",
+      "sha256": "bfc750e3b54c12d477ebf30802946aa2920ce58dd8d9170107fc41b5d214aa7a",
+      "bytes": 9021,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS focused score 003.md",
+      "pack_path": "99_Original_Reports/SiliconeOS focused score 003.md",
+      "sha256": "d012769cd0ba64c7880c33cede91f716f73b74662765497c40f16a018a706e30",
+      "bytes": 7692,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS founder story and slide handoff.md",
+      "pack_path": "99_Original_Reports/SiliconeOS founder story and slide handoff.md",
+      "sha256": "1a517c87f71fe8bdcd758423c9a1363acb38afc226d12771c4fdd7ab7d0806d6",
+      "bytes": 18849,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS pitch claim review round 001.md",
+      "pack_path": "99_Original_Reports/SiliconeOS pitch claim review round 001.md",
+      "sha256": "05d7cebec47c0485d1d9f0eee7af9c49fe8f6124080b476e183bac99b96eaa0a",
+      "bytes": 8709,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS pitch claim review round 002.md",
+      "pack_path": "99_Original_Reports/SiliconeOS pitch claim review round 002.md",
+      "sha256": "007b68ad311ab030df1bde5e95a33320df854c65ed12f43631154685f620b2aa",
+      "bytes": 7414,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS pitch claim review round 004.md",
+      "pack_path": "99_Original_Reports/SiliconeOS pitch claim review round 004.md",
+      "sha256": "b3f1f6c990c78606d4d838d11c5c2cc01e1b42f4e4f0e09008a7950580233665",
+      "bytes": 7857,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS recorded demo evidence research.md",
+      "pack_path": "99_Original_Reports/SiliconeOS recorded demo evidence research.md",
+      "sha256": "fd9d199ae7dc7700b44e17e2ca34f39800ebbb0a5511395fd63fc2aeeac4aec4",
+      "bytes": 7179,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS subscription pricing and costs.md",
+      "pack_path": "99_Original_Reports/SiliconeOS subscription pricing and costs.md",
+      "sha256": "ec4584806ed66f87e1fdb00e62cc5b5715f54674f711a25674b2bb5930ad0155",
+      "bytes": 12226,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\SiliconeOS teammate handoff 2026-11-14.md",
+      "pack_path": "99_Original_Reports/SiliconeOS teammate handoff 2026-11-14.md",
+      "sha256": "6de13cfee2580ea2ebc22a1b4f8da016635b21f98fb9a2d55c236313f3d1bc50",
+      "bytes": 29775,
+      "kind": "original_report"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\company-matrix.json",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/company-matrix.json",
+      "sha256": "5f904a0fcdb4ff71394f3c30e326787bde4056ace908e050d16fde6df0c30f95",
+      "bytes": 28984,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\edge-companies.md",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/edge-companies.md",
+      "sha256": "bddffa1c123238097f968af20c06a3457bc28f04dcc592daa61051ca92928038",
+      "bytes": 12909,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\market-metrics.json",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/market-metrics.json",
+      "sha256": "27478a365c7892f67f3331f001d6f5220cc20632befb25293fb613622f14f47b",
+      "bytes": 7319,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\market-metrics.md",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/market-metrics.md",
+      "sha256": "9afa44a168ce380fb28b29640060955e82bcf29564cbd8909f375b36a77561de",
+      "bytes": 12179,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\source-ledger.json",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/source-ledger.json",
+      "sha256": "38c57020bcc8ac37855264394f62c2da3eb7ca0c20b1b070fe0a3b5bd4a5b3f6",
+      "bytes": 18989,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\validation-results.json",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/validation-results.json",
+      "sha256": "58b969c45847567255bcffe3e82cc481363ae78db69608e6bf066920e694ce88",
+      "bytes": 1298,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\Edge AI FPGA customer market\\workflow-companies.md",
+      "pack_path": "06_Sources_and_Data/research_notes/Edge AI FPGA customer market/workflow-companies.md",
+      "sha256": "8c8ca9186e3fc816528fcab420a32f20ee622a6491ce51aab2479a5cab579ca9",
+      "bytes": 12436,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\FabZero customers and RTL value\\customer-evidence.md",
+      "pack_path": "06_Sources_and_Data/research_notes/FabZero customers and RTL value/customer-evidence.md",
+      "sha256": "462374acb895aec8a63602e2f8d5d6a045c082317537e6e9b996b189b2c374c7",
+      "bytes": 2686,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\FabZero customers and RTL value\\market-position.md",
+      "pack_path": "06_Sources_and_Data/research_notes/FabZero customers and RTL value/market-position.md",
+      "sha256": "10f6c6b0a41d4c37f1c0bab6bf9fddff26aa3ff4159a3dab286aca00a45deb01",
+      "bytes": 2428,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\FabZero customers and RTL value\\rtl-alternatives.md",
+      "pack_path": "06_Sources_and_Data/research_notes/FabZero customers and RTL value/rtl-alternatives.md",
+      "sha256": "d1d19f63b8c72a20ad0a0c4540af746e69c559270551ee84e33c842c2a9a2529",
+      "bytes": 2613,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-freeze.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-freeze.json",
+      "sha256": "a41a22e489209f178510412858684df2dbe59ff3be80c1da27518e1f2c068db0",
+      "bytes": 515,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-judge-customer.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-judge-customer.md",
+      "sha256": "c7da332c5a9253dd5601d9c5ddbf26d1c359d66515e7d2833edab30467e9b5f3",
+      "bytes": 1569,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-judge-pitch-ai.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-judge-pitch-ai.md",
+      "sha256": "ebcd6d7b98091a673edb222486dfb66f8c4c6a57dd674d927d610b978192559b",
+      "bytes": 1621,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-judge-technical.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-judge-technical.md",
+      "sha256": "c3c29868a4e9d539ade154fa730b201a79df17c61e49d0f13979a91e2e40f4e4",
+      "bytes": 1585,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-packet.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-packet.md",
+      "sha256": "36c6658cc5a805528e8684806564d436e0a8e731b10fe12d7aa7cfc50fe5d656",
+      "bytes": 13569,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-research.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-research.md",
+      "sha256": "0fa8d6292c041b45a2bd5cd2ab1b4d4e40ed47f05456153108a1acfc7b7791b3",
+      "bytes": 6360,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-scores.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-scores.json",
+      "sha256": "58a3300faff2876692d168a07c556959b3d16961a9f11ff4f752ad92803acc64",
+      "bytes": 3189,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\customer-path-001-sources.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/customer-path-001-sources.json",
+      "sha256": "ac25c685f14cead65828ede80c4a070cb2e99397f90c2ce46466a57cc3338243",
+      "bytes": 6305,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\data-review-2026-11-14.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/data-review-2026-11-14.json",
+      "sha256": "0a9f2692603fe71829d683d7dd305f39345dbb130e1d910b9c04807ef52fc196",
+      "bytes": 3828,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\data-review-2026-11-14.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/data-review-2026-11-14.md",
+      "sha256": "08632a9b0753b69ba79d05e3166fc7634d9738e37baaeeccdab27df2c89494ec",
+      "bytes": 7009,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\focused-003-judge-customer.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/focused-003-judge-customer.md",
+      "sha256": "039e4fd9be3ed8fbee26352a93045029d267d7fc310200e527e80432bfe50aea",
+      "bytes": 691,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\focused-003-judge-pitch-ai.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/focused-003-judge-pitch-ai.md",
+      "sha256": "fd2e31f039e37625efae2b4028e08e699e9898c63280391c1a614c33a38ad6df",
+      "bytes": 736,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\focused-003-judge-technical.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/focused-003-judge-technical.md",
+      "sha256": "6c45f5c4d8f83c09642665cb34f45e967e84bcf93b5058be7ca566d46bd9143a",
+      "bytes": 701,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\focused-003-packet.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/focused-003-packet.md",
+      "sha256": "81d275c6eca9bda80fa47b6b673e42ab758cd05123564b4b69ed47c4e8568841",
+      "bytes": 10940,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\focused-003-scores.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/focused-003-scores.json",
+      "sha256": "3e2985c232fadf5b79f4255ce24b60dd3fb9913fd9fd872eda657f0de5066c9a",
+      "bytes": 906,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\recording-evidence-checklist.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/recording-evidence-checklist.md",
+      "sha256": "cadb1493ee61eeb915214463022d4d98b194238523c45028cdd1291acf12f827",
+      "bytes": 5341,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-claims.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-claims.md",
+      "sha256": "e47b10547c5c2a8daa122d4f02801d72a473c52989737450a8e56c882881f035",
+      "bytes": 13388,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-freeze.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-freeze.json",
+      "sha256": "b9a28d7c450feae1a15e233c2e03d376b646b8880fd05195c500e2514c8db6ab",
+      "bytes": 225,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-judge-customer.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-judge-customer.md",
+      "sha256": "8f218f69857f8ecea6b91497d16b5110344b8a8fb1b38d59064696f057162943",
+      "bytes": 2683,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-judge-pitch-ai.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-judge-pitch-ai.md",
+      "sha256": "009faaa500b4dbe2f60f53916c2076083f14b86835f2ea7197b6a47f33755fe4",
+      "bytes": 2687,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-judge-technical.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-judge-technical.md",
+      "sha256": "4c3426c5e68931027c988560069cd98264b29bfafdbb72830d0968ddfb9e76b2",
+      "bytes": 2662,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-001-scores.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-001-scores.json",
+      "sha256": "6b838174ff8885ae1285abd0baf97339631b80edb22805c251dce5e604b123cf",
+      "bytes": 6428,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-claims.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-claims.md",
+      "sha256": "95b039101e114f86642602938c31a92dfbf31e44748a3e3d7b2b51a1c48208bd",
+      "bytes": 12754,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-freeze.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-freeze.json",
+      "sha256": "1c62e5e898ae9c4363787cdf89b53dbce0238cfa2c9f86f837703e1af147c131",
+      "bytes": 3046,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-judge-customer.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-judge-customer.md",
+      "sha256": "9a6f9963de17c6d3d29fbdbe2dd46a066fe47c01e4e410e05ccefa99b50df980",
+      "bytes": 2974,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-judge-pitch-ai.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-judge-pitch-ai.md",
+      "sha256": "51f6496fd701aa11b478aae549ae01f0d923eadb1b15f42decfb5d54b7c94684",
+      "bytes": 2767,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-judge-technical.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-judge-technical.md",
+      "sha256": "3b2afc63476123d7ed4640f652cc31e30a848d50aef3de4124f751954fa8197f",
+      "bytes": 2854,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-002-scores.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-002-scores.json",
+      "sha256": "3933fe3bb6868bf841a633dd35eaf8f330fec72612855697dd4abe050bf3df72",
+      "bytes": 9043,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-app-evidence.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-app-evidence.json",
+      "sha256": "7a25f70bb16c0c780e9b725401e45fd0d16540f087028e64961b14a39686ec59",
+      "bytes": 1381,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-claims.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-claims.md",
+      "sha256": "6e0b4b8524f82c4dbff92d3ef0433547aa364dfc9c691a765859f220f6ba7cde",
+      "bytes": 12325,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-freeze.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-freeze.json",
+      "sha256": "89639c599666626834a8e42b3dadecdfbd105613d3e1d30b849618ae8db4a1cf",
+      "bytes": 887,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-judge-customer.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-judge-customer.md",
+      "sha256": "dd3acbfd201cbf9cb7849f43c7535defef9f7d07d6a5e2df34f785ea8d6547eb",
+      "bytes": 2665,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-judge-pitch_ai.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-judge-pitch_ai.md",
+      "sha256": "3b9395c98e954e717d098901cb851df8faae03b387b91ed1bcf2b3644b073e81",
+      "bytes": 2645,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-judge-technical.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-judge-technical.md",
+      "sha256": "fd5ea6c7c7804c17bba5f4db8f65e6d4cce237e8d138c214a04e43b1a117bdb8",
+      "bytes": 2765,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-prior-hashes.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-prior-hashes.json",
+      "sha256": "1586982c0cbe638504a6019e3a7e4afa1f719e05448f6671a3017ed66e57211f",
+      "bytes": 583,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-rubric.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-rubric.txt",
+      "sha256": "219167f3958c80439aeb5c0330a8b49e540b78325580bbef660ae3b9b896a68d",
+      "bytes": 2611,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-scores.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-scores.json",
+      "sha256": "e1598a0a52cf6cb00d7b580e6fb7bac11392b559dc5362597c7415ca57742e7c",
+      "bytes": 1595,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\round-004-test-summary.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/round-004-test-summary.json",
+      "sha256": "7b6b0848a5c5e4449eae76c43172d4cb8b5b702fd096bc54e7c6e9593515795c",
+      "bytes": 600,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\SOURCE_LEDGER.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/SOURCE_LEDGER.json",
+      "sha256": "8a801f9f878ce294341d71a2cbd427a34ae5d4ed37a993b5bafb4e1e3ee58f8e",
+      "bytes": 965,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\supplement-recorded-demo-sources.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/supplement-recorded-demo-sources.json",
+      "sha256": "b190faffb51dcd52e3b4ca09b535a88fc5f7b7c3a0b3aba0f1f8a445c0528e5c",
+      "bytes": 6168,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\supplement-recorded-demo-sources.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/supplement-recorded-demo-sources.md",
+      "sha256": "4181c234fd948e32d3331ed0d5477430b45f2ceec42292e8576686458b1c210e",
+      "bytes": 9661,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\artifact-check-results.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/artifact-check-results.json",
+      "sha256": "9cfe8dd8d75755b67904e60165d0ef08997715a4fb7f1068d73700a31dcf01e4",
+      "bytes": 199,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\build-costs.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/build-costs.md",
+      "sha256": "1f4033b2f289e11a0397526dce39bdbe37f783ce97a3b4033dd00e18fa1c9fdd",
+      "bytes": 4356,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\comparables.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/comparables.md",
+      "sha256": "df5719e2e75249f9c13b80c23a1d19cbf6d9654f5129b98c7d195d846c50b41e",
+      "bytes": 3263,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\cost-model.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/cost-model.json",
+      "sha256": "7dd01c95c250c78a72fd4e2f10db549ba23e99c1844af447244c91cdb501e5dc",
+      "bytes": 6681,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\model-costs.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/model-costs.md",
+      "sha256": "ac5ba7b8be8eb530883d7a6e1424871206f216bdbddead49958e1f8d9d9e059e",
+      "bytes": 3062,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\prior-artifact-hashes.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/prior-artifact-hashes.json",
+      "sha256": "e0cd449676e4a3ab3fa3daf3baec439d0c60f844595373bd308a89dbc54282cd",
+      "bytes": 659,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS subscription pricing and costs\\verification-results.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS subscription pricing and costs/verification-results.json",
+      "sha256": "c85757e6c233da4bb489f089ccadfc68d20100ad3caebc14ff7ca480609201e6",
+      "bytes": 245,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\cleanroom-l1-check.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/cleanroom-l1-check.txt",
+      "sha256": "e2caa3ecc2d46e24f74aa3adb0f2008f9d65e1747466b068ff3266684db56db4",
+      "bytes": 1607,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\cleanroom-l4-check.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/cleanroom-l4-check.txt",
+      "sha256": "375cd1c8fb10f96e014d6ac4102b1b7cda1bdbd06f983ed8d78ca74d68b69f1f",
+      "bytes": 1607,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\published-input-l1-check.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/published-input-l1-check.txt",
+      "sha256": "b861dfc859b79b9757caf4f4dca0ea43a1c7c163c3769bbc86476d1e374b90ff",
+      "bytes": 1629,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\published-input-l4-check.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/published-input-l4-check.txt",
+      "sha256": "19a48384e9b4ecf873ec0b909ec26f938e2dde6712eeb5acbb4b7bc450745a5f",
+      "bytes": 1629,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\verification-results.json",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/verification-results.json",
+      "sha256": "f56ef5468e9658cc33f83e9851997ed50185ddf553f26e4a093d9c8739146fa2",
+      "bytes": 3809,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\wrong-zip-negative-check.txt",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS update review 2026-11-14/wrong-zip-negative-check.txt",
+      "sha256": "e249b2684967f3e7501d9459e0f8e9f99c44504a11a0ea1d1d7ef855c6f36726",
+      "bytes": 1689,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\sources\\siliconos_pitch_deck_research.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/siliconos_pitch_deck_research.md",
+      "sha256": "6bf5a844d9f300e2c784b10aa4a062387b36d1d0fe40ec1aeeb19ced0a3c574b",
+      "bytes": 23471,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\sources\\round-002-upstream\\DEMO_AND_CUSTOMER_PILOT.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/round-002-upstream/DEMO_AND_CUSTOMER_PILOT.md",
+      "sha256": "78bc9aa45a4bee555dd9d1ab216cf49c21921ec5353bceeefd9b7add15db87d9",
+      "bytes": 4335,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS pitch claim review\\sources\\round-002-upstream\\JUDGING_READINESS.md",
+      "pack_path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/round-002-upstream/JUDGING_READINESS.md",
+      "sha256": "f57bc171b32cc35b8b3dc645af9f4575ed6893748e0e1f5ccd02f69b889b0245",
+      "bytes": 12067,
+      "kind": "source_or_audit"
+    },
+    {
+      "source": "C:\\Users\\drewa\\.cursor\\projects\\c-Users-drewa-FabZero\\canvases\\edge-AI-FPGA-customer-market.canvas.tsx",
+      "pack_path": "07_Comparison_Tools/edge-AI-FPGA-customer-market.canvas.tsx",
+      "sha256": "cd82a4437421d3cb8c25861a83e5337b3f73b43a2ebfdc9072b90e3dc67748ab",
+      "bytes": 30239,
+      "kind": "optional_view"
+    },
+    {
+      "source": "C:\\Users\\drewa\\.codex\\visualizations\\2026\\11\\14\\01a1dc7c-2310-7082-a553-45126d23b504\\siliconeos-monthly-costs.html",
+      "pack_path": "07_Comparison_Tools/siliconeos-monthly-costs.html",
+      "sha256": "ce504e750e7448397da58d4c85165ec5a00917ea3ef8992057a5ff319368f475",
+      "bytes": 10380,
+      "kind": "optional_view"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001327Z_n8_l1/board-result.json",
+      "sha256": "71d5414dc64143d03eaa6c13bce6df5dc6d6fda896fe891fd1a179548efee46a",
+      "bytes": 2891,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001327Z_n8_l1/inputs.json",
+      "sha256": "bbb34202ecbad1dc75f450d8b45f58ea2229feefb5b8d642734ec88db208d66f",
+      "bytes": 346,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001327Z_n8_l1/xsdb.log",
+      "sha256": "77f7152acdbc6b571ccccc3da4e2099b3b4413ab8ce82f2680514a6fa1c89465",
+      "bytes": 1883,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001604Z_n8_l4/board-result.json",
+      "sha256": "e9f32a2c268a48c97709693c23ffd58de3c1ac9e0f84f4943d6caa0ddd3eaf96",
+      "bytes": 2892,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001604Z_n8_l4/inputs.json",
+      "sha256": "bbb34202ecbad1dc75f450d8b45f58ea2229feefb5b8d642734ec88db208d66f",
+      "bytes": 346,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T001604Z_n8_l4/xsdb.log",
+      "sha256": "d75f223ea93e0dcc15f19296b4a96eee3a4588c4abd7f4c8cec43b99d0a2a352",
+      "bytes": 1884,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T011930Z_n8_l1\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T011930Z_n8_l1/board-result.json",
+      "sha256": "bb3bb86c6550ec5206248cc7c9df55a9f5e03eaecfe1710d2bc35b19b75e9f44",
+      "bytes": 5525,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T011930Z_n8_l1\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T011930Z_n8_l1/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T011930Z_n8_l1\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T011930Z_n8_l1/xsdb.log",
+      "sha256": "4d2c2a34461184b7c303b04a3228ff0e7c0485db4c6074cf6779c50aabb4bb9d",
+      "bytes": 1641,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T012007Z_n8_l4\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T012007Z_n8_l4/board-result.json",
+      "sha256": "1a4ff036bff7f3d8c92c17377fe6caacc33cc64ab35c45eaa2e37de82ba5a26a",
+      "bytes": 5525,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T012007Z_n8_l4\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T012007Z_n8_l4/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T012007Z_n8_l4\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/results/20261115T012007Z_n8_l4/xsdb.log",
+      "sha256": "48939912599f8ff118609d3992819e3b6977cd57bfb943196fd93c995a373543",
+      "bytes": 1640,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l1/implementation_manifest.json",
+      "sha256": "bddb1998aea3d13d29419af43b0555a6595c41f40204a9e05629097f99697efb",
+      "bytes": 5260,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l1/summary/summary.md",
+      "sha256": "bf3ba4e2149d4efb97d9d616dd1817f3bf9c491b454d3c2df8a74a545062d9b6",
+      "bytes": 4750,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l1/summary/summary.json",
+      "sha256": "3dd77b5a0358159f708c9467467f53ab8c51ff7ab52ee379c50cbe97f60d42b5",
+      "bytes": 16416,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l4/implementation_manifest.json",
+      "sha256": "86723d9b9d68b2ebe386825d7904162e041eecf545ae89ed280310d695051bf0",
+      "bytes": 5211,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l4/summary/summary.md",
+      "sha256": "74dff00a0d2bb0a82890fa4df7b525ffed3dbbd595a413e5565e4b8f43f94f82",
+      "bytes": 4524,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/n8_l4/summary/summary.json",
+      "sha256": "56315080a356a1da230d1602d536e872ee17071b4197d7cca880a951643b52c8",
+      "bytes": 15922,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\compare_n8\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/reviewed-main/build/compare_n8/summary.md",
+      "sha256": "3b926965f03fdddbf861f025199d57c16a8a6b457169ff7f0ac5aad8c29c46ca",
+      "bytes": 6429,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021043Z_n8_l1\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021043Z_n8_l1/board-result.json",
+      "sha256": "aba00394df5f696f98746e8fb2462076720491dfe9edc1fa608f68be6e9ce933",
+      "bytes": 5525,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021043Z_n8_l1\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021043Z_n8_l1/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021043Z_n8_l1\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021043Z_n8_l1/xsdb.log",
+      "sha256": "d7dcc2627f2d57431ca6791418b3ae820b8324201742777c38fc6377e19fc6ea",
+      "bytes": 2388,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021100Z_n8_l4\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021100Z_n8_l4/board-result.json",
+      "sha256": "199dc6ea3d5a43fb9ea9eee063388513b487030def1bc6d688d6b1d97d0e8e07",
+      "bytes": 5525,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021100Z_n8_l4\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021100Z_n8_l4/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021100Z_n8_l4\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/results/20261115T021100Z_n8_l4/xsdb.log",
+      "sha256": "a8aaccf553a179b75ca151017b6a980f648230c7dae8331bd6567877ff4a2831",
+      "bytes": 1640,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l1\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l1/implementation_manifest.json",
+      "sha256": "0ed39d005ccc9b91e7d5e6a515c034d5a3d449ee6d7815222439eeff1148b391",
+      "bytes": 5268,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l1/summary/summary.md",
+      "sha256": "b5639e38d88b645e867cff8d7f37ee5192a05d2db15cb32c75ce446d0113511c",
+      "bytes": 4750,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l1/summary/summary.json",
+      "sha256": "b64f056813a935df866f8cef2db7ade0ead36d321a17ca422b76bbe6fbd309be",
+      "bytes": 16526,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l4\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l4/implementation_manifest.json",
+      "sha256": "724a13c2d5e89e1f0d32250feb14bd3feb9f21cd438823a1a858f08f11af7399",
+      "bytes": 5268,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l4/summary/summary.md",
+      "sha256": "1a3db47cbdb7873e3744be65f26370474c8a73238ba0703136f5f8bd9efce1d3",
+      "bytes": 4524,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/cleanroom/build/n8_l4/summary/summary.json",
+      "sha256": "6f7338f30d7a3f2afd2c87b24b7406d9cfa397caa54e3e8d63476f8a1979d8f6",
+      "bytes": 16032,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054545Z_n8_l1\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054545Z_n8_l1/board-result.json",
+      "sha256": "a7365f7bdef1d7ab8ef5901f1f9ba4559add3f509a19c545f05aa5ca5ffc0379",
+      "bytes": 5526,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054545Z_n8_l1\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054545Z_n8_l1/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054545Z_n8_l1\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054545Z_n8_l1/xsdb.log",
+      "sha256": "672e4a98ef7f04aba353e25ac6d390d330b0024a79e156d8c1628bca58f8b691",
+      "bytes": 2392,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054702Z_n8_l4\\board-result.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054702Z_n8_l4/board-result.json",
+      "sha256": "1038374dcb5db4d762d8c97f4d7e505154dff4c7b24881a0a01142c04d41abcd",
+      "bytes": 5526,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054702Z_n8_l4\\inputs.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054702Z_n8_l4/inputs.json",
+      "sha256": "825fb3868c8e3d9e2b96537810d320c17e166e7dfb22602221b3f86b51f1522f",
+      "bytes": 477,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\results\\20261115T054702Z_n8_l4\\xsdb.log",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/results/20261115T054702Z_n8_l4/xsdb.log",
+      "sha256": "d88c6e9468ba31a6b2e977fd548d317ffb749a932644e5afa531c9d793f6cc4c",
+      "bytes": 1643,
+      "kind": "selected_evidence"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l1\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l1/implementation_manifest.json",
+      "sha256": "bddb1998aea3d13d29419af43b0555a6595c41f40204a9e05629097f99697efb",
+      "bytes": 5260,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l1/summary/summary.md",
+      "sha256": "bf3ba4e2149d4efb97d9d616dd1817f3bf9c491b454d3c2df8a74a545062d9b6",
+      "bytes": 4750,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l1/summary/summary.json",
+      "sha256": "3dd77b5a0358159f708c9467467f53ab8c51ff7ab52ee379c50cbe97f60d42b5",
+      "bytes": 16416,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l4\\implementation_manifest.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l4/implementation_manifest.json",
+      "sha256": "86723d9b9d68b2ebe386825d7904162e041eecf545ae89ed280310d695051bf0",
+      "bytes": 5211,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l4/summary/summary.md",
+      "sha256": "74dff00a0d2bb0a82890fa4df7b525ffed3dbbd595a413e5565e4b8f43f94f82",
+      "bytes": 4524,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.json",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/n8_l4/summary/summary.json",
+      "sha256": "56315080a356a1da230d1602d536e872ee17071b4197d7cca880a951643b52c8",
+      "bytes": 15922,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero-worktrees\\demo-integration\\hw\\matmul_board\\build\\compare_n8\\summary.md",
+      "pack_path": "04_Technical_Evidence_and_Demo/Evidence/app-integration/build/compare_n8/summary.md",
+      "sha256": "3b926965f03fdddbf861f025199d57c16a8a6b457169ff7f0ac5aad8c29c46ca",
+      "bytes": 6429,
+      "kind": "build_summary"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\SPEC.md",
+      "pack_path": "08_Spec_Reference_Snapshots/SPEC.md",
+      "sha256": "875157eb91adfabbc8511f244038a625deef8510c31edc8e6747c38cdf49dcfa",
+      "bytes": 8880,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\DECISIONS.md",
+      "pack_path": "08_Spec_Reference_Snapshots/DECISIONS.md",
+      "sha256": "d36aefc565cc05695860575263a4ad0bc5f5525fcb6a220c0ee5b32ea0a62cad",
+      "bytes": 33298,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\HANDOFF.md",
+      "pack_path": "08_Spec_Reference_Snapshots/HANDOFF.md",
+      "sha256": "edff7fbdf99983967045e8adf5995ed81779bd4cd13b78fd521a87c9592a212b",
+      "bytes": 7152,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\BOARD_RESULT_FILE.md",
+      "pack_path": "08_Spec_Reference_Snapshots/BOARD_RESULT_FILE.md",
+      "sha256": "f86858a1aaf6d0e85ec187026a08079ab81b4f2850635a107c347631edb894a5",
+      "bytes": 6027,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\DEMO_PRODUCT_AND_FPGA_SPEC.md",
+      "pack_path": "08_Spec_Reference_Snapshots/DEMO_PRODUCT_AND_FPGA_SPEC.md",
+      "sha256": "e0882902bb3dc645b4c90830745f8e642e213372981386ea871a373d38033e1c",
+      "bytes": 41802,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\UPSTREAM.md",
+      "pack_path": "08_Spec_Reference_Snapshots/UPSTREAM.md",
+      "sha256": "e5ada1b722c19e34a156ea1306dbc4fb205b58b94af32d93c702937bc464b734",
+      "bytes": 6112,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\reviews\\round-010.md",
+      "pack_path": "08_Spec_Reference_Snapshots/reviews/round-010.md",
+      "sha256": "24f7d67252daf7cdbc673fdef98690eb5729b2ce3d06d5f915090461f2522798",
+      "bytes": 2580,
+      "kind": "contract_snapshot"
+    },
+    {
+      "source": "C:\\Users\\drewa\\FabZero\\docs\\spec\\research\\JUDGING.md",
+      "pack_path": "08_Spec_Reference_Snapshots/research/JUDGING.md",
+      "sha256": "828fa8c68d40bfffc43e70a7051afe8c3a60177244f06a4c6e52364bdb9e3eae",
+      "bytes": 3721,
+      "kind": "contract_snapshot"
+    }
+  ],
+  "reader_copy_policy": "Labels/local links edited;99_Original_Reports unchanged; frozen source snapshots unchanged",
+  "publication_omissions": [
+    {
+      "path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/hackathon-guide-2026-11-14.html",
+      "sha256": "7088b5c65652d5cd2c3d9b93211a69f31ee799547b1bbab4764b1a7f631882f5",
+      "url": "https://cpvc-ai-hackathon-guide.vercel.app/#judging"
+    },
+    {
+      "path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/hackathon-guide-round-002.html",
+      "sha256": "7088b5c65652d5cd2c3d9b93211a69f31ee799547b1bbab4764b1a7f631882f5",
+      "url": "https://cpvc-ai-hackathon-guide.vercel.app/#judging"
+    },
+    {
+      "path": "06_Sources_and_Data/research_notes/SiliconeOS pitch claim review/sources/hackathon-guide-round-004.html",
+      "sha256": "e571b56974b3a800ff3351df7a70d726a4b4af1d617258757acf3bce3bc732db",
+      "url": "https://cpvc-ai-hackathon-guide.vercel.app/#judging"
+    }
+  ],
+  "publication_note": "Full archived third-party guide HTML is retained locally; public sources/URLs/hashes and all11reports remain."
+}

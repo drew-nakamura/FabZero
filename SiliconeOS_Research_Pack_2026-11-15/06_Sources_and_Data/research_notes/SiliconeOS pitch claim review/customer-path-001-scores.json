@@ -1,0 +1,59 @@
+{
+  "scope": "Path to customers only",
+  "iteration": 1,
+  "packet_sha256": "36c6658cc5a805528e8684806564d436e0a8e731b10fe12d7aa7cfc50fe5d656",
+  "judges": {
+    "technical": {
+      "score": 12,
+      "previous": 8,
+      "reason": "Plausible explicitly untested model: buyer/trigger, bounded offer, test price, switching experiment and named recruitment routes. Readiness/qualification/exclusion gates keep scope honest.",
+      "risks": [
+        "The fixed N=8 catalog may not inform a real buying decision.",
+        "Named firms are experts/competitors, seven invitation slots are unfilled and secondary forum access is unverified.",
+        "Free scripts may suffice; no measured switching benefit, buyer budget or service effort.",
+        "Manual assisted delivery is distinct from unfinished app automation."
+      ],
+      "wording": "We propose testing a US$250 assisted evaluation with qualified engineers; no customer or price is validated yet."
+    },
+    "customer": {
+      "score": 12,
+      "previous": 12,
+      "reason": "The bounded purchase and testable switching reason constitute a coherent untested model. Specific channels and honest price/economics improve actionability without implying interested buyers.",
+      "risks": [
+        "Fit between the exact supported sample and a buyer's actual job remains the weakest assumption.",
+        "Expert access is not a sales channel yet; first-ten queue is not ten identified prospects.",
+        "Free-session enthusiasm is not purchase intent, delivery cost or willingness to pay.",
+        "A successful service experiment would not by itself validate the software business."
+      ],
+      "wording": "Retain hypothesis, plan, would test and no validated customers or price."
+    },
+    "pitch-ai": {
+      "score": 12,
+      "previous": 8,
+      "reason": "A plausible untested model now identifies operator/budget-owner hypothesis, bounded deliverable, honest test price, alternatives, falsification and source-backed places to recruit.",
+      "risks": [
+        "Specific places do not prove current demand for this narrow offer.",
+        "Engineering-service firms are expert/referral candidates, not budget owners looking for this offer.",
+        "Manual assistance cannot be narrated as a complete automated receipt or recurring software business.",
+        "No outcome proves experienced engineers would pay rather than use existing scripts."
+      ],
+      "wording": "Replace the engineering lead would fund an evaluation with we would test the offer with the engineering lead who controls evaluation spend."
+    }
+  },
+  "mean": 12.0,
+  "range": [
+    12,
+    12
+  ],
+  "prior_round002_row_mean": 9.333333333333334,
+  "change_in_row_mean": 2.666666666666666,
+  "requested_threshold": 12,
+  "all_judges_at_or_above_threshold": true,
+  "threshold_meaning": "plausible untested model; not demand or approved pricing",
+  "full_product_rescore": false,
+  "outreach_sent": 0,
+  "validated_customers": 0,
+  "price_status": "USD250 test hypothesis, not approved/offered/validated",
+  "state": "awaiting-user",
+  "next_iteration_authorized": false
+}

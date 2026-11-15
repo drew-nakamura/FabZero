@@ -1,0 +1,12 @@
+{
+  "iteration": "customer-path-001",
+  "scope": "Path to customers only,20points",
+  "state": "reviewed-target-met-awaiting-user",
+  "packet": "customer-path-001-packet.md",
+  "sha256": "36c6658cc5a805528e8684806564d436e0a8e731b10fe12d7aa7cfc50fe5d656",
+  "requested_target": 12,
+  "target_not_evidence": true,
+  "price_status": "USD250 hypothesis; not founder-approved, validated or offered",
+  "next_iteration_requires": "report and user direction",
+  "source_notes": "customer-path-001-research.md"
+}

@@ -1,0 +1,49 @@
+MM BEGIN n=8 base=0xA0000000
+attempting to launch hw_server
+
+****** Xilinx hw_server v2025.2
+  **** Build date : Oct 28 2025 at 10:03:13
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+INFO: hw_server application started
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+****** Xilinx hw_server v2025.2
+
+  **** Build date : Oct 28 2025 at 10:03:13
+
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+
+
+INFO: hw_server application started
+
+INFO: Use Ctrl-C to exit hw_server application
+
+
+
+
+INFO: To connect to this hw_server instance use url: TCP:127.0.0.1:3121
+
+
+
+MM CABLE XFL13U31JOU3A
+MM PROGRAM_NS 4757868000
+MM ID 1397312513
+MM N 8
+MM LANES 1
+MM STATUS_IDLE 0
+MM SCRATCH 5 0
+MM JOB first status=2 polls=0 timeout=0 cycles_lo=512 cycles_hi=0 host_ns=1006335000
+MM OUT first 5647 6242 10840 -2977 9474 4589 -3724 -21295 -2135 8581 17613 6663 -6512 11307 -23888 -16795 11821 -21799 8323 -6621 -23249 -25411 -3003 25995 2245 3157 -42 -6021 -2478 -16081 -16512 -3941 -2660 22843 -18166 -15961 22533 19761 3059 -7179 4643 5919 4949 -28735 11020 1035 3301 17689 -4768 -3099 3715 13002 -3016 14459 -830 -9505 369 -16353 15998 4460 -15210 -1833 7299 10431
+MM JOB repeat status=2 polls=0 timeout=0 cycles_lo=512 cycles_hi=0 host_ns=251173000
+MM OUT repeat 5647 6242 10840 -2977 9474 4589 -3724 -21295 -2135 8581 17613 6663 -6512 11307 -23888 -16795 11821 -21799 8323 -6621 -23249 -25411 -3003 25995 2245 3157 -42 -6021 -2478 -16081 -16512 -3941 -2660 22843 -18166 -15961 22533 19761 3059 -7179 4643 5919 4949 -28735 11020 1035 3301 17689 -4768 -3099 3715 13002 -3016 14459 -830 -9505 369 -16353 15998 4460 -15210 -1833 7299 10431
+MM RESET status=0 cycles_lo=0 cycles_hi=0
+MM JOB reset_reload status=2 polls=0 timeout=0 cycles_lo=512 cycles_hi=0 host_ns=946080000
+MM OUT reset_reload 5647 6242 10840 -2977 9474 4589 -3724 -21295 -2135 8581 17613 6663 -6512 11307 -23888 -16795 11821 -21799 8323 -6621 -23249 -25411 -3003 25995 2245 3157 -42 -6021 -2478 -16081 -16512 -3941 -2660 22843 -18166 -15961 22533 19761 3059 -7179 4643 5919 4949 -28735 11020 1035 3301 17689 -4768 -3099 3715 13002 -3016 14459 -830 -9505 369 -16353 15998 4460 -15210 -1833 7299 10431
+MM END

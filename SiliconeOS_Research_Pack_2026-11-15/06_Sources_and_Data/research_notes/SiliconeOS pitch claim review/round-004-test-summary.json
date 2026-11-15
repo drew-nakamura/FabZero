@@ -1,0 +1,18 @@
+{
+  "command": "python -B -m unittest discover -s tests -p test_board_import.py -v",
+  "snapshot_commit": "ff1e060",
+  "exit_code": 0,
+  "tests": 7,
+  "elapsed_seconds": 2.278,
+  "coverage": [
+    "real saved board inputs accepted",
+    "HMAC and key enforcement",
+    "signed wrong content rejected",
+    "tampered report/failed run refused",
+    "board freshness",
+    "HTTP signer to ephemeral test app",
+    "idempotent import and parent preserved"
+  ],
+  "warning": "ResourceWarning: implicit cleanup of expected HTTPError400; suite OK",
+  "new_board_or_provider_calls": false
+}

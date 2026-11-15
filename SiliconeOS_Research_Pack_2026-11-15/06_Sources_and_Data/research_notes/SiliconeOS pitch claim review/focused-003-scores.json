@@ -1,0 +1,25 @@
+{
+  "iteration": "focused-003",
+  "scored_rows": ["execution_design", "path_to_customers"],
+  "excluded_rows": ["real_problem_real_user", "pitch_demo", "creative_ai"],
+  "denominator": 45,
+  "baseline_45": 27,
+  "target_45": 34,
+  "packet_sha256": "81d275c6eca9bda80fa47b6b673e42ab758cd05123564b4b69ed47c4e8568841",
+  "judges": {
+    "technical": {"execution": 15, "path": 11, "total": 26},
+    "customer": {"execution": 16, "path": 11, "total": 27},
+    "pitch_integrity": {"execution": 16, "path": 12, "total": 28}
+  },
+  "mean": {
+    "execution": 15.6666666667,
+    "path": 11.3333333333,
+    "total_45": 27.0,
+    "delta_vs_baseline": 0.0
+  },
+  "range_total": [26, 28],
+  "plus3_report_threshold_met": false,
+  "plateau": true,
+  "next_round_authorized": false,
+  "stop_reason": "Mean unchanged at 27/45; desk research cannot clear receipt/outreach blockers; other-models usage limit already hit."
+}

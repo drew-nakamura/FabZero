@@ -1,0 +1,36 @@
+{
+  "checked_on": "2026-11-15",
+  "company_count": 14,
+  "product_companies": 7,
+  "workflow_firms": 7,
+  "metric_records": 11,
+  "unique_report_source_urls": 59,
+  "report_words": 4196,
+  "cagr_recalculated_percent": {
+    "M1": 10.38585230372333,
+    "M2": 21.251851667476075,
+    "M3": 10.517662681977225,
+    "M4": 17.64187623115736,
+    "M5": 21.711826718496653
+  },
+  "SHD_derived_FPGA_share_percent": [
+    3.453941780557486,
+    1.9663699422976553
+  ],
+  "ARR_arithmetic": "PASS",
+  "company_source_coverage": "PASS",
+  "prior_frozen_artifact_hashes": "PASS",
+  "canvas_structural_sdk_checks": "PASS",
+  "typescript_compile": "NOT RUN: global tsc unavailable; no dependency install or compiler search",
+  "native_runtime_and_visual_QA": "NOT RUN",
+  "no_outreach": true,
+  "no_new_scores": true,
+  "outputs": {
+    "report": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\reports\\Edge AI FPGA customer market.md",
+    "canvas": "C:\\Users\\drewa\\.cursor\\projects\\c-Users-drewa-FabZero\\canvases\\edge-AI-FPGA-customer-market.canvas.tsx"
+  },
+  "sha256": {
+    "report": "26a1c2bafe5720aac75192e0dbdda73b3d2c76adf67d1902fe3ed8bbffe56338",
+    "canvas": "cd82a4437421d3cb8c25861a83e5337b3f73b43a2ebfdc9072b90e3dc67748ab"
+  }
+}

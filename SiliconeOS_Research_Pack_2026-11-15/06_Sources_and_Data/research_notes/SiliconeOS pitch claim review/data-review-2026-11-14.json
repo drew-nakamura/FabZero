@@ -1,0 +1,81 @@
+{
+  "review_date": "2026-11-14 America/Los_Angeles",
+  "kind": "saved-build-and-board-evidence-review; not a new board execution or scoring round",
+  "main_head": "5ea8480d34980210b42d83279d1e45475c99af19",
+  "hardware_owner_record_reports_publication_commit": "424c681 (not independently refetched in this review)",
+  "files": [
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\board-result.json",
+      "sha256": "71d5414dc64143d03eaa6c13bce6df5dc6d6fda896fe891fd1a179548efee46a"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\inputs.json",
+      "sha256": "bbb34202ecbad1dc75f450d8b45f58ea2229feefb5b8d642734ec88db208d66f"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001327Z_n8_l1\\xsdb.log",
+      "sha256": "77f7152acdbc6b571ccccc3da4e2099b3b4413ab8ce82f2680514a6fa1c89465"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\implementation_manifest.json",
+      "sha256": "bddb1998aea3d13d29419af43b0555a6595c41f40204a9e05629097f99697efb"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\summary\\summary.json",
+      "sha256": "3dd77b5a0358159f708c9467467f53ab8c51ff7ab52ee379c50cbe97f60d42b5"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\build_info.txt",
+      "sha256": "9d05673b00b85871250f74b05a0cc458269338f89f9fa5e5ee2bfe1f7388164f"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\board-result.json",
+      "sha256": "e9f32a2c268a48c97709693c23ffd58de3c1ac9e0f84f4943d6caa0ddd3eaf96"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\inputs.json",
+      "sha256": "bbb34202ecbad1dc75f450d8b45f58ea2229feefb5b8d642734ec88db208d66f"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T001604Z_n8_l4\\xsdb.log",
+      "sha256": "d75f223ea93e0dcc15f19296b4a96eee3a4588c4abd7f4c8cec43b99d0a2a352"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\implementation_manifest.json",
+      "sha256": "86723d9b9d68b2ebe386825d7904162e041eecf545ae89ed280310d695051bf0"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\summary\\summary.json",
+      "sha256": "56315080a356a1da230d1602d536e872ee17071b4197d7cca880a951643b52c8"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4\\build_info.txt",
+      "sha256": "93193a7b3510643bbb2bf1711988f90ff963c2d46c883bd72c658ee18d15d569"
+    },
+    {
+      "path": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\compare_n8\\summary.md",
+      "sha256": "3b926965f03fdddbf861f025199d57c16a8a6b457169ff7f0ac5aad8c29c46ca"
+    }
+  ],
+  "root_checks": {
+    "independent_matrix_reference": true,
+    "configurations": 2,
+    "jobs_per_configuration": 3,
+    "outputs_per_job": 64,
+    "raw_output_comparisons": 384,
+    "all_matched": true,
+    "raw_status_timeout_reset_and_counter_checks": "passed",
+    "input_output_rtl_manifest_and_deployment_hashes": "passed",
+    "artifacts_checked_per_build": 7,
+    "current_build_source_hashes_checked_per_build": 5
+  },
+  "independent_technical_reviewer": {
+    "report_artifact_source_hash_bindings_checked": 52,
+    "all_matched": true,
+    "route_timing_drc_methodology_check_timing": "passed for supplied constrained designs",
+    "no_build_or_board_commands": true
+  },
+  "full_rubric_rescored": false,
+  "parent_linkage_demonstrated": false,
+  "test_workload": "identity A; B=-32..31; same test repeated and after reset"
+}

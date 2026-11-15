@@ -1,0 +1,505 @@
+[
+  {
+    "name": "Leopard Imaging",
+    "group": "Product companies",
+    "role": "Potential future user / imaging partner",
+    "priority": "First interviews",
+    "evidence": "Its AUTOMATE 2026 announcement describes ASTRO stereo cameras with two 5.1 MP RGB-IR sensors, FPGA processing and 10GigE for AI perception, navigation and reconstruction. A separate 25 MP demonstration combines FPGA processing with Jetson Thor. Its AMD camera interface supports ZCU102/ZCU104. This is hybrid FPGA preprocessing plus AI compute, not proof all inference is in programmable logic.",
+    "sources": [
+      [
+        "2026 AI-perception announcement",
+        "https://leopardimaging.com/leopard-imaging-to-showcase-advanced-ai-perception-and-vision-solutions-at-automate-2026/"
+      ],
+      [
+        "AMD-platform camera interface",
+        "https://leopardimaging.com/product/platform-partners/amd/li-multi-sensor-cphy-fmc-101h/"
+      ]
+    ],
+    "operator": "FPGA/embedded-imaging engineer",
+    "buyer": "Imaging or embedded engineering lead",
+    "trigger": "A sensor, synchronization, buffering or preprocessing change requiring a reproducible lab experiment.",
+    "gap": "MIPI/FMC, video streams, clock-domain crossing, DMA, external memory and real image kernels; none is established by the present small GEMM.",
+    "alternative": "Sophisticated internal integration and NVIDIA-based platforms; product configuration may matter more than new RTL.",
+    "question": "Which repeated FPGA/sensor variation requires the most manual reconstruction of tests, constraints and deployment evidence?",
+    "contact": [
+      "Official inquiry page",
+      "https://leopardimaging.com/contact-us/"
+    ],
+    "dates": "2026 announcement; other product page undated; checked 2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Basler",
+    "group": "Product companies",
+    "role": "Expert / collaborator / competing framework",
+    "priority": "First interviews",
+    "evidence": "Basler publicly describes an innovation-stage Python framework for programming FPGAs in cameras/frame grabbers, with image functions and simulation. It explicitly invites feedback on applications, Python and low-code approaches. Its engineering article discusses multi-camera timing, buffers, unsupported formats and insufficient FPGA expertise. This is explicit workflow relevance and evidence of an existing competing approach.",
+    "sources": [
+      [
+        "Python-to-FPGA innovation project",
+        "https://www.baslerweb.com/en-us/innovation/fpga-programming-python/"
+      ],
+      [
+        "AI vision engineering constraints",
+        "https://www.baslerweb.com/en-us/learning/computing-power-ai-vision-systems/"
+      ]
+    ],
+    "operator": "Applications engineer / FPGA framework engineer",
+    "buyer": "Relevant applications or platform engineering lead",
+    "trigger": "A customer-specific preprocessing function that must be simulated and deployed on a supported camera/frame grabber.",
+    "gap": "Basler targets, interfaces, stream-processing functions, existing framework integration and acceptance tests.",
+    "alternative": "Basler is already building an abstraction; it is not a greenfield prompt-tool prospect.",
+    "question": "Where would reviewed natural-language intent and retained evidence improve your Python-to-FPGA flow, and where would they add risk?",
+    "contact": [
+      "Innovation project; public invitation and innovation@baslerweb.com",
+      "https://www.baslerweb.com/en-us/innovation/fpga-programming-python/"
+    ],
+    "dates": "Innovation pages undated; 9M report covers Jan–Sep 2026; checked 2026-11-15.",
+    "scale": "Jan–Sep 2026 sales €227.4m (+35% against adjusted €168.0m), orders €278.6m (+62%), average 838 FTE. Prior-year figures restated; €295–300m FY2026 sales is guidance, not achieved annual revenue.",
+    "scale_source": [
+      "Primary 9M2026 report",
+      "https://assets-ctf.baslerweb.com/dg51pdwahxgw/1AGM8lfcGmEoRVpaKP5waH/a857cd4fc412656a7801939ecbb75da4/20261001_Q3_final_e.pdf"
+    ],
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Ouster",
+    "group": "Product companies",
+    "role": "Potential future engineering user",
+    "priority": "First interviews",
+    "evidence": "A company-hosted FPGA Design Engineer role explicitly names RTL, verification, testbenches, synthesis, timing closure and lidar integration, with Verilog/SystemVerilog, Vivado or Quartus, FPGA SoCs, AXI and Git. HLS/Vitis and Python/Tcl/Bash are additional skills. Its current platform spans lidar, cameras, compute and software. The job verifies the workflow, not tool-buying interest.",
+    "sources": [
+      [
+        "Official FPGA engineering role",
+        "https://ouster.applytojob.com/apply/PvWk0ZFwbL/FPGA-Design-Engineer"
+      ],
+      [
+        "Q3 company release filed with SEC",
+        "https://www.sec.gov/Archives/edgar/data/1816581/000162828026069487/exhibit991-9302026.htm"
+      ]
+    ],
+    "operator": "Firmware/FPGA engineer",
+    "buyer": "Firmware or hardware engineering leadership",
+    "trigger": "A deterministic lidar-data preprocessing/interface variant requiring independently checked outputs and exact build identity.",
+    "gap": "Lidar interfaces, calibration, throughput/latency contracts, reliability, enterprise source handling and proprietary RTL.",
+    "alternative": "An expert team and mature stack create a high trust/integration bar; the job is not evidence of replacing engineers.",
+    "question": "Which repeated RTL-to-lab validation step is painful enough for a third-party tool, and what evidence would your team require?",
+    "contact": [
+      "Official company contact",
+      "https://ouster.com/company/contact-us"
+    ],
+    "dates": "Job publication date not shown; release Nov 3,2026 for quarter ended Sep 30; checked 2026-11-15.",
+    "scale": "Q3 2026 revenue approximately $59m, +50% YoY/+9% sequential. More than27,000 lidar AND camera sensors shipped for revenue; about 27% were lidar. Stereolabs contributes to the combined platform, so growth and units are not organic FPGA metrics.",
+    "scale_source": [
+      "Primary investor release",
+      "https://investors.ouster.com/node/12271/pdf"
+    ],
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Xnext",
+    "group": "Product companies",
+    "role": "Later industrial acquisition-workflow candidate",
+    "priority": "Later qualification",
+    "evidence": "AMD’s 2023 XSpectra case describes Zynq real-time sensor acquisition/firmware in an X-ray inspection system combining sensing and AI/CNN software. Xnext’s current site still presents AI/deep-learning hyperspectral contaminant inspection. The case does not establish that the CNN runs in FPGA fabric.",
+    "sources": [
+      [
+        "2023 vendor/customer case",
+        "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/xnext-pbx.pdf"
+      ],
+      [
+        "Current company product site",
+        "https://www.x-next.com/"
+      ]
+    ],
+    "operator": "FPGA/embedded acquisition engineer",
+    "buyer": "R&D or embedded systems lead",
+    "trigger": "A detector acquisition, filter or buffer change with a known test input and reference output.",
+    "gap": "Detector interfaces, streaming, acquisition semantics, quality/latency constraints and production qualification.",
+    "alternative": "Existing custom electronics, firmware and trained inspection software; small GEMM is far from complete inspection.",
+    "question": "When acquisition/preprocessing firmware changes, how do you validate and preserve the detector-to-result evidence across variants?",
+    "contact": [
+      "Official site / info@x-next.com",
+      "https://www.x-next.com/"
+    ],
+    "dates": "FPGA evidence2023; current site checked2026-11-15.",
+    "caution": "Do not quote the case acquisition throughput: extraction/search representations disagree between GBps and Gbps.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "SICK",
+    "group": "Product companies",
+    "role": "Later enterprise user / expert benchmark",
+    "priority": "Later qualification",
+    "evidence": "AMD’s 2024 case documents Kintex UltraScale+, FINN and deep-learning processing in Lector/Inspector machine vision, including capture, compression and pre-segmentation. A 2025 case documents Zynq UltraScale+ in picoScan lidar for mobile robots. Performance claims in the first case were supplied by SICK and not independently verified by AMD.",
+    "sources": [
+      [
+        "2024 machine-vision case",
+        "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/sick-case-study.pdf"
+      ],
+      [
+        "2025 lidar case",
+        "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/sick-2d-lidar.pdf"
+      ]
+    ],
+    "operator": "Embedded FPGA / accelerator engineer",
+    "buyer": "Platform or R&D engineering manager",
+    "trigger": "A supported preprocessing/quantized-network block revision within an existing qualified toolchain.",
+    "gap": "FINN/network/streaming integration, exact sensor targets and quality/latency qualification.",
+    "alternative": "Substantial existing platform and open-source FPGA ML compiler; strong use evidence is not an easy first sale.",
+    "question": "What repeated experiment remains inconvenient after FINN and your current tools, and would an external orchestrator preserve qualification?",
+    "contact": [
+      "Official US contact / info@sick.com",
+      "https://www.sick.com/us/en/contact/w/contactflyout_general_contacts"
+    ],
+    "dates": "FPGA cases2024/2025; FY2025 figures; checked2026-11-15.",
+    "scale": "2025 continuing-operations sales €1.850bn versus €1.7368bn in2024, reported6.5% growth;10,158 employees at Dec 31,2025. Accounting exclusions make older group-total comparisons unsafe. Employees are not FPGA seats.",
+    "scale_source": [
+      "Official IFRS figures",
+      "https://www.sick.com/us/en/ifrs-figures-for-the-sick-group/w/key"
+    ],
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS.",
+    "scale_sources": [
+      [
+        "Official IFRS figures",
+        "https://www.sick.com/us/en/ifrs-figures-for-the-sick-group/w/key"
+      ],
+      [
+        "2025 annual report",
+        "https://tools.sick.com/annual-report/SICK_Geschaeftsbericht_2025_EN.pdf"
+      ]
+    ]
+  },
+  {
+    "name": "IDS Imaging",
+    "group": "Product companies",
+    "role": "Model-specific user hypothesis",
+    "priority": "Requalify architecture",
+    "evidence": "IDS describes its deep ocean FPGA core for NXT cameras. Its component material distinguishes rio/rome deep ocean from malibu’s Ambarella accelerator; newer malibu/oslo material explicitly describes an Ambarella SoC/NPU. The entire IDS edge-AI camera family cannot be counted as FPGA hardware.",
+    "sources": [
+      [
+        "FPGA technical article",
+        "https://en.ids-imaging.com/technical-articles-details/items/ids-nxt-ai-for-all.html?label=53"
+      ],
+      [
+        "System component distinction",
+        "https://www.ids-imaging.us/ids-nxt-system-components.html"
+      ],
+      [
+        "Current malibu/oslo NPU products",
+        "https://en.ids-imaging.com/ids-nxt-malibu-oslo.html"
+      ]
+    ],
+    "operator": "Engineer for the actual programmable-fabric camera family",
+    "buyer": "Relevant camera-platform engineering lead",
+    "trigger": "An active FPGA-camera core/preprocessing update, if that product family remains relevant.",
+    "gap": "Proprietary core/toolchain, camera I/O, network support and production evaluation.",
+    "alternative": "Existing training/app deployment tools; newer NPU products may remove custom FPGA work.",
+    "question": "Which active products still use programmable fabric, and where does custom RTL remain necessary rather than the NPU/app workflow?",
+    "contact": [
+      "Official contact",
+      "https://www.ids-imaging.us/contact.html"
+    ],
+    "dates": "Technical pages undated/current family material; company milestone2025; checked2026-11-15.",
+    "scale": "Company page says more than 320 employees; history records2 million IDS cameras in use in2025. These cover all camera families, not FPGA/AI units or tool seats.",
+    "scale_source": [
+      "Company overview and milestones",
+      "https://en.ids-imaging.com/history-of-the-company.html"
+    ],
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS.",
+    "scale_sources": [
+      [
+        "Company overview and milestones",
+        "https://en.ids-imaging.com/history-of-the-company.html"
+      ],
+      [
+        "Official company overview",
+        "https://www.ids-imaging.us/about-us.html"
+      ]
+    ]
+  },
+  {
+    "name": "Prophesee",
+    "group": "Product companies",
+    "role": "Historical KV260 partner / requalification",
+    "priority": "Requalify architecture",
+    "evidence": "Its May 6,2024 announcement and AMD case document Metavision event-based sensing/AI with Kria KV260. However, its official product page says the kit was discontinued Aug 31,2026 and is no longer available. Historical same-board fit is not a current purchasable product/channel.",
+    "sources": [
+      [
+        "Official kit and discontinued status",
+        "https://www.prophesee.ai/event-based-metavision-amd-kria-starter-kit/"
+      ],
+      [
+        "AMD customer case",
+        "https://www.amd.com/en/resources/case-studies/prophesee.html"
+      ]
+    ],
+    "operator": "Event-stream FPGA / embedded engineer, if current architecture uses fabric",
+    "buyer": "Current evaluation/platform engineering lead",
+    "trigger": "A present event-stream processing experiment only after confirming the new architecture.",
+    "gap": "Current platform, event sensor/SDK and real stream processing; discontinued KV260 kit cannot establish compatibility.",
+    "alternative": "Existing SDK/reference apps and a shift to more integrated systems may remove the close fit.",
+    "question": "After discontinuing the KV260 kit, where does programmable logic remain in the current evaluation/product flow?",
+    "contact": [
+      "Official contact",
+      "https://www.prophesee.ai/contact-us/"
+    ],
+    "dates": "Original2024 collaboration; discontinued2026-08-31; company facts checked2026-11-15.",
+    "scale": "Company overview lists65 people, three offices and nearly €150m cumulative funding; newsroom reports a June15,2026€20m financing. Funding is not revenue or a software budget.",
+    "scale_source": [
+      "Company overview",
+      "https://www.prophesee.ai/about-prophesee/"
+    ],
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS.",
+    "scale_sources": [
+      [
+        "Company overview",
+        "https://www.prophesee.ai/about-prophesee/"
+      ],
+      [
+        "Company newsroom / financing",
+        "https://www.prophesee.ai/newsroom/"
+      ]
+    ]
+  },
+  {
+    "name": "LogicTronix",
+    "group": "Workflow specialists",
+    "role": "Expert evaluator / potential future user or partner",
+    "priority": "First interviews",
+    "evidence": "It identifies as an AMD-Xilinx design-services and Kria SoM AI/ML design partner. Public services explicitly include KV260/VVAS, multi-channel/multi-model inference, RTL, embedded Linux and carrier work. Its IP portfolio confirms FPGA solution work.",
+    "sources": [
+      [
+        "Services and inquiry",
+        "https://logictronix.com/fpga-design-services/"
+      ],
+      [
+        "FPGA IP portfolio",
+        "https://logictronix.com/solutions-ip-cores/logictronix-fpga-ip-cores/"
+      ]
+    ],
+    "operator": "Senior FPGA / ML engineer",
+    "buyer": "Engineering lead or customer-project owner",
+    "trigger": "A customer-specific Kria configuration requiring repeatable PL/model/implementation/deployment checks.",
+    "gap": "Real VVAS/Vitis-AI, model integration, memory/stream interfaces, Linux packaging and customer IP handling.",
+    "alternative": "It already sells the integration work and likely has tooling; partnership/competition may be more realistic than seat sales.",
+    "question": "For the last KV260 customer variation, what changed and was rechecked between the model, PL integration, implementation and deployment?",
+    "contact": [
+      "Official services inquiry form",
+      "https://logictronix.com/fpga-design-services/"
+    ],
+    "dates": "Pages undated; checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Starware Design",
+    "group": "Workflow specialists",
+    "role": "Expert evaluator / small-firm user hypothesis",
+    "priority": "First interviews",
+    "evidence": "Current services cover FPGA/ASIC verification, board bring-up, embedded software and edge AI. Its DevOps article describes source/bitstream mismatch, unreproducible environments and dependence on one release engineer. The article lists admin and no clear date; current site material also describes GitLab CI/Vivado/Cocotb work.",
+    "sources": [
+      [
+        "Company services",
+        "https://www.starwaredesign.com/"
+      ],
+      [
+        "First-person FPGA DevOps account",
+        "https://www.starwaredesign.com/fpga-meets-devops-introduction/"
+      ]
+    ],
+    "operator": "FPGA project lead / principal consultant",
+    "buyer": "Founder/principal or project owner",
+    "trigger": "A customer handoff requiring proof that source, build and physical result belong together.",
+    "gap": "Existing CI integration, customer-owned designs, reproducible environments and actual project checks.",
+    "alternative": "It already knows and uses CI; an earlier pain account does not prove the problem is still unsolved.",
+    "question": "Which part of a recent source-to-tested-board handoff still required reconstruction after your existing CI work?",
+    "contact": [
+      "Official Get in touch route; contact page timed out in this pass",
+      "https://www.starwaredesign.com/"
+    ],
+    "dates": "DevOps article undated; current site checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "hema electronic",
+    "group": "Workflow specialists",
+    "role": "Platform / qualification partner hypothesis",
+    "priority": "Platform partners",
+    "evidence": "The German electronics firm’s AMD-coordinated platform supplements K26/KV260 development. KV260 and EVB2 both use K26; EVB2 is positioned for customizable embedded vision/sensor/AI work toward production. Shared silicon does not make bitstreams interchangeable.",
+    "sources": [
+      [
+        "AMD FPGA platform",
+        "https://www.hema.de/loesungen/amd-fpga-plattform"
+      ],
+      [
+        "Official contact",
+        "https://www.hema.de/unternehmen/kontakt"
+      ]
+    ],
+    "operator": "Platform FPGA / embedded-vision engineer",
+    "buyer": "Platform engineering or business-development lead",
+    "trigger": "Moving a feasibility variant from KV260 to EVB2/custom carrier with transferrable acceptance evidence.",
+    "gap": "Carrier constraints, sensors/interfaces, clocks/drivers and production validation.",
+    "alternative": "Platform reuse already addresses part of development effort; no numerical saving established.",
+    "question": "What configuration and validation steps repeat between KV260 feasibility work and an EVB2/custom carrier?",
+    "contact": [
+      "Official sales/contact",
+      "https://www.hema.de/unternehmen/kontakt"
+    ],
+    "dates": "Pages undated; checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Enclustra",
+    "group": "Workflow specialists",
+    "role": "Platform partner / established orchestration competitor",
+    "priority": "Platform partners",
+    "evidence": "Services include specifications, HDL, verification, software and prototyping for edge AI. Its Sep 21,2026 announcement pairs MakarenaLabs MuseBox, branded Lira, with its portfolio for hardware-accelerated local edge-AI pipelines. Its wider SoC/MPSoC/MLSoC portfolio is not all FPGA.",
+    "sources": [
+      [
+        "Design services",
+        "https://www.enclustra.com/en/design-services/"
+      ],
+      [
+        "Lira orchestration partnership",
+        "https://www.enclustra.com/en/company/news-events/news/enclustra-partner-with-makarenalabs-on-edge-ai-orchestration/"
+      ]
+    ],
+    "operator": "FPGA platform architect / services engineer",
+    "buyer": "Design-services or platform lead",
+    "trigger": "An experiment/evidence gap complementary to existing Lira orchestration.",
+    "gap": "Actual module/tool recipes and a demonstrably complementary function.",
+    "alternative": "An existing orchestration partner directly weakens a generic one-workflow sales pitch.",
+    "question": "What remains manual in custom RTL verification and physical acceptance after Lira and your design-services tooling?",
+    "contact": [
+      "Official design-services route",
+      "https://www.enclustra.com/en/design-services/"
+    ],
+    "dates": "Partnership2026-09-21; services checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Missing Link Electronics",
+    "group": "Workflow specialists",
+    "role": "Automation competitor / interoperability partner",
+    "priority": "Competitive benchmarks",
+    "evidence": "MLE lists reduced-precision neural networks, vision, RTL/HLS, AXI, timing closure and automated builds. Its company-owned FPGA-vbs automates Vivado variants, reports and Git/dirty-state identity.",
+    "sources": [
+      [
+        "Competencies",
+        "https://www.missinglinkelectronics.com/design-services/competence-areas/"
+      ],
+      [
+        "fpga-vbs source",
+        "https://github.com/missinglinkelectronics/fpga-vbs"
+      ]
+    ],
+    "operator": "FPGA tooling / design-services engineer",
+    "buyer": "Tooling or services lead",
+    "trigger": "An acceptance/physical-result step outside the existing variant-build system.",
+    "gap": "Interoperability with its subsystems, streaming/data-movement interfaces and CI.",
+    "alternative": "Already provides substantial automation; no evidence it wants a paid prompt wrapper.",
+    "question": "Which physical acceptance/handoff step remains outside FPGA-vbs, and would reviewed specifications improve it?",
+    "contact": [
+      "Official technical inquiry",
+      "https://www.missinglinkelectronics.com/contact/"
+    ],
+    "dates": "Current pages/repository checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "Antmicro",
+    "group": "Workflow specialists",
+    "role": "Open-source tooling competitor / collaboration candidate",
+    "priority": "Competitive benchmarks",
+    "evidence": "Its FPGA work includes AI accelerators and VEDLIoT. Topwrap connects and parameterizes HDL modules and generates top-level wrappers through CLI/graphical workflows. Announcement Aug 19,2024; documentation updated Sep 1,2026.",
+    "sources": [
+      [
+        "FPGA technology work",
+        "https://antmicro.com/technologies/fpga/"
+      ],
+      [
+        "Topwrap announcement",
+        "https://antmicro.com/blog/2024/08/parameterizable-digital-logic-design-with-the-topwrap-toolkit/"
+      ],
+      [
+        "Topwrap documentation",
+        "https://antmicro.github.io/topwrap/"
+      ]
+    ],
+    "operator": "FPGA tooling / project engineer",
+    "buyer": "Tooling or project lead",
+    "trigger": "A real experiment still hard after Topwrap and current simulation/CI.",
+    "gap": "Open-interface interoperability, co-simulation and broader IP validation.",
+    "alternative": "Already builds integration infrastructure; generic HDL-tool orchestration is insufficient differentiation.",
+    "question": "What customer task remains difficult after Topwrap and your simulation/CI stack when physical evidence is required?",
+    "contact": [
+      "Official contact / contact@antmicro.com",
+      "https://antmicro.com/about/contact/"
+    ],
+    "dates": "Announcement2024-08-19; docs2026-09-01; checked2026-11-15.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  },
+  {
+    "name": "TOPIC Embedded Systems",
+    "group": "Workflow specialists",
+    "role": "T&S platform supplier / legacy automation benchmark",
+    "priority": "Competitive benchmarks",
+    "evidence": "TOPIC joined Technology & Strategy in March2023. Current Miami platforms include Zynq-7000, Zynq UltraScale+ and Versal. Legacy Dyplo material describes software-to-FPGA deployment, streaming/DMA and partial reconfiguration, but its old product link now redirects to a general portfolio; current standalone Dyplo availability was not verified.",
+    "sources": [
+      [
+        "2023 T&S integration",
+        "https://topic.nl/nieuws/integration-of-topic-with-ts-group"
+      ],
+      [
+        "Current platforms",
+        "https://topic.nl/products"
+      ],
+      [
+        "Legacy Dyplo route",
+        "https://topic.nl/us/dyplo"
+      ]
+    ],
+    "operator": "FPGA platform / services engineer",
+    "buyer": "Platform or design-services lead",
+    "trigger": "A customer-specific Miami accelerator with unautomated acceptance/evidence steps.",
+    "gap": "Actual Miami profiles, Linux/DMA interfaces and project-level acceptance.",
+    "alternative": "Existing supplier platform/deployment expertise; legacy Dyplo is not confirmed current paid software.",
+    "question": "Which requirements-to-verified-artifact steps remain manual beyond the platform and deployment tools you already provide?",
+    "contact": [
+      "Current product/contact route; info@topic.nl",
+      "https://topic.nl/products"
+    ],
+    "dates": "T&S integration2023-03-30; current portfolio checked2026-11-15.",
+    "scale": "2023 acquisition announcement cited more than 100 professionals. This is historical total employment, not current FPGA seats.",
+    "checked_on": "2026-11-15",
+    "demand_status": "No contact, trial, quote, purchase or willingness to pay established.",
+    "present_product_fit": "Research/example only; production workload unsupported by current SiliconeOS."
+  }
+]

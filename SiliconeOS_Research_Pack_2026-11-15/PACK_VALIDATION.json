@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "original_reports": 11,
+  "source_hashes": "all match",
+  "reader_links_checked": 85,
+  "no_credentials_databases_large_binaries_or_app_snapshots": true,
+  "new_research_or_scores": false,
+  "tool_QA": "Original limitations retained; no new runtime or visual QA",
+  "publication_note": "All11originalreports included; three fullguideHTMLsnapshots omitted with sourcehashes retained.",
+  "publication_source_copy_count": 132
+}

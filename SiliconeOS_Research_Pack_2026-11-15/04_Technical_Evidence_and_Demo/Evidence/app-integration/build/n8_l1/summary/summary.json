@@ -1,0 +1,494 @@
+{
+  "schema": "fabzero.vivado_summary/1",
+  "generated_at": "2026-11-14T15:53:17-08:00",
+  "summaries": [
+    {
+      "label": "N=8 LANES=1 post-route",
+      "folder": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports",
+      "inputs": [
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\design_info.txt",
+          "kind": "design_info",
+          "sha256": "cc51b6b70a894a7479cf734cddc491c88c4d2061f13387027cfe27dbc9f54c78",
+          "design_state": null,
+          "tool": null,
+          "device": null,
+          "design": null,
+          "date": null
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\drc.rpt",
+          "kind": "drc",
+          "sha256": "e2d60ffec186b5452a84fe83d59d9bd81a0439906b10c5225158418848f18949",
+          "design_state": "Fully Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784-2LV-c",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:15 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\kernel_paths.rpt",
+          "kind": "timing_paths",
+          "sha256": "833bd119e7dc86553389cb926522ada38ba66edd0f930cfb800f73598397863e",
+          "design_state": "Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:16 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\methodology.rpt",
+          "kind": "methodology",
+          "sha256": "fe582684c930b3177009a01a03037a46c0d144a065681d20d8cba714e5caea96",
+          "design_state": "Fully Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784-2LV-c",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:15 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\power.rpt",
+          "kind": "power",
+          "sha256": "ab67349c4a44b60726546c30026fef79aa6b44103eb1bb5ed81c2b91284dc224",
+          "design_state": "routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784-2LV-c",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:13 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\timing_summary.rpt",
+          "kind": "timing_summary",
+          "sha256": "d115f86467eeac8a8e6171688ae7297388dba7b1cc17a103c2fe21a09f78707f",
+          "design_state": "Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:09 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\utilization.rpt",
+          "kind": "utilization",
+          "sha256": "a7ebc104967218632caa8be16db4ea6643aa9afbf3c3c23e7fd32e50ad56f2f9",
+          "design_state": "Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784-2LV-c",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:06 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\reports\\utilization_hier.rpt",
+          "kind": "utilization_hier",
+          "sha256": "7c718602263f11645caa5bba383f44c639e0a7e444a6748fe3641c4e7e2ca35d",
+          "design_state": "Routed",
+          "tool": "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025",
+          "device": "xck26-sfvc784-2LV-c",
+          "design": "matmul_board_top",
+          "date": "Sat Nov 14 15:53:06 2026"
+        },
+        {
+          "file": "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1\\proj\\matmul_board.runs\\synth_1\\runme.log",
+          "kind": "synth_log",
+          "sha256": "cad9c5da9b6402f9386d018c77c669c393f8e82d53cf53f74a2ca401f7164ff9",
+          "design_state": null,
+          "tool": null,
+          "device": null,
+          "design": null,
+          "date": null
+        }
+      ],
+      "warnings": [],
+      "stage": "Post-route (implemented design)",
+      "tool_versions": [
+        "Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025"
+      ],
+      "devices": [
+        "xck26-sfvc784-2LV-c"
+      ],
+      "metadata": {
+        "vivado": "2025.2",
+        "opened": "project C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l1/proj/matmul_board.xpr run impl_1",
+        "top": "matmul_board_top",
+        "part": "xck26-sfvc784-2LV-c",
+        "kernel_instance": "u_matmul",
+        "collected_at": "2026-11-14T15:53:16-0800"
+      },
+      "N": 8,
+      "LANES": null,
+      "kernel_instance": "u_matmul",
+      "area_scope": "instance u_matmul (matmul_axi)",
+      "area": {
+        "Total LUTs": 354,
+        "Logic LUTs": 294,
+        "LUTRAMs": 60,
+        "SRLs": 0,
+        "FFs": 318,
+        "RAMB36": 0,
+        "RAMB18": 0,
+        "URAM": 0,
+        "DSP Blocks": 0
+      },
+      "timing": {
+        "constraints_met": true,
+        "WNS": 4.757,
+        "TNS": 0.0,
+        "TNS_failing": 0,
+        "TNS_endpoints": 3488,
+        "WHS": 0.001,
+        "THS": 0.0,
+        "THS_failing": 0,
+        "THS_endpoints": 3488,
+        "WPWS": 3.5,
+        "TPWS": 0.0,
+        "TPWS_failing": 0,
+        "TPWS_endpoints": 1230,
+        "clocks": [
+          {
+            "name": "clk_pl_0",
+            "period_ns": 10.0,
+            "freq_mhz": 100.0
+          },
+          {
+            "name": "clk_pl_1",
+            "period_ns": 10.0,
+            "freq_mhz": 100.0
+          }
+        ],
+        "check_timing": {
+          "no_clock": 0,
+          "constant_clock": 0,
+          "pulse_width_clock": 0,
+          "unconstrained_internal_endpoints": 0,
+          "no_input_delay": 0,
+          "no_output_delay": 0,
+          "multiple_clock": 0,
+          "generated_clocks": 0,
+          "loops": 0,
+          "partial_input_delay": 0,
+          "partial_output_delay": 0,
+          "latch_loops": 0
+        },
+        "worst_setup_paths": [
+          {
+            "status": "MET",
+            "slack_ns": 4.757,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/c_reg_0_63_28_31/RAMB/I",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.864,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.771,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/c_reg_0_63_28_31/RAMA/I",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.85,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.78,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/c_reg_0_63_14_20/RAMG/I",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.84,
+            "logic_levels": 12,
+            "logic_detail": "CARRY8=5 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.82,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/c_reg_0_63_28_31/RAMD/I",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.799,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.845,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/c_reg_0_63_21_27/RAME/I",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.776,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          }
+        ],
+        "fmax_estimates": [
+          {
+            "clock": "clk_pl_0",
+            "constrained_mhz": 100.0,
+            "wns_ns": 4.757,
+            "estimated_fmax_mhz": 190.7
+          }
+        ],
+        "kernel_worst_paths": [
+          {
+            "status": "MET",
+            "slack_ns": 4.948,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/acc_reg[0][31]/D",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.823,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.958,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/acc_reg[0][29]/D",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.812,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          },
+          {
+            "status": "MET",
+            "slack_ns": 4.961,
+            "source": "u_matmul/kernel/k_reg[0]/C",
+            "destination": "u_matmul/kernel/acc_reg[0][30]/D",
+            "path_group": "clk_pl_0",
+            "path_type": "Setup (Max at Slow Process Corner)",
+            "data_path_delay_ns": 4.809,
+            "logic_levels": 13,
+            "logic_detail": "CARRY8=6 LUT2=3 LUT4=1 LUT6=2 RAMD64E=1"
+          }
+        ]
+      },
+      "power": {
+        "total_w": 2.723,
+        "dynamic_w": 2.422,
+        "static_w": 0.3,
+        "junction_c": 31.3,
+        "confidence": "Medium",
+        "components": [
+          {
+            "name": "Clocks",
+            "depth": 0,
+            "power_w": 0.003
+          },
+          {
+            "name": "CLB Logic",
+            "depth": 0,
+            "power_w": 0.002
+          },
+          {
+            "name": "Signals",
+            "depth": 0,
+            "power_w": 0.002
+          },
+          {
+            "name": "PS8",
+            "depth": 0,
+            "power_w": 2.415
+          },
+          {
+            "name": "Static Power",
+            "depth": 0,
+            "power_w": 0.3
+          },
+          {
+            "name": "Total",
+            "depth": 0,
+            "power_w": 2.723
+          }
+        ],
+        "kernel_w": 0.002
+      },
+      "checks": {
+        "drc": {
+          "rules": [],
+          "by_severity": {}
+        },
+        "methodology": {
+          "rules": [],
+          "by_severity": {}
+        }
+      },
+      "synthesis": {
+        "rtl_components": [
+          {
+            "category": "Adders",
+            "item": "2 Input 32 Bit Adders",
+            "count": 5
+          },
+          {
+            "category": "Registers",
+            "item": "32 Bit Registers",
+            "count": 5
+          },
+          {
+            "category": "Registers",
+            "item": "8 Bit Registers",
+            "count": 2
+          },
+          {
+            "category": "Registers",
+            "item": "4 Bit Registers",
+            "count": 1
+          },
+          {
+            "category": "Registers",
+            "item": "2 Bit Registers",
+            "count": 2
+          },
+          {
+            "category": "Registers",
+            "item": "1 Bit Registers",
+            "count": 8
+          },
+          {
+            "category": "RAMs",
+            "item": "2K Bit (64 X 32 bit) RAMs",
+            "count": 1
+          },
+          {
+            "category": "RAMs",
+            "item": "512 Bit (64 X 8 bit) RAMs",
+            "count": 2
+          },
+          {
+            "category": "Muxes",
+            "item": "2 Input 32 Bit Muxes",
+            "count": 8
+          },
+          {
+            "category": "Muxes",
+            "item": "4 Input 32 Bit Muxes",
+            "count": 1
+          },
+          {
+            "category": "Muxes",
+            "item": "3 Input 2 Bit Muxes",
+            "count": 2
+          },
+          {
+            "category": "Muxes",
+            "item": "2 Input 2 Bit Muxes",
+            "count": 2
+          },
+          {
+            "category": "Muxes",
+            "item": "2 Input 1 Bit Muxes",
+            "count": 14
+          },
+          {
+            "category": "Muxes",
+            "item": "4 Input 1 Bit Muxes",
+            "count": 3
+          }
+        ],
+        "mapping_tables": [
+          {
+            "title": "Distributed RAM: Preliminary Mapping Report (see note below)",
+            "header": [
+              "Module Name",
+              "RTL Object",
+              "Inference",
+              "Size (Depth x Width)",
+              "Primitives"
+            ],
+            "rows": [
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/b_reg",
+                "Implied",
+                "64 x 8",
+                "RAM64M8 x 2"
+              ],
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/a_reg",
+                "Implied",
+                "64 x 8",
+                "RAM64M8 x 2"
+              ],
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/c_reg",
+                "Implied",
+                "64 x 32",
+                "RAM64M8 x 5"
+              ]
+            ]
+          },
+          {
+            "title": "Distributed RAM: Final Mapping Report",
+            "header": [
+              "Module Name",
+              "RTL Object",
+              "Inference",
+              "Size (Depth x Width)",
+              "Primitives"
+            ],
+            "rows": [
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/b_reg",
+                "Implied",
+                "64 x 8",
+                "RAM64M8 x 2"
+              ],
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/a_reg",
+                "Implied",
+                "64 x 8",
+                "RAM64M8 x 2"
+              ],
+              [
+                "matmul_board_top",
+                "u_matmul/kernel/c_reg",
+                "Implied",
+                "64 x 32",
+                "RAM64M8 x 5"
+              ]
+            ]
+          }
+        ],
+        "cell_usage": {
+          "matmul_board_bd_rst_pl_clk0": 1,
+          "matmul_board_bd_smartconnect_0": 1,
+          "matmul_board_bd_zynq_ultra_ps_e_0": 1,
+          "CARRY8": 40,
+          "LUT1": 7,
+          "LUT2": 151,
+          "LUT3": 48,
+          "LUT4": 74,
+          "LUT5": 40,
+          "LUT6": 134,
+          "RAM64M8": 7,
+          "RAM64X1D": 2,
+          "FDRE": 318
+        },
+        "errors": 0,
+        "critical_warnings": 0,
+        "warnings": 0
+      },
+      "performance": {
+        "cycles": 512,
+        "cycles_source": "expected",
+        "clock_period_ns": 10.0,
+        "kernel_time_us": 5.12,
+        "time_basis": "cycles x constrained clock period (not a measured time)",
+        "macs": 512,
+        "macs_per_cycle": 1.0,
+        "gmac_per_s_at_constrained_clock": 0.1
+      }
+    }
+  ]
+}

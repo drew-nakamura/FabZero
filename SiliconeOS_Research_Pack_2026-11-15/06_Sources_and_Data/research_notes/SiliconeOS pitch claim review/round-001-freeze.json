@@ -1,0 +1,7 @@
+{
+  "round": 1,
+  "packet": "round-001-claims.md",
+  "sha256": "e47b10547c5c2a8daa122d4f02801d72a473c52989737450a8e56c882881f035",
+  "state": "reviewed-awaiting-user",
+  "next_round_requires": "explicit user continue"
+}

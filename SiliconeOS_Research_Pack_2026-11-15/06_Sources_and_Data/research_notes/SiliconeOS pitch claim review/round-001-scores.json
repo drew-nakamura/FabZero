@@ -1,0 +1,162 @@
+{
+  "round": 1,
+  "state": "awaiting-user",
+  "packet_sha256": "e47b10547c5c2a8daa122d4f02801d72a473c52989737450a8e56c882881f035",
+  "judges": {
+    "technical": {
+      "role": "siliconeos-judge-technical",
+      "scores": [
+        5,
+        10,
+        4,
+        6,
+        3
+      ],
+      "total": 28,
+      "read": "Verified frozen hash; saved public rubric and project context; all eight PASS/exit markers; four N=8 raw logs; pinned lifecycle/AXI testbenches via read-only Git objects. Independently rechecked Siemens 87%, AMD footnotes and BLS. No new tests.",
+      "findings": [
+        "C09: tests assert the DUT cycle-counter value N^3/LANES; these two testbenches do not independently count elapsed busy clocks. Say reported compute counts, not independently measured clocks.",
+        "C01-C02: attributed survey results cannot establish that provenance reconstruction caused escapes or delays.",
+        "C03: exact debugging percentage remains unsupported against its primary chart in this audit.",
+        "C04: AMD benchmark footnotes describe different tests/comparison systems; no transfer to this matmul.",
+        "C05-C08: milestone/market/pay/arithmetic cannot establish demand or realized savings.",
+        "C10: interface identity and hashes alone cannot bind a complete accepted parent/build/programmed-artifact/output receipt.",
+        "C11: live-hardware requirement conflicts with D-025."
+      ],
+      "questions": [
+        "Which exact source, inputs and bitstream produced this result, and can the app reject a mismatched result?",
+        "Who needed this this weekend and what improvement was observed?",
+        "What useful part depends on AI and what blocks a persuasive incorrect receipt?"
+      ]
+    },
+    "customer": {
+      "role": "siliconeos-judge-customer",
+      "scores": [
+        5,
+        10,
+        4,
+        6,
+        3
+      ],
+      "total": 28,
+      "read": "Verified frozen hash; saved guide, current scope/handoff/status, simulation summary and earlier research. No other judge outputs read; external numeric sources not independently refetched.",
+      "findings": [
+        "C01-C03: industry verification pain is context; the narrow evidence-assembly task still needs direct observation.",
+        "C04-C07: omit borrowed benchmarks, Amazon scale, adjacent market forecasts and salary figures from short pitch.",
+        "C08: measure same-task active time including setup/checking; build waiting time is not payroll automatically saved.",
+        "C09: bounded simulation result does not establish switching reason or robotics value.",
+        "C10: split physical-receipt completion and customer validation into separate IDs next round. Need is still a hypothesis; do not state every engineer has it.",
+        "C11: live hardware conflict needs owner decision or organizer clarification.",
+        "No target-user observation, concrete offer/price, demonstrated switching reason or specific first-user channel. Existing scripts, IP/HLS, competing tools and services remain alternatives."
+      ],
+      "questions": [
+        "Which engineer had this exact problem recently; what happened and what did they use instead?",
+        "Why pay rather than improve existing scripts, and what would you charge?",
+        "What can I use and verify now, and what useful job does AI perform?"
+      ]
+    },
+    "pitch-ai": {
+      "role": "siliconeos-judge-pitch-ai",
+      "scores": [
+        5,
+        10,
+        4,
+        6,
+        3
+      ],
+      "total": 28,
+      "read": "Verified frozen hash; saved original guide, role/task/workflow, scope/handoff/decisions and simulation summary. No other judge outputs read; no independent external salary fetch.",
+      "findings": [
+        "C01-C03: more verification statistics do not establish this specific task; omit background that distracts.",
+        "C04-C07: omit vendor ratios, Amazon fleet scale, forecast TAM and pay from the four-minute story.",
+        "C08: keep an evaluation question, not savings claims.",
+        "C09: label directed simulation whenever clock counts appear; do not place figures beside board footage in a way implying physical measurement.",
+        "C10: still being integrated may imply progress beyond snapshot. Prefer not yet demonstrated in evidence reviewed here.",
+        "Opening needs should become we are testing whether until direct user evidence exists.",
+        "C11: reconcile live hardware requirement and separately verify submission/judge accessibility.",
+        "No demonstrated main-flow journey, observed user story, timed rehearsal or materially distinctive AI interaction. Multiple review agents do not alone earn novelty points."
+      ],
+      "questions": [
+        "When did a likely user last lose time or make an evidence-reconstruction mistake?",
+        "What can I operate now, and which result came from this exact physical artifact?",
+        "What does AI improve beyond controls, catalog and scripts?"
+      ]
+    }
+  },
+  "category_order": [
+    "Execution & design",
+    "Real problem, real user",
+    "Path to customers",
+    "Pitch & demo",
+    "Creative use of AI"
+  ],
+  "rows": [
+    {
+      "category": "Execution & design",
+      "max": 25,
+      "individual": [
+        5,
+        5,
+        5
+      ],
+      "mean": 5.0,
+      "min": 5,
+      "max_awarded": 5
+    },
+    {
+      "category": "Real problem, real user",
+      "max": 25,
+      "individual": [
+        10,
+        10,
+        10
+      ],
+      "mean": 10.0,
+      "min": 10,
+      "max_awarded": 10
+    },
+    {
+      "category": "Path to customers",
+      "max": 20,
+      "individual": [
+        4,
+        4,
+        4
+      ],
+      "mean": 4.0,
+      "min": 4,
+      "max_awarded": 4
+    },
+    {
+      "category": "Pitch & demo",
+      "max": 15,
+      "individual": [
+        6,
+        6,
+        6
+      ],
+      "mean": 6.0,
+      "min": 6,
+      "max_awarded": 6
+    },
+    {
+      "category": "Creative use of AI",
+      "max": 15,
+      "individual": [
+        3,
+        3,
+        3
+      ],
+      "mean": 3.0,
+      "min": 3,
+      "max_awarded": 3
+    }
+  ],
+  "mean_total": 28.0,
+  "range_total": [
+    28,
+    28
+  ],
+  "official_score": false,
+  "next_round_authorized": false
+}

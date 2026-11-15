@@ -1,0 +1,5 @@
+# Published pack
+
+All 11 research reports, their organized reader copies, original reports, source notes/data, compact selected evidence and comparison sources are included. The full archived HTML copies of the third-party event guide are retained only in the local pack. Their source URL and original SHA256 values remain in MANIFEST.json and the frozen review records. Consult the published guide at https://cpvc-ai-hackathon-guide.vercel.app/#judging; later revisions may differ from the reviewed snapshot.
+
+This repository copy and ZIP therefore differ from the original local export by those HTML omissions and these publication metadata/attributes. Frozen original reports and remaining audit/data files are byte-identical. Archival relative paths to omitted HTML are historical references, not bundled documents. Use START_HERE.md for navigation. The .gitattributes file preserves exact bytes on Windows checkouts. No personal agent configuration, credentials, app database or full build/runtime snapshot is included.

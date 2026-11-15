@@ -1,0 +1,175 @@
+{
+  "currency": "USD",
+  "checked_on": "2026-11-14 America/Los_Angeles",
+  "status": "hypothetical mature-product costing, not measured telemetry or approved pricing",
+  "models": {
+    "sol": {
+      "label": "OpenAI gpt-6.1-sol",
+      "input_per_million": 2,
+      "output_per_million": 10,
+      "cached_input_per_million": 0.1,
+      "source": "openai"
+    },
+    "terra": {
+      "label": "OpenAI gpt-6.1-terra",
+      "input_per_million": 1,
+      "output_per_million": 5,
+      "cached_input_per_million": 0.05,
+      "source": "terra"
+    },
+    "astra": {
+      "label": "OpenAI gpt-6-astra",
+      "input_per_million": 10,
+      "output_per_million": 50,
+      "cached_input_per_million": 1,
+      "source": "openai"
+    },
+    "sonnet": {
+      "label": "Claude Sonnet5.5",
+      "input_per_million": 2,
+      "output_per_million": 10,
+      "cached_input_per_million": 0.1,
+      "source": "anthropic"
+    },
+    "opus": {
+      "label": "Claude Opus5.5",
+      "input_per_million": 4,
+      "output_per_million": 20,
+      "cached_input_per_million": 0.2,
+      "source": "anthropic"
+    },
+    "groq": {
+      "label": "Groq openai/gpt-oss-120b",
+      "input_per_million": 0.15,
+      "output_per_million": 0.6,
+      "cached_input_per_million": 0.075,
+      "source": "groq"
+    }
+  },
+  "workloads": {
+    "template": {
+      "input_tokens": 50000,
+      "output_tokens": 10000,
+      "calls": 4,
+      "repair_calls": 0
+    },
+    "integration": {
+      "input_tokens": 1000000,
+      "output_tokens": 200000,
+      "calls": 20,
+      "repair_calls": 8
+    },
+    "stress": {
+      "input_tokens": 10000000,
+      "output_tokens": 2000000,
+      "calls": 100,
+      "repair_calls": 60
+    }
+  },
+  "workload_status": "All footprints/call counts are unmeasured assumptions, including repairs/reasoning. Equal token footprints do not imply equal capability.",
+  "billing_assumptions": {
+    "service": "Standard synchronous uncached",
+    "max_request_input_tokens_assumed": 100000,
+    "paid_model_tools_usd": 0,
+    "cache_discount_assumed": 0,
+    "internal_ai_cost_unit_usd": 0.1,
+    "internal_unit_status": "proposed accounting denomination; not provider credit, retail price or Codex conversion"
+  },
+  "defaults": {
+    "model": "sol",
+    "template": 16,
+    "integration": 4,
+    "stress": 0,
+    "subscription": 149,
+    "infra": 5,
+    "supportMinutes": 15,
+    "supportRate": 60,
+    "cloudHours": 0,
+    "cloudRate": 0.504,
+    "allowance": 30,
+    "feePercent": 3
+  },
+  "default_status": "All usage, subscription, allocation, support and fee values are planning assumptions. Cloud unit rate and model rates are sourced; actual use is unmeasured.",
+  "profiles": {
+    "light": {
+      "template": 8,
+      "integration": 2,
+      "stress": 0
+    },
+    "mixed20": {
+      "template": 16,
+      "integration": 4,
+      "stress": 0
+    },
+    "heavy50": {
+      "template": 40,
+      "integration": 10,
+      "stress": 0
+    },
+    "all20integration": {
+      "template": 0,
+      "integration": 20,
+      "stress": 0
+    },
+    "mixed20_plus2stress": {
+      "template": 16,
+      "integration": 4,
+      "stress": 2
+    }
+  },
+  "cloud": {
+    "region": "East US",
+    "os": "Linux",
+    "e8sv5_usd_per_allocated_hour": 0.504,
+    "e16sv5_usd_per_allocated_hour": 1.008,
+    "monthly_requests_assumed": 20,
+    "uncached_candidates_per_request_assumed": 2,
+    "worker_hours_per_attempt_assumed": 1,
+    "attempt_multiplier_assumed": 1.25,
+    "blob_hot_lrs_usd_per_gb_month": 0.0208,
+    "excludes": [
+      "disk",
+      "egress",
+      "idle allocation",
+      "tool/IP licenses",
+      "operations",
+      "tax"
+    ]
+  },
+  "proposed_pricing": {
+    "engineer_monthly": 149,
+    "price_test_band": [
+      99,
+      199
+    ],
+    "engineer_included_provider_cost": 30,
+    "engineer_internal_units": 300,
+    "team_monthly_hypothesis": 499,
+    "team_editors_hypothesis": 5,
+    "team_provider_allowance_hypothesis": 100,
+    "status": "unapproved hypotheses; team contingent on actual collaboration and costs; custom bring-up separately scoped"
+  },
+  "sources": {
+    "openai": "https://developers.openai.com/api/docs/pricing.md",
+    "terra": "https://developers.openai.com/api/docs/models/gpt-6.1-terra.md",
+    "reasoning": "https://developers.openai.com/api/docs/guides/reasoning",
+    "anthropic": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "groq": "https://console.groq.com/docs/model/openai/gpt-oss-120b",
+    "groq_cache": "https://console.groq.com/docs/prompt-caching",
+    "chipagents": "https://chipagents.ai/ic-star",
+    "cadence": "https://newsroom.cadence.com/press-releases/press-release-details/2026/Cadence-Expands-ChipStack-AI-Super-Agent-with-a-New-Agent-for-RTL-Generation-and-Early-PPA-Optimization/default.aspx",
+    "allspice": "https://allspice.io/plans",
+    "copilot": "https://docs.github.com/en/copilot/get-started/plans",
+    "cursor": "https://cursor.com/pricing",
+    "cursor_legacy": "https://prod.cursor.com/docs/models-and-pricing",
+    "fusesoc": "https://github.com/olofk/fusesoc",
+    "amd_licenses": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html",
+    "amd_faq": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/licensing-faq.html",
+    "amd_devices": "https://docs.amd.com/r/2025.2-English/ug973-vivado-release-notes-install-license/Supported-Devices",
+    "amd_board": "https://docs.amd.com/r/2025.2-English/ug994-vivado-ip-subsystems/Using-the-Platform-Board-Flow-in-IP-Integrator",
+    "azure_specs": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/memory-optimized/esv5-series?tabs=sizebasic",
+    "azure_vm": "https://prices.azure.com/api/retail/prices?%24filter=serviceName%20eq%20%27Virtual%20Machines%27%20and%20armRegionName%20eq%20%27eastus%27%20and%20%28armSkuName%20eq%20%27Standard_E8s_v5%27%20or%20armSkuName%20eq%20%27Standard_E16s_v5%27%29&currencyCode=USD",
+    "azure_blob": "https://prices.azure.com/api/retail/prices?%24filter=serviceName%20eq%20%27Storage%27%20and%20armRegionName%20eq%20%27eastus%27%20and%20productName%20eq%20%27General%20Block%20Blob%20v2%27%20and%20skuName%20eq%20%27Hot%20LRS%27&currencyCode=USD",
+    "azure_disk": "https://prices.azure.com/api/retail/prices?%24filter=serviceName%20eq%20%27Storage%27%20and%20armRegionName%20eq%20%27eastus%27%20and%20productName%20eq%20%27Premium%20SSD%20Managed%20Disks%27%20and%20skuName%20eq%20%27P15%20LRS%27&currencyCode=USD"
+  }
+}

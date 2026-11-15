@@ -1,0 +1,88 @@
+[
+  {
+    "label": "published-input",
+    "lanes": 1,
+    "result": "PRODUCT_FIT: PASS (26/26 checks; 3 app-side pending)",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-B",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\tests\\product_fit_check.py",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T011930Z_n8_l1",
+      "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\siliconos-6bccf63e-f83a-4e12-88e6-78b20d120b65-n8-l1-handoff.zip",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l1"
+    ]
+  },
+  {
+    "label": "cleanroom",
+    "lanes": 1,
+    "result": "PRODUCT_FIT: PASS (28/28 checks; 3 app-side pending)",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-B",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\tests\\product_fit_check.py",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021043Z_n8_l1",
+      "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\siliconos-6bccf63e-f83a-4e12-88e6-78b20d120b65-n8-l1-handoff.zip",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l1"
+    ]
+  },
+  {
+    "lanes": 1,
+    "same_length": true,
+    "byte_differences": [
+      123,
+      125,
+      126,
+      129
+    ],
+    "old_sha256": "63c19180aa6ea09513a2b5ec4fb8a2966af64161de3c400614f42cc191909bfc",
+    "fresh_sha256": "8ecee10ec08726bc92077741f02590a21779a3627448fc5fa5902c05a31f6165"
+  },
+  {
+    "label": "published-input",
+    "lanes": 4,
+    "result": "PRODUCT_FIT: PASS (26/26 checks; 3 app-side pending)",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-B",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\tests\\product_fit_check.py",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\results\\20261115T012007Z_n8_l4",
+      "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\siliconos-3abe54e6-25d2-4eb7-90bf-dd3b39f3a4e9-n8-l4-handoff.zip",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\build\\n8_l4"
+    ]
+  },
+  {
+    "label": "cleanroom",
+    "lanes": 4,
+    "result": "PRODUCT_FIT: PASS (28/28 checks; 3 app-side pending)",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-B",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\tests\\product_fit_check.py",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021100Z_n8_l4",
+      "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\siliconos-3abe54e6-25d2-4eb7-90bf-dd3b39f3a4e9-n8-l4-handoff.zip",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l4"
+    ]
+  },
+  {
+    "lanes": 4,
+    "same_length": true,
+    "byte_differences": [
+      123,
+      126,
+      129
+    ],
+    "old_sha256": "500cc93bf500fc0b3f8fbe19f727ecf7493f97f8886a31bb709a8934155ce770",
+    "fresh_sha256": "4c2783b5ea23188806c15c8cf0ea8b2f5e5c577ac1d16f613294126a83f3833a"
+  },
+  {
+    "negative_wrong_zip": "correctly rejected",
+    "command": [
+      "C:\\Python314\\python.exe",
+      "-B",
+      "C:\\Users\\drewa\\FabZero\\hw\\matmul_board\\tests\\product_fit_check.py",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\results\\20261115T021043Z_n8_l1",
+      "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree\\research_notes\\SiliconeOS update review 2026-11-14\\siliconos-3abe54e6-25d2-4eb7-90bf-dd3b39f3a4e9-n8-l4-handoff.zip",
+      "C:\\Users\\drewa\\FabZero-cleanroom\\hw\\matmul_board\\build\\n8_l1"
+    ]
+  }
+]

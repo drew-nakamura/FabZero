@@ -1,0 +1,115 @@
+{
+  "type": "supplemental-research-not-a-scoring-round",
+  "checked_on": "2026-11-14",
+  "sources": [
+    {
+      "id": "R01",
+      "title": "Lunar Energy: variant testing and traceability",
+      "url": "https://www.ni.com/en/solutions/energy/case-studies/scaling-power-conversion-test-startup-speed.html",
+      "publisher_version_date": "NI-hosted customer-authored case; Ash Mistry, Lunar Energy; publication date not displayed",
+      "section": "The Challenge; Why Fragmented Test Approaches Fall Short; Scaling Output Without Scaling Headcount",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened original and relevant full sections."
+    },
+    {
+      "id": "R02",
+      "title": "Danfoss: frequent configuration changes and repeatable tests",
+      "url": "https://www.ni.com/en/solutions/transportation/case-studies/improve-test-coverage-documentation-and-traceability-by-integrating-python-automation-with-hil-testing.html",
+      "publisher_version_date": "NI-hosted customer-authored case; Dirk Runge, Danfoss; publication date not displayed",
+      "section": "Working with MATS; Adding a Python interface; The Outcome",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened original and relevant full sections."
+    },
+    {
+      "id": "R03",
+      "title": "AMD: validation at separate design stages",
+      "url": "https://docs.amd.com/r/2025.2-English/ug949-vivado-design-methodology/Validating-at-Each-Design-Stage",
+      "publisher_version_date": "AMD UG949, 2025.2, release 2025-11-20",
+      "section": "Validating at Each Design Stage",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened version matching recorded project tools."
+    },
+    {
+      "id": "R04",
+      "title": "AMD: routed timing evidence",
+      "url": "https://docs.amd.com/r/2025.2-English/ug906-vivado-design-analysis/Report-Timing-Summary",
+      "publisher_version_date": "AMD UG906, 2025.2, release 2025-12-10",
+      "section": "Report Timing Summary, final paragraphs",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened original and final paragraphs."
+    },
+    {
+      "id": "R05",
+      "title": "AMD: matrix multiplication already has established implementations",
+      "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vitis/vitis-libraries/vitis-blas.html",
+      "publisher_version_date": "AMD live product/library page; undated, checked 2026-11-14",
+      "section": "Functions; Function Implementation Types",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened original."
+    },
+    {
+      "id": "R06",
+      "title": "AMD: parallelism can be limited by interface bandwidth",
+      "url": "https://docs.amd.com/r/2025.2-English/Vitis-Tutorials-Vitis-HLS/Compare-results",
+      "publisher_version_date": "AMD XD261, 2025.2, release 2025-12-05",
+      "section": "Beamformer Analysis: Compare results",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Root opened original."
+    },
+    {
+      "id": "R07",
+      "title": "Vivado native project archiving",
+      "url": "https://docs.amd.com/r/2025.2-English/ug835-vivado-tcl-commands/archive_project",
+      "publisher_version_date": "AMD UG835, 2025.2, release 2025-11-20",
+      "section": "Description; Arguments; hook-script tip",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher checked; root independently opened original."
+    },
+    {
+      "id": "R08",
+      "title": "FuseSoC parameterized simulation/synthesis workflows",
+      "url": "https://fusesoc.readthedocs.io/en/stable/user/build_system/core_files.html",
+      "publisher_version_date": "FuseSoC stable documentation labeled 2.4.7; publication date not displayed",
+      "section": "Filesets; Targets; Inheritance; Signed core files",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher checked; root independently opened original."
+    },
+    {
+      "id": "R09",
+      "title": "Edalize build input and flow metadata",
+      "url": "https://edalize.readthedocs.io/en/latest/edam/api.html",
+      "publisher_version_date": "Edalize rolling latest EDAM documentation; publication date not displayed",
+      "section": "Introduction; File; Dependency; Flow options",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher checked original; root did not independently refetch."
+    },
+    {
+      "id": "R10",
+      "title": "OpenTitan loaded artifact identity and mutable memory state",
+      "url": "https://opentitan.org/book/doc/getting_started/setup_fpga.html",
+      "publisher_version_date": "lowRISC/OpenTitan rolling master documentation; publication date not displayed",
+      "section": "Automatic loading; custom bitstream; USR_ACCESS and Loading Bitstreams",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher checked; root independently opened identity section."
+    },
+    {
+      "id": "R11",
+      "title": "OpenTitan issue: source hashing can miss command-line dependencies",
+      "url": "https://github.com/lowRISC/opentitan/issues/31264",
+      "publisher_version_date": "lowRISC/OpenTitan contributor issue, opened 2026-09-08; displayed open when checked",
+      "section": "Background, final paragraph",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher and root independently read original issue and date/state."
+    },
+    {
+      "id": "R12",
+      "title": "AMD native 32-bit loaded-design metadata",
+      "url": "https://docs.amd.com/r/en-US/ug570-ultrascale-configuration/USR_ACCESSE2",
+      "publisher_version_date": "AMD UG570 revision 1.20.1, release 2025-03-04",
+      "section": "USR_ACCESSE2",
+      "checked_on": "2026-11-14 America/Los_Angeles",
+      "inspection": "Researcher checked original; root did not independently refetch."
+    }
+  ],
+  "source_snapshots_downloaded": false
+}

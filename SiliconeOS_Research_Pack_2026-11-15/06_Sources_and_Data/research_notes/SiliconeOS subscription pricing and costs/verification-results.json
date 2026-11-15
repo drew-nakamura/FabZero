@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "checks": 53,
+  "html_bytes": 10380,
+  "verification": "Node syntax compile plus fake DOM execution of actual inline script, real input listener, state restoration and independent expected values; not browser visual QA"
+}

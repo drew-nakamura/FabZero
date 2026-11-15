@@ -1,0 +1,36 @@
+[
+  {
+    "parent_id": "8a76e61a-512a-47e3-82ae-a707f236898f",
+    "child_id": "b55672e2-5773-42ae-a319-467ca4b8d2c3",
+    "lanes": 1,
+    "cycles": 512,
+    "evidence": "board_measured",
+    "correct": true,
+    "physical_fpga": true,
+    "board_result_folder": "20261115T054545Z_n8_l1",
+    "outputs_checked": 64,
+    "oracle_match": true,
+    "signer_build_artifact_hash_verification": true,
+    "isolated_acceptance_of_actual_parent": true,
+    "parent_source_identity_match": true,
+    "input_sha256": "62878b156ccf0f29d6a22777369f4e8f365263d8b6862507995e1eca45824fe0",
+    "board_result_sha256": "a7365f7bdef1d7ab8ef5901f1f9ba4559add3f509a19c545f05aa5ca5ffc0379"
+  },
+  {
+    "parent_id": "0c8276d5-eae7-4c8f-9331-b3aa50cb6a97",
+    "child_id": "f33c81aa-5c88-4490-8657-a0480463c819",
+    "lanes": 4,
+    "cycles": 128,
+    "evidence": "board_measured",
+    "correct": true,
+    "physical_fpga": true,
+    "board_result_folder": "20261115T054702Z_n8_l4",
+    "outputs_checked": 64,
+    "oracle_match": true,
+    "signer_build_artifact_hash_verification": true,
+    "isolated_acceptance_of_actual_parent": true,
+    "parent_source_identity_match": true,
+    "input_sha256": "62878b156ccf0f29d6a22777369f4e8f365263d8b6862507995e1eca45824fe0",
+    "board_result_sha256": "1038374dcb5db4d762d8c97f4d7e505154dff4c7b24881a0a01142c04d41abcd"
+  }
+]

@@ -1,0 +1,31 @@
+PASS  required fields present
+PASS  schema_version 1
+PASS  status pass and evidence board_measured
+PASS  parent_run_id == ZIP run_id
+PASS  source_sha256 == parent map exactly (incl. tb.sv)
+PASS  ZIP entries match their manifest hashes
+PASS  N/LANES agree: ZIP, build, interface
+PASS  identity 0x53494c01
+PASS  inputs.json == ZIP inputs
+PASS  input_sha256 == app raw-byte rule
+PASS  ZIP expected outputs == own oracle
+PASS  board outputs == own oracle (first run)
+PASS  repeat-without-reload outputs == oracle
+PASS  reset+reload outputs == oracle
+PASS  output_sha256 == compact JSON rule
+PASS  cycles == N^3/LANES == 128 (all three runs, and ZIP)
+PASS  exactly one bitstream in build dir
+PASS  actual .bit sha == manifest == result
+PASS  implementation_manifest_sha256 == actual manifest file
+PASS  manifest timing_met and drc_clean, result timing_met
+PASS  every report hash in manifest matches the file
+PASS  manifest artifact hashes match files
+PASS  built kernel == ZIP hardware/matmul.sv
+PASS  built wrapper == ZIP integration/matmul_axi.sv
+PASS  result records this ZIP
+PASS  configured clock consistent
+INFO  bitstream reused: built from the pinned RTL, byte-identical to this ZIP's RTL (commit 84fcae1000f056f869b6b84a28804b98cb7b6a48)
+PENDING  board.board_revision is null; app validator requires a nonempty string until they change it (D5)
+PENDING  board.kernel_version is null; app validator requires a nonempty string until they change it (D5)
+PENDING  HMAC signing/import is done by the app-side adapter (not in pushed app code yet)
+PRODUCT_FIT: PASS (26/26 checks; 3 app-side pending)

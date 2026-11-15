@@ -1,0 +1,199 @@
+{
+  "round": 2,
+  "state": "awaiting-user",
+  "packet_sha256": "95b039101e114f86642602938c31a92dfbf31e44748a3e3d7b2b51a1c48208bd",
+  "rubric_sha256": "7088b5c65652d5cd2c3d9b93211a69f31ee799547b1bbab4764b1a7f631882f5",
+  "categories": [
+    "Execution & design",
+    "Real problem, real user",
+    "Path to customers",
+    "Pitch & demo",
+    "Creative use of AI"
+  ],
+  "judges": {
+    "technical": {
+      "role": "siliconeos-judge-technical",
+      "scores": [
+        15,
+        10,
+        8,
+        6,
+        6
+      ],
+      "total": 45,
+      "inspected": "Frozen packet and guide hashes; newest task authority; data-review ledger; pinned upstream readiness/pilot docs; prior independent 52-binding implementation review remains applicable. No fresh device run.",
+      "rationales": [
+        "Real two-artifact physical tests and routed implementations, independently checked outputs/reset/artifact identity and documented app QA support a functioning core. Complete app import/archived parent/receipt replay, cold usability and live presentation remain unobserved.",
+        "Specific engineer and plausible job; adjacent named cases are not target-user conversations or actual SiliconeOS use.",
+        "Scoped pilot, buyer roles, opt-in mechanism and proposed lab/professional route earn partial model credit; price, reachable prospect and switching proof are missing.",
+        "Concrete honest result/story, but no supplied recording or timed main-flow rehearsal; cannot grade future presentation quality.",
+        "Structured spec adapter/provenance/guardrails/mocked tests establish purposeful integration; actual provider quality and useful distinctive behavior remain unobserved."
+      ],
+      "objections": [
+        "Do not generalize identity/ramp repetitions into broad arithmetic coverage.",
+        "Reported counters and routed resources support a capacity tradeoff; calculated microseconds, estimated Fmax/power cannot become measured system results.",
+        "Null parent IDs and no app import/replay leave the complete receipt open.",
+        "Respect recorded-only choice and retain rubric constraint; invent neither exception nor disqualification.",
+        "Catalog hardware is not proven AI-generated RTL."
+      ],
+      "actions": [
+        "Close one accepted application-parent/archived-vector/physical-import/receipt replay chain and show mismatch rejection.",
+        "Capture and time a coherent genuine recorded journey with accurate evidence labels.",
+        "Observe a relevant engineer; retain actual useful AI/provider examples if part of the journey."
+      ]
+    },
+    "customer": {
+      "role": "siliconeos-judge-customer",
+      "scores": [
+        15,
+        10,
+        12,
+        6,
+        6
+      ],
+      "total": 49,
+      "inspected": "Verified frozen packet/guide hashes; read pinned upstream readiness/pilot docs and saved data assessment. Did not execute product or inspect other round-002 verdicts. Technical conclusions rely on prior independent checks.",
+      "rationales": [
+        "Documented paired-app QA, simulations and verified routed/physical evidence support the middle functioning-prototype anchor; complete receipt/cold use/presentation missing.",
+        "Persona/job and adjacent cases are plausible; no likely-user interview or observed SiliconeOS use reaches the middle user anchor.",
+        "Bounded pilot and potential maintained-runner/team-history value form a plausible untested model with a vague acquisition route: fits the published middle anchor. No named prospect, agreed price, purchase process or switching evidence supports higher.",
+        "Understandable truthful narration and physical result; no recording/rehearsal showing the journey earns the demonstrated-main-flow anchor.",
+        "Purposeful structured adapter and deterministic checks go beyond AI-written copy/code; actual provider interaction/usefulness remains unproved."
+      ],
+      "objections": [
+        "Research volume, market totals and vendor statistics cannot become demand/ROI evidence.",
+        "384 comparisons are six jobs on one input pair, not 384 independent tests.",
+        "Fourfold reported compute-count ratio is not full application speedup; 10.2x accelerator-plus-wrapper LUT cost and estimated power need labels.",
+        "Saved board-to-build links are supported; complete customer-facing app receipt is not.",
+        "Local opt-in mechanism is not actual interest; catalog physical core is not demonstrated AI-generation."
+      ],
+      "actions": [
+        "Observe a qualified engineer on the actual supported task, capture their current alternative and concrete follow-up.",
+        "Record and review the genuine journey within four minutes, including truthful unfinished boundaries.",
+        "Make a concrete pilot offer to a reachable prospect: buyer, task, deliverable, acceptance, proposed price and next commitment, labeling unconfirmed elements."
+      ]
+    },
+    "pitch-ai": {
+      "role": "siliconeos-judge-pitch-ai",
+      "scores": [
+        15,
+        10,
+        8,
+        6,
+        6
+      ],
+      "total": 45,
+      "inspected": "Verified packet hash; read guide, task, upstream readiness/pilot docs, data assessment, both physical JSON results and routed comparison. No other verdicts consulted, writes or execution.",
+      "rationales": [
+        "Working hardware core, report/resource results, repeat/reset and bindings plus documented software QA merit middle anchor; app/board chain, cold usability and presentation reliability remain unobserved.",
+        "Coherent engineer/task and plausible adjacent cases; no actual user observation or target-user interview.",
+        "Bounded pilot/buyer hypotheses and possible maintained-runner/team-experiment value improve model, but no price, named prospect, switching reason or follow-up.",
+        "Better substance for a story, but script/screenshots are not a supplied timed main-flow recording. Opening still lacks a tangible observed user consequence.",
+        "Adapter/provenance/constraints/tests demonstrate purposeful integration; no real useful provider or distinctive outcome. Do not call catalog core AI-generated."
+      ],
+      "objections": [
+        "Keep identity/ramp case and reported compute-counter qualifications.",
+        "Distinguish accelerator/wrapper resource scope, calculated time, rough Fmax and estimated power.",
+        "Do not promote runner evidence to complete app receipt with null parent linkage.",
+        "Recorded-only plan stands; rubric constraint is not permission to invent a blanket cap or disqualification.",
+        "An AI prompt-to-bitstream transition must not visually imply AI generated the catalog RTL."
+      ],
+      "actions": [
+        "Record one genuine coherent journey on the intended machine and rehearse under four minutes.",
+        "Observe a relevant engineer, document their problem/current alternative/task outcome/follow-up.",
+        "Capture useful actual AI supported/ambiguous/unsupported interactions with review and independent deterministic checks."
+      ]
+    }
+  },
+  "rows": [
+    {
+      "category": "Execution & design",
+      "available": 25,
+      "scores_by_judge": {
+        "technical": 15,
+        "customer": 15,
+        "pitch-ai": 15
+      },
+      "mean": 15.0,
+      "range": [
+        15,
+        15
+      ],
+      "round001_mean": 5,
+      "delta": 10.0
+    },
+    {
+      "category": "Real problem, real user",
+      "available": 25,
+      "scores_by_judge": {
+        "technical": 10,
+        "customer": 10,
+        "pitch-ai": 10
+      },
+      "mean": 10.0,
+      "range": [
+        10,
+        10
+      ],
+      "round001_mean": 10,
+      "delta": 0.0
+    },
+    {
+      "category": "Path to customers",
+      "available": 20,
+      "scores_by_judge": {
+        "technical": 8,
+        "customer": 12,
+        "pitch-ai": 8
+      },
+      "mean": 9.333333333333334,
+      "range": [
+        8,
+        12
+      ],
+      "round001_mean": 4,
+      "delta": 5.333333333333334
+    },
+    {
+      "category": "Pitch & demo",
+      "available": 15,
+      "scores_by_judge": {
+        "technical": 6,
+        "customer": 6,
+        "pitch-ai": 6
+      },
+      "mean": 6.0,
+      "range": [
+        6,
+        6
+      ],
+      "round001_mean": 6,
+      "delta": 0.0
+    },
+    {
+      "category": "Creative use of AI",
+      "available": 15,
+      "scores_by_judge": {
+        "technical": 6,
+        "customer": 6,
+        "pitch-ai": 6
+      },
+      "mean": 6.0,
+      "range": [
+        6,
+        6
+      ],
+      "round001_mean": 3,
+      "delta": 3.0
+    }
+  ],
+  "mean_total": 46.333333333333336,
+  "range_total": [
+    45,
+    49
+  ],
+  "previous_mean_total": 28,
+  "delta": 18.333333333333336,
+  "official_score": false,
+  "next_round_authorized": false
+}

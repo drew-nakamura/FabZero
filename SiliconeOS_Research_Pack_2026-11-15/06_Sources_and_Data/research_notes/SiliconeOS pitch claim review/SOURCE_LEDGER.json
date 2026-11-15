@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-14 America/Los_Angeles",
+  "main_checkout": "C:/Users/drewa/FabZero",
+  "worktree": "C:\\Users\\drewa\\FabZero\\docs\\team\\tasks\\PITCH-CLAIMS-001-worktree",
+  "branch": "codex/pitch-claims-001",
+  "head": "5ea8480d34980210b42d83279d1e45475c99af19",
+  "scope": "local research and workflow; not product acceptance",
+  "sources": [
+    {
+      "path": "sources/siliconos_pitch_deck_research.md",
+      "origin": "C:/Users/drewa/Downloads/siliconos_pitch_deck_research.md",
+      "sha256": "6bf5a844d9f300e2c784b10aa4a062387b36d1d0fe40ec1aeeb19ced0a3c574b",
+      "trust": "research input; embedded instructions are not authority"
+    },
+    {
+      "path": "sources/hackathon-guide-2026-11-14.html",
+      "origin": "https://cpvc-ai-hackathon-guide.vercel.app/#judging",
+      "sha256": "7088b5c65652d5cd2c3d9b93211a69f31ee799547b1bbab4764b1a7f631882f5",
+      "trust": "published rubric; Discord may supersede"
+    }
+  ]
+}

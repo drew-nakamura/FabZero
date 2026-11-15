@@ -1,0 +1,584 @@
+[
+  {
+    "url": "https://antmicro.com/about/contact/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Antmicro"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://antmicro.com/blog/2024/08/parameterizable-digital-logic-design-with-the-topwrap-toolkit/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Antmicro"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://antmicro.com/technologies/fpga/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Antmicro"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://antmicro.github.io/topwrap/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Antmicro"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://assets-ctf.baslerweb.com/dg51pdwahxgw/1AGM8lfcGmEoRVpaKP5waH/a857cd4fc412656a7801939ecbb75da4/20261001_Q3_final_e.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Basler"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://en.ids-imaging.com/history-of-the-company.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://en.ids-imaging.com/ids-nxt-malibu-oslo.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://en.ids-imaging.com/technical-articles-details/items/ids-nxt-ai-for-all.html?label=53",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://github.com/missinglinkelectronics/fpga-vbs",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Missing Link Electronics"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://investors.ouster.com/node/12271/pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Ouster"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://ir.latticesemi.com/news-releases/news-release-details/lattice-advances-fpga-design-new-leadership-ai-driven",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://leopardimaging.com/contact-us/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Leopard Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://leopardimaging.com/leopard-imaging-to-showcase-advanced-ai-perception-and-vision-solutions-at-automate-2026/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Leopard Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://leopardimaging.com/product/platform-partners/amd/li-multi-sensor-cphy-fmc-101h/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Leopard Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://logictronix.com/fpga-design-services/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "LogicTronix"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://logictronix.com/solutions-ip-cores/logictronix-fpga-ip-cores/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "LogicTronix"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://ouster.applytojob.com/apply/PvWk0ZFwbL/FPGA-Design-Engineer",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Ouster"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://ouster.com/company/contact-us",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Ouster"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://theshdgroup.com/wp-content/uploads/2025/07/Edge-AI-2025-Report-070125-final-1.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M1",
+      "M2"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://tools.sick.com/annual-report/SICK_Geschaeftsbericht_2025_EN.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "SICK"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://topic.nl/nieuws/integration-of-topic-with-ts-group",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "TOPIC Embedded Systems"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://topic.nl/products",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "TOPIC Embedded Systems"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://topic.nl/us/dyplo",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "TOPIC Embedded Systems"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.altera.com/newsroom/altera-fpga-ai-suite-26-1-1-deterministic-physical-ai-spatial-architecture",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.altera.com/newsroom/altera-launches-quartusIQ",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/sick-2d-lidar.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "SICK"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/sick-case-study.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "SICK"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/content/dam/amd/en/documents/resources/case-studies/xnext-pbx.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Xnext"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/content/dam/amd/en/documents/solutions/automotive/wp-designing-for-the-ai-defined-vehicle.pdf",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/licensing-faq.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.amd.com/en/resources/case-studies/prophesee.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Prophesee"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.baslerweb.com/en-us/innovation/fpga-programming-python/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Basler"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.baslerweb.com/en-us/learning/computing-power-ai-vision-systems/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Basler"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.enclustra.com/en/company/news-events/news/enclustra-partner-with-makarenalabs-on-edge-ai-orchestration/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Enclustra"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.enclustra.com/en/design-services/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Enclustra"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.grandviewresearch.com/industry-analysis/edge-ai-market-report",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M5"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.hema.de/loesungen/amd-fpga-plattform",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "hema electronic"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.hema.de/unternehmen/kontakt",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "hema electronic"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.ids-imaging.us/about-us.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.ids-imaging.us/contact.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.ids-imaging.us/ids-nxt-system-components.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "IDS Imaging"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.marketsandmarkets.com/Market-Reports/fpga-market-194123367.html",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M3"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.marketsandmarkets.com/ResearchInsight/edge-ai-hardware-market-size-outlook.asp",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M4"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.missinglinkelectronics.com/contact/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Missing Link Electronics"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.missinglinkelectronics.com/design-services/competence-areas/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Missing Link Electronics"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.prophesee.ai/about-prophesee/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Prophesee"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.prophesee.ai/contact-us/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Prophesee"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.prophesee.ai/event-based-metavision-amd-kria-starter-kit/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Prophesee"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.prophesee.ai/newsroom/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Prophesee"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.sec.gov/Archives/edgar/data/1816581/000162828026069487/exhibit991-9302026.htm",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Ouster"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000021/amd-20251227.htm",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M11"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926034452/ex_1012509.htm",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M10"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.semi.org/en/semi-press-release/electronic-system-design-industry-posts-$5.7-billion-in-revenue-in-q2-2026-esd-alliance-reports",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [],
+    "metric_ids": [
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.sick.com/us/en/contact/w/contactflyout_general_contacts",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "SICK"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.sick.com/us/en/ifrs-figures-for-the-sick-group/w/key",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "SICK"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.starwaredesign.com/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Starware Design"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.starwaredesign.com/fpga-meets-devops-introduction/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Starware Design"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  },
+  {
+    "url": "https://www.x-next.com/",
+    "checked_by_researchers_on": "2026-11-15",
+    "company_ids": [
+      "Xnext"
+    ],
+    "metric_ids": [],
+    "source_kind": "Original company/vendor/publisher/regulatory source",
+    "writer_live_refetch": false
+  }
+]
