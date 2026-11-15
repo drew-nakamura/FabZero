@@ -8,3 +8,7 @@ build/*/proj/
 __pycache__/
 # The repository root ignores vivado*.log; keep this folder's build logs as evidence.
 !vivado*.log
+# Live board state and xsdb/hw_server scratch (not evidence).
+results/board_check.json
+results/.xsdb/
+dfx_runtime.txt

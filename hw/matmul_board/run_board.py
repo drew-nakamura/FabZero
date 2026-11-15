@@ -41,6 +41,9 @@ XSDB = Path(r"C:/AMDDesignTools/2025.2/Vivado/bin/xsdb.bat")
 IDENTITY = 0x53494C01
 XSDB_TIMEOUT_S = 600
 LIVE_RESULTS = HERE / "results"
+# xsdb/hw_server write scratch files (dfx_runtime.txt) into their working directory
+# and hw_server outlives xsdb, so they run from this persistent, git-ignored folder.
+XSDB_WORKDIR = LIVE_RESULTS / ".xsdb"
 
 
 # ------------------------------------------------------------- reference model
@@ -76,6 +79,11 @@ def comparator_self_check(expected):
 
 def canon_sha(obj):
     return hashlib.sha256(json.dumps(obj, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def xsdb_workdir():
+    XSDB_WORKDIR.mkdir(parents=True, exist_ok=True)
+    return XSDB_WORKDIR
 
 
 def file_sha(path):
@@ -186,7 +194,7 @@ def check_board(results, timeout_s=120):
            "ok": False, "cable_serial": None, "devices": [], "reason": None}
     try:
         p = subprocess.run([str(XSDB), str(script)], capture_output=True, text=True,
-                           timeout=timeout_s, cwd=HERE)
+                           timeout=timeout_s, cwd=xsdb_workdir())
         text = p.stdout + p.stderr
     except (OSError, subprocess.TimeoutExpired) as e:
         text = ""
@@ -401,7 +409,7 @@ def run_xsdb(bit, bdir, A, B, n, extra):
                inp.as_posix(), str(n)]
         print("> " + " ".join(cmd), flush=True)
         try:
-            p = subprocess.run(cmd, capture_output=True, text=True, timeout=XSDB_TIMEOUT_S, cwd=bdir)
+            p = subprocess.run(cmd, capture_output=True, text=True, timeout=XSDB_TIMEOUT_S, cwd=xsdb_workdir())
             if p.returncode != 0:
                 extra.append(f"xsdb exit code {p.returncode}")
             return p.stdout + ("\n--- stderr ---\n" + p.stderr if p.stderr else "")
