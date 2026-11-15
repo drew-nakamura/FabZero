@@ -62,23 +62,28 @@ const spec = {operation: 'matrix_multiply', size: 8, precision: 'int8', target: 
 function rtlReport(overrides = {}) {
   return {id: 'fixture-run', created_at: '2026-11-14T00:00:00Z', evidence: 'ai_generated_rtl', correct: true, spec: {...spec}, lanes: 4, seed: 42, prompt: 'Multiply signed INT8 matrices', cycles: 129, projected_us: 1.29, outputs: [123], limitations: ['UI fixture only'], simulator: 'Icarus fixture', source_sha256: {'matmul.sv': 'generated-fixture-hash', 'tb.sv': 'testbench-fixture-hash'}, input_sha256: 'input-fixture-hash', output_sha256: 'output-fixture-hash', source_files: {'matmul.sv': 'verified-fixture-source'}, ...overrides};
 }
+function planFixture(body) {
+  return {schema_version: 1, evidence: 'build_plan', block_id: body.lanes === 1 ? 'siliconos.matmul.serial.v1' : 'siliconos.matmul.parallel4.v1', spec: body.spec, parameters: {N: body.spec.size, LANES: body.lanes}, recipe_sha256: 'recipe' + body.lanes, source_sha256: {'hardware/matmul.sv': 'f81498d1fdb9'}, selection: 'deterministic constraint selection; no generated RTL'};
+}
+const settle = async () => {for (let i = 0; i < 6; i++) await new Promise(resolve => setImmediate(resolve));};
 async function app(options = {}) {
   const document = documentFixture(), calls = [], routes = new Map();
   const reports = options.runs || [];
   const fetch = async (url, init = {}) => {
     const body = init.body ? JSON.parse(init.body) : undefined;
-    calls.push({url, body});
+    calls.push({url, body, t: Date.now()});
     let data, ok = true;
     if (routes.has(url)) {const response = await routes.get(url)(body); data = response.data; ok = response.ok !== false;}
     else if (url === '/api/status') data = {ai: true, simulator: true, ...options.status};
     else if (url === '/api/fpga/builds') data = {builds: [buildEvidence(1), buildEvidence(4)]};
     else if (url === '/api/runs') data = reports;
-    else if (url === '/api/explore') data = {spec: body.spec, candidates: [1, 4].map(lanes => ({lanes, id: 'mac' + lanes, within_lane_limit: lanes <= body.spec.max_lanes, cycles: 512 / lanes, projected_us: 5.12 / lanes})), provisional: 'mac4', warning: 'Unverified resources.'};
+    else if (url === '/api/plan') data = planFixture(body);
+    else if (url === '/api/explore') data ={spec: body.spec, candidates: [1, 4].map(lanes => ({lanes, id: 'mac' + lanes, within_lane_limit: lanes <= body.spec.max_lanes, cycles: 512 / lanes, projected_us: 5.12 / lanes})), provisional: 'mac4', warning: 'Unverified resources.'};
     else throw new Error('Unconfigured fixture URL: ' + url);
     return {ok, json: async () => data, text: async () => typeof data === 'string' ? data : JSON.stringify(data)};
   };
   const context = vm.createContext({document, fetch, Blob, URL, setTimeout, matchMedia: () => ({matches: true})});
-  vm.runInContext(script + '\n' + pipelineScript + '\n;globalThis.ui={state,readSpec,fillSpec,updateTarget,updateGenerateRtl,setBusy,comparable,comparison,renderResult,history,generateRtl,pipe,renderPipeline,runPipeline,showRecorded,generateSpec};', context);
+  vm.runInContext(script + '\n' + pipelineScript + '\n;globalThis.ui={state,readSpec,fillSpec,updateTarget,updateGenerateRtl,setBusy,comparable,comparison,renderResult,history,generateRtl,pipe,renderPipeline,runPipeline,showRecorded,generateSpec,useExample,checkBoardNow,diag};', context);
   await new Promise(resolve => setImmediate(resolve));
   const get = id => document.getElementById(id);
   return {ui: context.ui, get, document, routes, calls, reports, prompt(value) {get('prompt').value = value; get('prompt').oninput();}};
@@ -238,10 +243,17 @@ test('simulation results link to their board runs and offer the FPGA handoff ZIP
 });
 
 test('board status is shown only from a fresh passing check', async () => {
-  const fresh = await app({status: {board: true, board_details: {available: true, checked_at: '2026-11-15T01:20:00Z'}}});
+  const fresh = await app({status: {board: true, board_details: {available: true, checked_at: '2026-11-15T01:20:00Z', last_check_ok: true}}});
   assert.match(fresh.get('target-state').textContent, /KV260 connected/);
-  const stale = await app({status: {board: false, board_details: {available: false, checked_at: '2026-11-15T00:00:00Z', reason: 'last board check is 900 s old'}}});
+  assert.equal(fresh.get('board-visual').attrs['data-state'], 'connected');
+  assert.match(fresh.get('board-visual').innerHTML, /<svg class="kv260"/);
+  const stale = await app({status: {board: false, board_details: {available: false, checked_at: '2026-11-15T00:00:00Z', cable_serial: 'XFL13U31JOU3A', last_check_ok: true, reason: 'last board check is 900 s old'}}});
   assert.match(stale.get('target-state').textContent, /not confirmed · last board check is 900 s old/);
+  assert.equal(stale.get('board-visual').attrs['data-state'], 'unknown', 'a stale passing check is drawn neither as connected nor as a fault');
+  const noCable = await app({status: {board: false, board_details: {available: false, checked_at: '2026-11-15T01:20:00Z', cable_serial: null, last_check_ok: false, reason: 'no JTAG cable'}}});
+  assert.equal(noCable.get('board-visual').attrs['data-state'], 'unplugged');
+  const noAnswer = await app({status: {board: false, board_details: {available: false, checked_at: '2026-11-15T01:20:00Z', cable_serial: 'XFL13U31JOU3A', last_check_ok: false, reason: 'board not detected'}}});
+  assert.equal(noAnswer.get('board-visual').attrs['data-state'], 'nopower');
   const none = await app();
   assert.match(none.get('target-state').textContent, /not checked/);
 });
@@ -302,14 +314,22 @@ test('Build runs every step in order and shows each step\'s artifacts and a 1 vs
   a.ui.fillSpec({...spec}, {size: 'user'}, {kind: 'ai', prompt: 'Fast 8x8 INT8 matmul on the KV260', model: 'openai/gpt-oss-20b'});
   await a.ui.runPipeline();
   for (const step of ['sim', 'handoff', 'vivado', 'board', 'run', 'import', 'compare']) assert.equal(a.ui.pipe.status[step], 'done', step);
-  for (const id of ['step-spec', 'step-rtl', 'step-vivado', 'step-board', 'step-results']) assert.equal(a.get(id).hidden, false, id);
+  const urls = a.calls.map(c => c.url), rtlEnd = urls.lastIndexOf('/api/runs/sim-4/handoff.json'), vivadoStart = urls.indexOf('/api/fpga/builds', rtlEnd);
+  const vivadoEnd = urls.lastIndexOf('/api/fpga/builds/4/reports/timing_summary.rpt'), boardStart = urls.indexOf('/api/board/check');
+  assert.ok(a.calls[vivadoStart].t - a.calls[rtlEnd].t >= 950, 'the finished RTL step stays on screen ~1 s before Vivado starts');
+  assert.ok(a.calls[boardStart].t - a.calls[vivadoEnd].t >= 950, 'the finished Vivado step stays on screen ~1 s before the board check');
+  for (const id of ['step-spec', 'step-diagram', 'step-rtl', 'step-vivado', 'step-board', 'step-results']) assert.equal(a.get(id).hidden, false, id);
   assert.match(a.get('flow-progress').innerHTML, /class="done"><a href="#step-results"><b>✓<\/b>Results/);
   assert.match(a.get('art-rtl').innerHTML, /hardware\/matmul\.sv/);
   assert.match(a.get('art-rtl').innerHTML, /64\/64 ✓/);
   assert.match(a.get('art-vivado').innerHTML, /reused, not rebuilt/);
   assert.match(a.get('art-vivado').innerHTML, /All user specified timing constraints are met\./);
   assert.match(a.get('art-vivado').innerHTML, /\/api\/fpga\/builds\/1\/reports\/timing_summary\.rpt/);
-  assert.match(a.get('art-board').innerHTML, /KV260 connected/);
+  assert.match(a.get('board-side').innerHTML, /KV260 connected/);
+  assert.equal(a.get('board-visual-big').attrs['data-state'], 'connected');
+  assert.equal(a.get('board-scene').attrs['data-state'], 'connected');
+  for (const node of ['XFL13U31JOU3A', 'xck26', 'arm_dap']) assert.match(a.get('board-side').innerHTML, new RegExp(`<li class="ok">((?!</li>).)*${node}`), node);
+  assert.equal(a.ui.state.boardActivity, null, 'the sidebar returns to the check result after the run');
   assert.match(a.get('art-board').innerHTML, /MM JOB first status=2/);
   assert.match(a.get('art-board').innerHTML, /\(64 values\)/);
   assert.match(a.get('art-board').innerHTML, /Identity register 0x53494C01/);
@@ -331,8 +351,88 @@ test('Build stops before programming when the board is not detected', async () =
   assert.notEqual(a.ui.pipe.status.run, 'done');
   assert.equal(called(a, '/api/runs/sim-1/board-run'), false);
   assert.match(a.get('art-board').innerHTML, /J4/);
+  assert.equal(a.get('board-visual-big').attrs['data-state'], 'unplugged');
+  assert.match(a.get('board-side').innerHTML, /USB-JTAG cable not found/);
+  assert.match(a.get('board-side').innerHTML, /<li class="miss">((?!<\/li>).)*USB-JTAG cable/);
   assert.equal(a.get('step-results').hidden, true);
   assert.equal(a.get('notice').className, 'notice error');
+});
+
+test('a cable without a responding board points at power (J12), not the cable', async () => {
+  const a = pipelineApp(await app(), {check: {available: false, cable_serial: 'XFL13U31JOU3A', devices: ['1  Xilinx X-MLCC-01 XFL13U31JOU3A'], reason: 'board not detected: need a JTAG cable with xck26 and arm_dap devices'}});
+  await a.ui.runPipeline();
+  assert.equal(a.ui.pipe.status.board, 'failed');
+  assert.equal(called(a, '/api/runs/sim-1/board-run'), false);
+  assert.equal(a.get('board-visual-big').attrs['data-state'], 'nopower');
+  const side = a.get('board-side').innerHTML;
+  assert.match(side, /J12/);
+  assert.match(side, /<li class="ok">((?!<\/li>).)*XFL13U31JOU3A/);
+  assert.match(side, /<li class="miss">((?!<\/li>).)*xck26/);
+  assert.match(side, /<li class="miss">((?!<\/li>).)*arm_dap/);
+});
+
+test('Check board animates a scan, then shows the board plugged in', async () => {
+  const a = pipelineApp(await app());
+  assert.equal(a.get('board-visual').attrs['data-state'], 'unknown');
+  const pending = a.ui.checkBoardNow();
+  assert.equal(a.get('board-visual').attrs['data-state'], 'checking');
+  assert.match(a.get('target-state').textContent, /Scanning JTAG/);
+  await pending;
+  assert.equal(a.get('board-visual').attrs['data-state'], 'connected');
+  assert.equal(a.get('target-state').attrs['data-state'], 'connected');
+  assert.match(a.get('target-state').textContent, /KV260 connected/);
+  assert.equal(called(a, '/api/runs/sim-1/board-run'), false, 'a check never programs the board');
+});
+
+test('the block diagram is developed from the validated plan after the spec and before any RTL runs', async () => {
+  const a = pipelineApp(await app());
+  a.routes.set('/api/spec', async () => ({data: {supported: true, explanation: 'Supported 8x8 INT8 GEMM.', spec: {...spec}, provenance: {size: 'user'}, unresolved: []}}));
+  assert.equal(a.get('step-diagram').hidden, true);
+  a.prompt('Fast 8x8 INT8 matmul on the KV260');
+  await a.ui.generateSpec();
+  await settle();
+  assert.equal(a.get('step-diagram').hidden, false);
+  assert.deepEqual([...new Set(a.calls.filter(c => c.url === '/api/plan').map(c => c.body.lanes))].sort(), [1, 4]);
+  const four = a.get('art-diagram').innerHTML;
+  assert.match(four, /siliconos\.matmul\.parallel4\.v1/);
+  assert.match(four, /CONCEPTUAL · NOT VIVADO/);
+  assert.match(four, /MAC 4/);
+  assert.match(four, /RTL DATA PATH \/ 8 × 8/);
+  assert.match(four, /32-bit acc/);
+  assert.match(four, /not a BRAM mapping claim/);
+  assert.match(four, /Zynq PS → AXI4-Lite → matmul_axi/);
+  assert.match(four, /0xA0000000/);
+  assert.match(a.get('flow-progress').innerHTML, /class="done"><a href="#step-diagram"><b>✓<\/b>Block diagram/);
+  assert.equal(called(a, '/api/simulate'), false, 'the diagram is a plan; nothing runs until Build');
+  assert.equal(a.get('step-rtl').hidden, true);
+  await a.document.querySelector('[data-diagram="1"]').onclick();
+  const one = a.get('art-diagram').innerHTML;
+  assert.match(one, /siliconos\.matmul\.serial\.v1/);
+  assert.match(one, /LANES=1/);
+  assert.doesNotMatch(one, /MAC 2/);
+});
+
+test('a 16 x 16 block diagram does not claim a KV260 bitstream', async () => {
+  const a = pipelineApp(await app());
+  await a.ui.useExample();
+  a.get('size').value = '16';
+  a.get('size').onchange();
+  await settle();
+  const html = a.get('art-diagram').innerHTML;
+  assert.match(html, /RTL DATA PATH \/ 16 × 16/);
+  assert.match(html, /SIMULATION ONLY/);
+  assert.doesNotMatch(html, /0xA0000000/);
+});
+
+test('a rejected plan shows a visible block diagram error instead of a diagram', async () => {
+  const a = pipelineApp(await app());
+  a.routes.set('/api/plan', async () => ({ok: false, data: {error: 'Unsupported catalog lane configuration.'}}));
+  await a.ui.useExample();
+  await settle();
+  assert.equal(a.ui.diag.status, 'failed');
+  assert.match(a.get('art-diagram').innerHTML, /Block diagram unavailable: Unsupported catalog lane configuration\./);
+  assert.doesNotMatch(a.get('art-diagram').innerHTML, /RTL DATA PATH/);
+  assert.match(a.get('flow-progress').innerHTML, /class="failed"><a href="#step-diagram">/);
 });
 
 test('Build refuses a bitstream that was not built from the simulated RTL', async () => {
@@ -364,6 +464,8 @@ test('the recorded run is labelled as recorded, not live', async () => {
   a.routes.set('/api/runs/sim-4', async () => ({data: simRun(4)}));
   await a.ui.showRecorded();
   assert.match(a.get('live-final').innerHTML, /Recorded real run \(not live\)/);
+  assert.equal(a.get('board-visual-big').attrs['data-state'], 'recorded');
+  assert.match(a.get('board-side').innerHTML, /Recorded KV260 run \(not live\)/);
   assert.match(a.get('art-results').innerHTML, /fewer kernel cycles, measured on the KV260/);
   assert.equal(called(a, '/api/board/check'), false);
 });

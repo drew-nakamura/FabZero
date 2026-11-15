@@ -51,3 +51,143 @@
 .more{margin-top:34px;border-top:1px solid var(--line);padding-top:18px}.more>summary{cursor:pointer;font:500 15px 'Space Grotesk',sans-serif;color:#24402f}.more>summary span{font:12px 'DM Sans',sans-serif;color:#7d8b75}.more-actions{margin:16px 0}
 @media(max-width:900px){.spec-grid{grid-template-columns:1fr}.arch-cards{grid-template-columns:1fr}.build-row{flex-direction:column;align-items:flex-start}}
 @media(max-width:700px){.flow-step{padding:18px}.flow-num{min-width:32px;height:32px;font-size:12px}.lane-cards,.chart-grid{grid-template-columns:1fr}}
+/* 03 Block diagram: ported from codex/demo-pipeline eb16f64 (architecture map + RTL schematic); topology comes only from /api/plan. */
+.architecture-map-card{border:1px solid #bfd2b5;border-radius:12px;padding:22px;background:radial-gradient(circle at 80% 0,#eef7e9 0,#fff 48%)}
+.architecture-map-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.architecture-map-head h3{font:500 19px 'Space Grotesk',sans-serif;margin:7px 0 0;color:#294334}
+.diagram-head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.diagram-toggle{display:inline-flex;gap:3px;padding:3px;border:1px solid #cfddc9;border-radius:8px;background:#fff}
+.diagram-toggle button{display:flex;align-items:center;border:0;border-radius:6px;padding:6px 11px;background:none;font-size:12px;color:#5d6f58}
+.diagram-toggle button.active{background:#183c2f;color:#fff}
+.architecture-flow{display:flex;align-items:stretch;gap:9px;margin:20px 0 16px;overflow-x:auto;padding-bottom:5px}
+.architecture-node{flex:1 0 157px;min-height:126px;padding:15px;border:1px solid #cfddc9;border-radius:9px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.architecture-node small{font-size:8px;letter-spacing:1px;color:#73856f}
+.architecture-node strong{font:500 13px 'Space Grotesk',sans-serif;color:#294334}
+.architecture-node span{font-size:10px;line-height:1.55;color:#647660}
+.architecture-node.intent{border-top:3px solid #87aa71}
+.architecture-node.config{border-top:3px solid #6e9c8b}
+.architecture-node.compute{border-top:3px solid #5a8d7b}
+.architecture-node.integration{border-top:3px solid #8c9d78}
+.architecture-arrow{align-self:center;font-size:22px;color:#8ca385}
+.architecture-lanes{display:flex;flex-wrap:wrap;gap:5px}
+.architecture-lane{padding:4px 6px;border-radius:4px;background:#e4f0dc;color:#315c3c;font:700 8px 'Space Grotesk',sans-serif;letter-spacing:.3px}
+.architecture-map-foot{border-top:1px solid #dbe7d6;padding-top:14px;margin-top:16px}
+.architecture-map-foot p{margin:0;font-size:11px;line-height:1.6;color:#51674f;overflow-wrap:anywhere}
+.schematic{margin-top:12px;padding:22px;border:1px solid #254e45;border-radius:12px;background:radial-gradient(circle at top right,#19443c,#102923 58%);color:#dcefe4;box-shadow:0 15px 32px #173d2b20;overflow:hidden}
+.schematic-title{display:flex;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid #ffffff28;color:#a9d8bb;font:700 10px monospace;letter-spacing:1.3px}
+.schematic-grid{display:grid;grid-template-columns:minmax(125px,1fr) minmax(70px,.5fr) minmax(220px,2fr) minmax(70px,.5fr) minmax(125px,1fr);gap:10px;align-items:center;margin:22px 0}
+.schematic-inputs{display:grid;gap:9px}
+.schematic-block,.schematic-compute{border:1px solid #8bc4a468;border-radius:8px;background:#ffffff0d;padding:14px;min-width:0}
+.schematic-block{display:flex;flex-direction:column;gap:5px}
+.schematic-block small,.schematic-compute>small{color:#99c8aa;font:700 9px monospace;letter-spacing:1px}
+.schematic-block strong{font:500 15px 'Space Grotesk',sans-serif}
+.schematic-block span{font-size:10px;color:#a8c3b3}
+.schematic-wire{height:2px;background:#8bd5a8;position:relative}
+.schematic-wire:after{content:'\203A';position:absolute;right:-3px;top:-17px;color:#8bd5a8;font-size:27px}
+.schematic-wire span{position:absolute;bottom:10px;left:2px;color:#b2d9bf;font:9px/1.4 monospace;white-space:nowrap}
+.schematic-compute{border-color:#a8dc88;background:#a8dc8812}
+.schematic-lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:10px}
+.schematic-lanes.one{grid-template-columns:minmax(0,170px);justify-content:center}
+.schematic-lane{display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center;padding:10px 4px;border:1px solid #a8dc8877;border-radius:6px;background:#163a30}
+.schematic-lane span{color:#9fd79b;font:700 9px monospace}
+.schematic-lane strong{font:600 10px 'Space Grotesk',sans-serif}
+.schematic-lane small{font-size:9px;color:#a9c6b2}
+.schematic-lane b{color:#a8dc88}
+.schematic-control{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:11px;border:1px dashed #9ac99b80;border-radius:7px;background:#ffffff09}
+.schematic-control span{color:#a9c9b1;font:10px monospace}
+.schematic-control strong{font:600 11px 'Space Grotesk',sans-serif}
+.schematic-caption{margin:14px 0 0;color:#a9bdaf;font-size:10px;line-height:1.6}
+.schematic-caption code{color:#b9e9b3}
+@media(max-width:850px){.schematic-grid{grid-template-columns:1fr;gap:18px}.schematic-inputs{grid-template-columns:1fr 1fr}.schematic-wire{height:22px;width:2px;justify-self:center}.schematic-wire:after{right:-8px;top:9px;transform:rotate(90deg)}.schematic-wire span{left:13px;bottom:0}.schematic-lanes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.architecture-map-card{padding:16px}.architecture-arrow{display:none}.architecture-flow{display:grid;grid-template-columns:1fr 1fr}.architecture-node{min-height:112px;min-width:0;flex:auto}}
+@media(max-width:500px){.schematic{padding:16px}.schematic-title{flex-direction:column}.schematic-inputs{grid-template-columns:1fr}}
+
+/* KV260 illustration (sidebar + step 06). data-state comes only from the read-only JTAG check; see KV260_SVG in app.js. */
+.board-visual svg{display:block;width:100%;height:auto;overflow:visible}
+.board-visual.mini{width:100%;max-width:190px;margin:-4px 0 6px}
+.kv260 .pcb{fill:#1f4c3c;stroke:#143a2c;stroke-width:1.5}
+.kv260 .trace{fill:none;stroke:#ffffff17;stroke-width:1.4}
+.kv260 .hole{fill:#f6f8f3;stroke:#c9b26a;stroke-width:1.6}
+.kv260 .io rect{fill:#b4bdb8;stroke:#86918b}
+.kv260 .pins rect{fill:#d9c27a}
+.kv260 .port.jack{fill:#232826;stroke:#0e1311}
+.kv260 .jack-pin{fill:#6d7672}
+.kv260 .port.usb{fill:#c8d0cd;stroke:#7c8682}
+.kv260 .som-body{fill:#151d1a;stroke:#34473f}
+.kv260 .fins{stroke:#ffffff10;stroke-width:4}
+.kv260 .fan-ring{fill:#0d1311;stroke:#3a4c45;stroke-width:1.5}
+.kv260 .blades{transform-box:view-box;transform-origin:128px 92px}
+.kv260 .blades path{fill:#2d3c36}
+.kv260 .hub{fill:#40514a}
+.kv260 .som-label{fill:#a7c0b4;font:600 9px 'Space Grotesk',sans-serif;letter-spacing:.6px}
+.kv260 .som-sub{fill:#7f978c;font:600 7.5px 'Space Grotesk',sans-serif}
+.kv260 .silk{fill:#d4e7da;font:600 7.5px 'DM Sans',sans-serif;opacity:.85}
+.kv260 .silk.brand{font:700 11px 'Space Grotesk',sans-serif;letter-spacing:.5px;opacity:.7}
+.kv260 .led{fill:#35433d;stroke:#0e1311;transition:fill .3s}
+.kv260 .som-glow{fill:none;stroke:#d5f77d;stroke-width:3;opacity:0;transition:opacity .5s}
+.kv260 .cord{fill:none;stroke:#2e3231;stroke-width:5;stroke-linecap:round}
+.kv260 .cable-usb .cord{stroke:#3b403f}
+.kv260 .plug{fill:#4f5654}
+.kv260 .cable-usb .plug{fill:#dfe4e2;stroke:#8b9491}
+.kv260 .packets{fill:none;stroke:none;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:3 13}
+.kv260 .cable{transition:transform .7s cubic-bezier(.2,.9,.3,1.15),opacity .4s}
+.kv260 .board-body{transition:filter .5s;filter:saturate(.3) brightness(.92)}
+.kv260 .ring{fill:none;stroke:#e9902c;stroke-width:2.5;opacity:0;transform-box:fill-box;transform-origin:center}
+/* USB cable hovers outside J4 until a check runs, plugs in on a scan, and is pulled out when the cable was not found. */
+.board-visual .cable-usb{transform:translate(20px,9px);opacity:.75}
+.board-visual:is([data-state=checking],[data-state=connected],[data-state=running],[data-state=recorded],[data-state=nopower]) .cable-usb{transform:none;opacity:1}
+.board-visual[data-state=unplugged] .cable-usb{transform:translate(26px,14px) rotate(6deg)}
+.board-visual[data-state=checking] .board-body{filter:saturate(.7)}
+.board-visual:is([data-state=connected],[data-state=running],[data-state=recorded]) .board-body{filter:none}
+.board-visual:is([data-state=connected],[data-state=running],[data-state=recorded]) .led-pwr{fill:#7fe37a;filter:drop-shadow(0 0 3px #7fe37a)}
+.board-visual:is([data-state=connected],[data-state=recorded]) .led-act{fill:#d5f77d}
+.board-visual:is([data-state=connected],[data-state=recorded]) .som-glow{opacity:.45}
+.board-visual[data-state=checking] .packets{stroke:#f2c14e;animation:packets .7s linear infinite}
+.board-visual[data-state=checking] .led-act{fill:#f2c14e;animation:blink .6s linear infinite}
+.board-visual[data-state=connected] .packets{stroke:#d5f77d;animation:packets 1.6s linear infinite}
+.board-visual[data-state=connected] .blades{animation:spin 2.4s linear infinite}
+.board-visual[data-state=running] .packets{stroke:#d5f77d;animation:packets .45s linear infinite}
+.board-visual[data-state=running] .led-act{fill:#d5f77d;animation:blink .3s linear infinite}
+.board-visual[data-state=running] .som-glow{animation:glow 1s ease-in-out infinite alternate}
+.board-visual[data-state=running] .blades{animation:spin .7s linear infinite}
+.board-visual[data-state=unplugged] .ring-usb,.board-visual[data-state=nopower] .ring-pwr{animation:ring 1.4s ease-out infinite}
+@keyframes packets{to{stroke-dashoffset:-32}}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glow{from{opacity:.2}to{opacity:.9}}
+@keyframes ring{0%{opacity:1;transform:scale(.8)}100%{opacity:0;transform:scale(1.6)}}
+@keyframes live{0%{box-shadow:0 0 0 0 #2fae5b77}100%{box-shadow:0 0 0 8px #2fae5b00}}
+@keyframes chain-in{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.board-state{display:flex;align-items:flex-start;gap:7px;line-height:1.45}
+.board-state::before{content:'';flex:none;width:7px;height:7px;margin-top:4px;border-radius:50%;background:#b7a96d}
+.board-state[data-state=connected]{background:#e6f4de;color:#245d45;font-weight:600}
+.board-state[data-state=connected]::before{background:#2fae5b;animation:live 1.8s ease-out infinite}
+.board-state:is([data-state=checking],[data-state=running])::before{background:#f2c14e;animation:live .9s ease-out infinite}
+.board-state:is([data-state=unplugged],[data-state=nopower]){background:#fff1e7;color:#8b5c38}
+.board-state:is([data-state=unplugged],[data-state=nopower])::before{background:#d9772b}
+.board-scene{display:grid;grid-template-columns:minmax(240px,360px) 1fr;gap:26px;align-items:center;margin-bottom:14px;padding:18px 22px;border:1px solid #e3eadc;border-radius:10px;background:radial-gradient(circle at 25% 40%,#eef5e8,#fbfcf9 65%)}
+.board-scene:is([data-state=connected],[data-state=running]){border-color:#bcd9a8}
+.board-scene:is([data-state=unplugged],[data-state=nopower]){border-color:#ebd0b7;background:radial-gradient(circle at 25% 40%,#fbf1e8,#fdfbf8 65%)}
+.board-headline{display:flex;gap:12px;align-items:flex-start}
+.board-headline strong{display:block;font:500 20px 'Space Grotesk',sans-serif;color:#183c2f}
+.board-headline small{display:block;margin-top:3px;font-size:12px;line-height:1.5;color:#6c7b66}
+.board-dot{flex:none;width:12px;height:12px;margin-top:8px;border-radius:50%;background:#b9c4b2}
+.board-scene:is([data-state=connected],[data-state=running]) .board-dot{background:#2fae5b;animation:live 1.8s ease-out infinite}
+.board-scene[data-state=recorded] .board-dot{background:#2fae5b}
+.board-scene[data-state=checking] .board-dot{background:#f2c14e;animation:live .9s ease-out infinite}
+.board-scene:is([data-state=unplugged],[data-state=nopower]) .board-dot{background:#d9772b}
+.board-side .subtle{margin:8px 0 0;font-size:11px}
+.jtag-chain{list-style:none;margin:16px 0 4px;padding:0}
+.jtag-chain li{position:relative;display:grid;grid-template-columns:24px auto 1fr;gap:4px 12px;align-items:center;padding:6px 0;font-size:12px}
+.jtag-chain li:not(:last-child)::after{content:'';position:absolute;left:11px;top:calc(50% + 12px);height:calc(100% - 24px);width:2px;background:#dfe6da}
+.jtag-chain li.ok:has(+ li.ok)::after{background:#8fc77a}
+.jtag-chain i{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;border:1.5px solid #d6e0cf;background:#fff;color:#8a9682;font:700 11px 'DM Sans',sans-serif;font-style:normal}
+.jtag-chain li.ok i{background:#183c2f;border-color:#183c2f;color:#d5f77d;animation:chain-in .35s ease-out both}
+.jtag-chain li.miss i{background:#fff1e7;border-color:#ebd0b7;color:#a2522a}
+.jtag-chain li.pending i{border-style:dashed;animation:pulse 1.2s ease-in-out infinite}
+.jtag-chain li:nth-child(2) i{animation-delay:.15s}.jtag-chain li:nth-child(3) i{animation-delay:.3s}.jtag-chain li:nth-child(4) i{animation-delay:.45s}
+.jtag-chain b{font:500 13px 'Space Grotesk',sans-serif;color:#24402f}
+.jtag-chain li.miss b{color:#a2522a}
+.jtag-chain span{font-size:11px;color:#6f7d69;overflow-wrap:anywhere}
+@media(max-width:900px){.board-scene{grid-template-columns:1fr}.board-visual.big{max-width:380px}}
+@media(prefers-reduced-motion:reduce){.board-visual *,.board-scene *,.board-state::before{animation:none!important;transition:none!important}}

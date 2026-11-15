@@ -184,14 +184,15 @@ def board_status(check_file, max_age_s=BOARD_CHECK_MAX_AGE_S):
     check is at most max_age_s old. Anything else is reported as unknown."""
     path = Path(check_file)
     out = {"available": False, "checked_at": None, "age_seconds": None, "cable_serial": None,
-           "reason": "no board check yet (python hw/matmul_board/run_board.py --check)"}
+           "last_check_ok": False, "reason": "no board check yet (python hw/matmul_board/run_board.py --check)"}
     try:
         rec = json.loads(path.read_text(encoding="utf-8"))
         checked = datetime.fromisoformat(rec["checked_at"])
         age = (datetime.now(timezone.utc) - checked).total_seconds()
     except (OSError, ValueError, KeyError, TypeError):
         return out
-    out.update(checked_at=rec["checked_at"], age_seconds=round(age), cable_serial=rec.get("cable_serial"))
+    out.update(checked_at=rec["checked_at"], age_seconds=round(age), cable_serial=rec.get("cable_serial"),
+               last_check_ok=bool(rec.get("ok")))
     if not rec.get("ok"):
         out["reason"] = rec.get("reason") or "last board check failed"
     elif age > max_age_s or age < -60:

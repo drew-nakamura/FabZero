@@ -152,7 +152,9 @@ class BoardStatus(unittest.TestCase):
                 f.write_text(json.dumps({"ok": ok, "checked_at": (now - timedelta(seconds=age)).isoformat(),
                                          "cable_serial": "X", "reason": None if ok else "no cable"}))
                 with self.subTest(ok=ok, age=age):
-                    self.assertEqual(board.board_status(f)["available"], want)
+                    status = board.board_status(f)
+                    self.assertEqual(status["available"], want)
+                    self.assertEqual(status["last_check_ok"], ok)  # lets the UI tell "stale" from "failed"
 
 
 class ServerImport(unittest.TestCase):
