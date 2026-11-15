@@ -75,6 +75,19 @@ hw/matmul_board/results/<UTC time>_n8_l<LANES>/{board-result.json, inputs.json, 
 MATMUL_BOARD_RESULT: PASS|FAIL (...) <folder>
 ```
 
+**SiliconeOS handoff ZIP:** `python hw/matmul_board/run_board.py --handoff run.zip` runs the app's exported vectors and links the result to the ZIP's parent run.
+- **Checks before loading the board:** every ZIP entry must match its manifest hash; N=8 and LANES 1 or 4; the expected outputs must agree with our reference model and the cycles with the schedule. Then the ZIP's `hardware/matmul.sv` and `integration/matmul_axi.sv` must be byte-identical to the RTL the bitstream was built from. Otherwise it refuses. A CRLF checkout on the app side changes the hash.
+- **The result adds:**
+  - `parent_run_id`;
+  - the parent's `source_sha256` map (`matmul.sv`, `tb.sv`);
+  - `wrapper_sha256`;
+  - a `handoff` block (ZIP hash, parent-output match);
+  - the outputs of all three runs.
+
+**Board presence:** `python hw/matmul_board/run_board.py --check` lists the JTAG chain only, with no reset or programming. It writes `results/board_check.json` with a timestamp.
+
+`input_sha256` follows the app's rule: SHA256 of the raw bytes `x & 255` for A then B. The two 2026-11-14 identity runs predate this and used the earlier JSON rule.
+
 Failed runs are written too (`"status": "fail"`, `"evidence": null`). A second run in the same second gets a `-2` suffix rather than overwriting. Only one run at a time (`results/.runner.lock`). `--inputs file.json` runs other signed INT8 vectors, for example archived SiliconeOS vectors.
 
 ## Offline checks (no board)

@@ -105,16 +105,21 @@ class RunnerReplay(unittest.TestCase):
         self.assertEqual((rc, res["status"], res["failure_reason"]), (0, "pass", None))
         self.assertEqual(res["evidence"], "replay_test_not_board")
         self.assertTrue(r.name.endswith("_n8_l1_replay"))
-        inputs_bytes = (r / "inputs.json").read_bytes()
-        self.assertEqual(res["run"]["input_sha256"], hashlib.sha256(inputs_bytes).hexdigest())
-        self.assertEqual(json.loads(inputs_bytes)["B"], [i - 32 for i in range(64)])
+        inputs = json.loads((r / "inputs.json").read_bytes())
+        # Agreed rule (app D1): SHA256 of the raw INT8 bytes of A then B.
+        self.assertEqual(res["run"]["input_sha256"],
+                         hashlib.sha256(bytes(x & 255 for x in inputs["A"] + inputs["B"])).hexdigest())
+        self.assertEqual(inputs["B"], [i - 32 for i in range(64)])
         self.assertEqual(res["run"]["outputs"], [i - 32 for i in range(64)])
         self.assertEqual(res["run"]["output_sha256"], hashlib.sha256(
             json.dumps([i - 32 for i in range(64)], separators=(",", ":")).encode()).hexdigest())
         self.assertEqual(res["run"]["cycles"], 512)
         self.assertEqual(res["interface_check"]["identity"], 1397312513)
         self.assertTrue(res["interface_check"]["scratch_register_ok"])
-        self.assertEqual(res["repeat_checks"]["reset_reload_rerun"], {"outputs_match": True, "cycles": 512})
+        self.assertEqual(res["repeat_checks"]["reset_reload_rerun"],
+                         {"outputs_match": True, "cycles": 512, "outputs": [i - 32 for i in range(64)]})
+        self.assertIsNone(res["parent_run_id"])
+        self.assertIsNone(res["handoff"])
         self.assertEqual(res["board"]["jtag_cable_serial"], "XFL13U31JOU3")
         for key in ("schema_version", "runner_result_id", "parent_run_id", "recorded_at", "source_sha256",
                     "build", "board", "interface_check", "run", "repeat_checks", "workload_id"):
@@ -183,6 +188,129 @@ class RunnerReplay(unittest.TestCase):
         a, b = run_board.identity_ramp(8)
         self.assertEqual(run_board.reference_matmul(a, b, 8), [i - 32 for i in range(64)])
         self.assertTrue(run_board.comparator_self_check([i - 32 for i in range(64)]))
+
+
+def vectors():
+    a = [((i * 37 + 11) % 256) - 128 for i in range(64)]
+    b = [((i * 53 + 7) % 256) - 128 for i in range(64)]
+    return a, b
+
+
+def make_zip(path, lanes, run_id="11111111-2222-3333-4444-555555555555", crlf=False, tamper=False,
+             bad_expected=False):
+    """A handoff ZIP in the exact layout of the app's siliconos/handoff.py (schema_version 1)."""
+    import zipfile
+    a, b = vectors()
+    outs = run_board.reference_matmul(a, b, 8)
+    if bad_expected:
+        outs = list(outs)
+        outs[3] += 1
+    mm = (BOARD / "rtl" / "matmul.sv").read_bytes()
+    if crlf:
+        mm = mm.replace(b"\n", b"\r\n")
+    files = {
+        "hardware/matmul.sv": mm,
+        "hardware/tb.sv": b"// testbench snapshot\nmodule tb; endmodule\n",
+        "inputs.hex": ("\n".join(f"{x & 255:02x}" for x in a + b) + "\n").encode(),
+        "expected.json": json.dumps({"inputs": {"a": a, "b": b}, "outputs": outs, "cycles": 512 // lanes,
+                                     "parameters": {"N": 8, "LANES": lanes}}, indent=2).encode(),
+        "integration/matmul_axi.sv": (BOARD / "rtl" / "matmul_axi.sv").read_bytes(),
+        "integration/matmul.sv": mm,
+        "README.md": b"# Verified kernel handoff\n",
+    }
+    manifest = {"schema_version": 1, "run_id": run_id, "source_evidence": "rtl_simulation",
+                "original_target": "kv260", "requested_target": "kv260", "board_sku": "SK-KV260-G",
+                "reported_vivado": "2025.2", "parameters": {"N": 8, "LANES": lanes}, "physical_fpga": False,
+                "integration_status": "unverified for this run",
+                "files_sha256": {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}}
+    if tamper:
+        files["hardware/tb.sv"] += b"// edited after export\n"
+    files["manifest.json"] = json.dumps(manifest, indent=2).encode()
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
+        for k, v in files.items():
+            z.writestr(k, v)
+    return a, b, outs
+
+
+class Handoff(unittest.TestCase):
+    def setUp(self):
+        self.td = tempfile.TemporaryDirectory()
+        self.root = Path(self.td.name)
+
+    def tearDown(self):
+        self.td.cleanup()
+
+    def run_handoff(self, lanes=1, outputs=None, cli_lanes=None, **zipkw):
+        zp = self.root / f"h{len(list(self.root.iterdir()))}.zip"
+        a, b, outs = make_zip(zp, lanes, **zipkw)
+        bdir = fake_build(self.root / f"b{len(list(self.root.iterdir()))}", lanes)
+        tp = self.root / f"t{len(list(self.root.iterdir()))}.txt"
+        tp.write_text(transcript(lanes=lanes, outputs=outputs if outputs is not None
+                                 else run_board.reference_matmul(a, b, 8)))
+        out = self.root / "results"
+        args = ["--handoff", str(zp), "--replay", str(tp), "--results-dir", str(out), "--build-dir", str(bdir)]
+        if cli_lanes:
+            args += ["--lanes", str(cli_lanes)]
+        rc = run_board.main(args)
+        run = sorted(p for p in out.iterdir() if not p.name.startswith("."))[-1]
+        return rc, json.loads((run / "board-result.json").read_text()), a, b, zp, run
+
+    def test_handoff_pass_links_parent_and_uses_app_hash_rules(self):
+        for lanes in (1, 4):
+            with self.subTest(lanes=lanes):
+                rc, res, a, b, zp, run = self.run_handoff(lanes)
+                self.assertEqual((rc, res["status"]), (0, "pass"), res["failure_reason"])
+                self.assertEqual(res["parent_run_id"], "11111111-2222-3333-4444-555555555555")
+                self.assertEqual(res["workload_id"], "siliconos-run-11111111-2222-3333-4444-555555555555")
+                self.assertEqual(res["run"]["input_sha256"],
+                                 hashlib.sha256(bytes(x & 255 for x in a + b)).hexdigest())
+                self.assertEqual(res["source_sha256"], {
+                    "matmul.sv": RTL_SHA["matmul.sv"],
+                    "tb.sv": hashlib.sha256(b"// testbench snapshot\nmodule tb; endmodule\n").hexdigest()})
+                self.assertEqual(res["wrapper_sha256"], RTL_SHA["matmul_axi.sv"])
+                self.assertEqual(res["handoff"]["zip_sha256"], hashlib.sha256(zp.read_bytes()).hexdigest())
+                self.assertTrue(res["handoff"]["parent_expected_outputs_match"])
+                self.assertEqual(res["run"]["cycles"], 512 // lanes)
+                self.assertEqual(res["repeat_checks"]["reset_reload_rerun"]["outputs"], res["run"]["outputs"])
+                self.assertEqual(json.loads((run / "inputs.json").read_text()), {"A": a, "B": b})
+
+    def test_wrong_board_output_fails_against_parent(self):
+        a, b = vectors()
+        bad = run_board.reference_matmul(a, b, 8)
+        bad[9] += 1
+        rc, res, *_ = self.run_handoff(1, outputs=bad)
+        self.assertEqual((rc, res["status"]), (1, "fail"))
+        self.assertIsNone(res["evidence"])
+        self.assertIn("differ from the parent run", res["failure_reason"])
+        self.assertEqual(res["parent_run_id"], "11111111-2222-3333-4444-555555555555")
+
+    def test_refusals_before_loading(self):
+        for kw, needle in [({"tamper": True}, "does not match its manifest hash"),
+                           ({"crlf": True}, "line endings"),
+                           ({"bad_expected": True}, "disagree with the independent reference"),
+                           ({"cli_lanes": 4}, "differs from the ZIP")]:
+            with self.subTest(**kw):
+                with self.assertRaises(SystemExit) as cm:
+                    self.run_handoff(1, **kw)
+                self.assertIn(needle, str(cm.exception))
+
+    def test_check_board_parsing(self):
+        from unittest import mock
+        good = ("CHECK CABLE XFL13U31JOU3A\nCHECK DEVICE 1  Xilinx X-MLCC-01 XFL13U31JOU3A\n"
+                "CHECK DEVICE 2  xck26 (idcode 04724093 irlen 12 fpga)\n"
+                "CHECK DEVICE 3  arm_dap (idcode 5ba00477 irlen 4)\nCHECK END\n")
+        for text, ok in [(good, True), ("CHECK CABLE \nCHECK END\n", False),
+                         ("CHECK ERROR connect failed: no hw_server\nCHECK END\n", False)]:
+            with mock.patch.object(run_board.subprocess, "run",
+                                   return_value=subprocess.CompletedProcess([], 0, text, "")):
+                rec = run_board.check_board(self.root / "res")
+            self.assertEqual(rec["ok"], ok, rec)
+            saved = json.loads((self.root / "res" / "board_check.json").read_text())
+            self.assertEqual(saved["ok"], ok)
+            if ok:
+                self.assertEqual(rec["cable_serial"], "XFL13U31JOU3A")
+            else:
+                self.assertTrue(rec["reason"])
 
 
 @unittest.skipUnless(XSDB.exists(), "xsdb not installed")
