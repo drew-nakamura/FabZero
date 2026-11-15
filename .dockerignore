@@ -1,0 +1,14 @@
+.git
+.env
+**/.env
+.venv
+data
+output
+hw/matmul_board/results
+hw/matmul_board/tests
+__pycache__
+**/__pycache__
+*.pyc
+*.key
+*.pem
+.DS_Store

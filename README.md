@@ -14,6 +14,16 @@ python3 server.py
 
 Open http://127.0.0.1:8000. The server binds to loopback; it is a development server, not a public deployment. Runs and local activity events persist in ignored `data/siliconos.db`.
 
+The root page is the judge-facing introduction; **Open interactive workbench** goes to `/app` on the same server.
+
+## Public judge demo
+
+`Dockerfile` and `render.yaml` prepare one public web service with Icarus Verilog installed. Connect the `codex/judge-landing` branch as a Render Blueprint or Docker web service; the `onrender.com` URL will be assigned by Render. Set `SILICONOS_PUBLIC_DEMO=1` (already in the image and Blueprint). The server then binds to `0.0.0.0:$PORT` and accepts browser posts from Render's `RENDER_EXTERNAL_URL`. For another host, set `SILICONOS_PUBLIC_ORIGIN` to its exact HTTPS origin.
+
+The public path runs supported RTL simulations and reads hash-checked committed Vivado build reports. The board check and board-run actions need the separate Windows JTAG runner and physical KV260, so they are unavailable in public mode. AI drafting, AI-generated RTL, board-result import and the contact form are also disabled there. The public instance does not claim a new board measurement; the local demo with matching signed imports remains the place to inspect authenticated physical results. Each public visitor's new simulation history is temporary because Render's free filesystem is ephemeral.
+
+Before submitting the assigned URL, open it in a private window and check `/`, `/app`, `/api/status`, the example simulation flow and the Vivado report view. Do not submit a local URL or a temporary tunnel URL as the permanent live link.
+
 ```sh
 python3 -m unittest discover -s tests -v
 ```

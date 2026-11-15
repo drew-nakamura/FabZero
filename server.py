@@ -17,6 +17,7 @@ from siliconos.engine import explore, simulate, validate
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"siliconos.db"
 BOARD_CHECK=ROOT/"hw"/"matmul_board"/"results"/"board_check.json"
+PUBLIC_DEMO=os.environ.get("SILICONOS_PUBLIC_DEMO")=="1"
 RUN_LOCK=threading.Lock()
 BOARD_LOCK=threading.Lock()
 BOARD_CHECK_LOCK=threading.Lock()
@@ -92,8 +93,13 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path=urlparse(self.path).path
         if path=="/api/status":
-            board_details=board.board_status(BOARD_CHECK)
-            return self.reply(200,dict(ai=ai.configured(),ai_details=ai.details(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=board_details["available"],board_details=board_details))
+            board_details=(dict(available=False,checked_at=None,age_seconds=None,cable_serial=None,
+                                last_check_ok=False,reason="Live KV260 runs require the separate Windows JTAG runner and board.")
+                           if PUBLIC_DEMO else board.board_status(BOARD_CHECK))
+            return self.reply(200,dict(ai=ai.configured() and not PUBLIC_DEMO,ai_details=ai.details(),
+                                       simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),
+                                       board=board_details["available"],board_details=board_details,
+                                       public_demo=PUBLIC_DEMO))
         if path=="/api/fpga/builds":
             return self.reply(200,{"builds":[fpga.build_evidence(lanes) for lanes in (1,4)]})
         match=re.fullmatch(r'/api/fpga/builds/([14])/reports/([a-z_]+\.(?:rpt|txt))',path)
@@ -141,7 +147,10 @@ class Handler(BaseHTTPRequestHandler):
             if run.get("evidence")=="board_measured" and not run.get("runner_result_folder"):
                 run["runner_result_folder"]=fpga.find_result_folder(run.get("runner_result_id"))
             return self.reply(200,run)
-        files={"/":("index.html","text/html"),"/app.js":("app.js","application/javascript"),"/pipeline.js":("pipeline.js","application/javascript"),"/catalog.js":("catalog.js","application/javascript"),"/style.css":("style.css","text/css")}
+        files={"/":("landing.html","text/html"),"/app":("index.html","text/html"),
+               "/landing.css":("landing.css","text/css"),
+               "/app.js":("app.js","application/javascript"),"/pipeline.js":("pipeline.js","application/javascript"),
+               "/catalog.js":("catalog.js","application/javascript"),"/style.css":("style.css","text/css")}
         if path not in files: return self.reply(404,{"error":"Not found"})
         name,mime=files[path]; body=(ROOT/"web"/name).read_bytes()
         self.send_response(200); self.send_header("Content-Type",mime); self.send_header("Content-Length",str(len(body)))
@@ -149,10 +158,17 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         origin=self.headers.get("Origin")
-        if origin and origin not in (f"http://localhost:{self.server.server_port}",f"http://127.0.0.1:{self.server.server_port}"):
+        allowed_origins={f"http://localhost:{self.server.server_port}",f"http://127.0.0.1:{self.server.server_port}"}
+        if PUBLIC_DEMO:
+            external_origin=os.environ.get("SILICONOS_PUBLIC_ORIGIN") or os.environ.get("RENDER_EXTERNAL_URL")
+            if external_origin: allowed_origins.add(external_origin.rstrip("/"))
+        if origin and origin not in allowed_origins:
             return self.reply(403,{"error":"Cross-origin requests are not accepted."})
         try:
             path=urlparse(self.path).path
+            if PUBLIC_DEMO and (path in ("/api/board/check","/api/pilot","/api/generate-rtl","/api/spec")
+                                or re.fullmatch(r'/api/runs/[a-f0-9-]{36}/(?:board-run|board-result)',path)):
+                return self.reply(403,{"error":"This action requires the local hardware runner or private server. Use the public simulation and recorded board evidence here."})
             board_route=re.fullmatch(r'/api/runs/([a-f0-9-]{36})/board-result',path)
             length=int(self.headers.get("Content-Length","0"))
             # A signed board result carries its implementation manifest and summary.
@@ -233,5 +249,6 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__=="__main__":
     port=int(os.environ.get("PORT","8000"))
-    print(f"SiliconOS http://127.0.0.1:{port}",flush=True)
-    ThreadingHTTPServer(("127.0.0.1",port),Handler).serve_forever()
+    host="0.0.0.0" if PUBLIC_DEMO else "127.0.0.1"
+    print(f"SiliconOS http://{host}:{port}",flush=True)
+    ThreadingHTTPServer((host,port),Handler).serve_forever()

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102920">
+  <meta name="description" content="SiliconOS is a student-built workbench for exploring and verifying FPGA architecture choices. Try the browser demo, then inspect exactly what requires a physical KV260.">
+  <title>SiliconOS — Explore the architecture. See the evidence.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/landing.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="SiliconOS home"><span class="brand-icon">S</span><span>Silicon<span class="brand-light">OS</span></span></a>
+    <nav aria-label="Main navigation">
+      <a class="nav-link" href="#how-it-works">How it works</a>
+      <a class="nav-link" href="#demo-guide">Judge guide</a>
+      <a class="nav-cta" href="/app">Open workbench <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> CPVC × OCOB × CPE HACKATHON · STUDENT PROTOTYPE</div>
+        <h1 id="hero-title">Explore the architecture.<br><em>See the evidence.</em></h1>
+        <p class="hero-lead">SiliconOS turns a supported compute idea into a reviewed FPGA specification, compares hardware architectures, and shows what each result actually proves.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="/app">Open interactive workbench <span aria-hidden="true">↗</span></a>
+          <a class="button button-secondary" href="#demo-guide">Follow the 3-step demo <span aria-hidden="true">↓</span></a>
+        </div>
+        <p class="hero-note"><span aria-hidden="true">●</span> Browser exploration works without a board. Physical execution needs a connected KV260 and the separate Windows/JTAG runner.</p>
+      </div>
+      <div class="hero-visual" aria-label="Architecture workflow: specification, RTL verification, and KV260 board evidence">
+        <div class="visual-top"><span>ARCHITECTURE WORKBENCH</span><span class="visual-state"><i></i> INTERACTIVE DEMO</span></div>
+        <div class="diagram">
+          <div class="diagram-node"><small>01 / INTENT</small><strong>8 × 8 INT8</strong><span>Signed matrix multiply</span></div>
+          <div class="diagram-connector" aria-hidden="true"><span>→</span></div>
+          <div class="diagram-node accent"><small>02 / COMPARE</small><strong>1 vs 4 lanes</strong><span>Same inputs, two designs</span></div>
+          <div class="diagram-connector" aria-hidden="true"><span>→</span></div>
+          <div class="diagram-node"><small>03 / VERIFY</small><strong>RTL + oracle</strong><span>Inspectable run record</span></div>
+        </div>
+        <div class="visual-divider"></div>
+        <div class="visual-bottom"><span class="chip">BROWSER DEMO</span><span>Architecture, simulation &amp; evidence inspection</span></div>
+        <div class="visual-bottom hardware"><span class="chip chip-outline">PHYSICAL STEP</span><span>KV260 + Windows/JTAG runner required</span></div>
+      </div>
+    </section>
+
+    <section class="scope-band" aria-label="Current project scope"><div class="wrap scope-inner"><strong>Built for one concrete workload</strong><span>Signed INT8 matrix multiply</span><span>INT32 accumulation</span><span>8 × 8 or 16 × 16</span><span>1 or 4 arithmetic lanes</span><span>AMD Kria KV260 target</span></div></section>
+
+    <section id="how-it-works" class="section wrap" aria-labelledby="how-title">
+      <div class="section-heading"><div><p class="section-kicker">WHAT THE DEMO SHOWS</p><h2 id="how-title">A visible chain from idea to proof.</h2></div><p>Each stage has its own evidence level. You can inspect architectural projections, simulation results, and recorded implementation reports.</p></div>
+      <div class="stage-grid">
+        <article class="stage-card"><div class="stage-number">01</div><h3>Review the specification</h3><p>Start from the built-in example without an AI account. Review size, lane limit, and clock assumption before running anything.</p><span class="stage-label">IN THE BROWSER</span></article>
+        <article class="stage-card"><div class="stage-number">02</div><h3>Compare verified RTL</h3><p>Where the hosted simulator is available, run both checked-in designs on identical inputs. Outputs are checked against an independent integer oracle.</p><span class="stage-label">SERVER-SIDE SIMULATION</span></article>
+        <article class="stage-card"><div class="stage-number">03</div><h3>Inspect build reports</h3><p>For matching 8 × 8 RTL, inspect saved Vivado reports checked against their file hashes. A new FPGA measurement needs the KV260 and connected runner.</p><span class="stage-label">IMPLEMENTATION EVIDENCE</span></article>
+      </div>
+    </section>
+
+    <section class="hardware-section wrap" aria-labelledby="hardware-title">
+      <div class="hardware-icon" aria-hidden="true"><span>KV</span><small>260</small></div>
+      <div class="hardware-copy"><p class="section-kicker">ABOUT THE PHYSICAL STEP</p><h2 id="hardware-title">A public website cannot plug in the FPGA.</h2><p>The hosted workbench lets you explore architecture, run RTL simulation, and inspect saved Vivado build reports. A live board measurement requires the KV260 and its separate Windows/JTAG runner. A signed board-result import is not available in this hosted demo.</p></div>
+      <div class="hardware-aside"><strong>Evidence stays labeled</strong><span>Projected time is based on a clock assumption. Simulation is distinct from implementation and board measurement. A lane count is not a DSP count.</span></div>
+    </section>
+
+    <section id="demo-guide" class="section guide-section wrap" aria-labelledby="guide-title">
+      <div class="section-heading"><div><p class="section-kicker">FOR JUDGES · ABOUT 3 MINUTES</p><h2 id="guide-title">Try it in three steps.</h2></div><p>No login or hardware is needed for the browser path.</p></div>
+      <ol class="guide-list">
+        <li><span class="guide-num">1</span><div><h3>Load the example</h3><p>Open the workbench and choose <strong>“Use the example · no AI”</strong>. Review the supported 8 × 8 INT8 specification.</p></div></li>
+        <li><span class="guide-num">2</span><div><h3>Explore the architectures</h3><p>Compare the one-lane and four-lane choices. Note that the clock is a target assumption and more lanes use more arithmetic capacity.</p></div></li>
+        <li><span class="guide-num">3</span><div><h3>Run and inspect</h3><p>Choose <strong>“Run RTL simulations &amp; inspect saved build reports”</strong>. Then open <strong>“Run history &amp; tools”</strong> to inspect the simulation record or compare the architectures manually.</p></div></li>
+      </ol>
+      <div class="guide-action"><div><strong>Ready to see the working app?</strong><span>Start with the example; it works without AI credentials.</span></div><a class="button button-primary" href="/app">Open interactive workbench <span aria-hidden="true">↗</span></a></div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-inner"><span class="brand footer-brand"><span class="brand-icon">S</span><span>Silicon<span class="brand-light">OS</span></span></span><p>Student prototype · CPVC × OCOB × CPE Hackathon 2026</p><a href="/app">Enter workbench ↗</a></div></footer>
+</body>
+</html>

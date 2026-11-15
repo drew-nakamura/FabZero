@@ -104,6 +104,10 @@
 
 /* KV260 illustration (sidebar + step 06). data-state comes only from the read-only JTAG check; see KV260_SVG in app.js. */
 .board-visual svg{display:block;width:100%;height:auto;overflow:visible}
+.public-demo-note{display:flex;gap:16px;align-items:flex-start;margin:12px 0 20px;padding:15px 18px;border:1px solid #b8d5b2;border-radius:8px;background:#edf6e9;color:#244632;font-size:12px;line-height:1.6}
+.public-demo-note[hidden]{display:none}
+.public-demo-note strong{flex:none;font:600 13px 'Space Grotesk',sans-serif}
+@media(max-width:650px){.public-demo-note{display:block}.public-demo-note strong{display:block;margin-bottom:5px}}
 .board-visual.mini{width:100%;max-width:190px;margin:-4px 0 6px}
 .kv260 .pcb{fill:#1f4c3c;stroke:#143a2c;stroke-width:1.5}
 .kv260 .trace{fill:none;stroke:#ffffff17;stroke-width:1.4}

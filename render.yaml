@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: siliconos-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/status
+    envVars:
+      - key: SILICONOS_PUBLIC_DEMO
+        value: "1"

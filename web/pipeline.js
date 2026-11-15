@@ -135,31 +135,31 @@ const ARTIFACTS={rtl:rtlArtifact,vivado:vivadoArtifact,board:boardArtifact,resul
 // ---------------------------------------------------------------- rendering
 function renderPipeline(){
  const prog=$('flow-progress');
- if(prog)prog.innerHTML=FLOW.map(([k,label],i)=>`<li class="${flowStatus(k)}"><a href="#step-${k}"><b>${flowStatus(k)==='done'?'✓':String(i+1).padStart(2,'0')}</b>${label}</a></li>`).join('');
+ if(prog)prog.innerHTML=FLOW.filter(([k])=>!(state.publicDemo&&pipe.mode==='live'&&k==='board')).map(([k,label],i)=>`<li class="${flowStatus(k)}"><a href="#step-${k}"><b>${flowStatus(k)==='done'?'✓':String(i+1).padStart(2,'0')}</b>${label}</a></li>`).join('');
  if($('spec-origin'))$('spec-origin').textContent=specOriginText();
  if($('spec-notes'))$('spec-notes').innerHTML=specNotes();
  if($('step-spec'))$('step-spec').hidden=!(pipe.specShown||pipe.mode);
  if(pipe.archData)renderArch(pipe.archData);
  let reveal=null;
- for(const [k] of FLOW.slice(2)){const art=$('step-'+k),st=flowStatus(k),err=flowError(k);if(!art)continue;
+ for(const [k] of FLOW.slice(2)){const art=$('step-'+k),st=flowStatus(k),err=flowError(k);if(!art)continue;if(state.publicDemo&&pipe.mode==='live'&&k==='board'){art.hidden=true;continue;}
   const show=st!=='waiting';art.hidden=!show;art.className='flow-step '+st;
   if($('chip-'+k))$('chip-'+k).innerHTML=chip(st);
   if(show&&k==='diagram'){try{renderDiagram($('art-diagram'));}catch(e){$('art-diagram').innerHTML=`<p class="bad-line">Could not display the block diagram: ${escapeHtml(e.message)}</p>`;diag.painted=null;}}
   else if(show){const box=$('art-'+k),open=new Set((box.querySelectorAll?[...box.querySelectorAll('details[open]')]:[]).map(d=>d.dataset?.key));let body='';try{body=st==='skipped'?'':ARTIFACTS[k]();}catch(e){body=`<p class="bad-line">Could not display this step: ${escapeHtml(e.message)}</p>`;}
    box.innerHTML=(err?`<p class="bad-line">${escapeHtml(err)}</p>`:'')+body;if(box.querySelectorAll)box.querySelectorAll('details').forEach(d=>{if(d.dataset?.key&&open.has(d.dataset.key))d.open=true;});
    if(!pipe.revealed.has(k)){pipe.revealed.add(k);reveal=art;}}}
- if(flowStatus('board')!=='waiting')renderBoardScene();
+ if(flowStatus('board')!=='waiting'&&!(state.publicDemo&&pipe.mode==='live'))renderBoardScene();
  renderBoardState();
  if(reveal&&pipe.mode==='live'&&reveal.scrollIntoView)reveal.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
  const fin=$('live-final');if(fin)fin.innerHTML=pipe.note?`<p class="notice">${escapeHtml(pipe.note)}</p>`:'';
- const run=$('live-run');if(run){run.disabled=state.busy||!state.simulator;run.textContent=pipe.running?'Running…':'▶ Build it and run it on the KV260';}
- for(const id of ['live-check','live-recorded'])if($(id))$(id).disabled=state.busy;
+ const run=$('live-run');if(run){run.disabled=state.busy||!state.simulator;run.textContent=pipe.running?'Running…':state.publicDemo?'▶ Run RTL simulations & inspect saved build reports':'▶ Build it and run it on the KV260';}
+ for(const id of ['live-check','live-recorded'])if($(id))$(id).disabled=state.busy||state.publicDemo;
  if(typeof bindRunLinks==='function')bindRunLinks();
 }
 
 // ---------------------------------------------------------------- actions
 async function loadBuilds(){try{const b=await api('/api/fpga/builds');pipe.builds=Object.fromEntries(b.builds.map(x=>[x.lanes,x]));}catch(e){}}
-async function checkBoardNow(){if(state.busy)return;state.boardActivity='checking';setBusy(true);notice('Scanning JTAG for the KV260 (read-only)…');try{const c=await api('/api/board/check',{});state.board=c.available;state.boardDetails=c;state.boardActivity=null;notice(c.available?'KV260 connected: '+c.cable_serial:'KV260 not detected: '+(c.reason||''),!c.available);}catch(e){notice(e.message,true);}finally{state.boardActivity=null;setBusy(false);}}
+async function checkBoardNow(){if(state.busy||state.publicDemo)return;state.boardActivity='checking';setBusy(true);notice('Scanning JTAG for the KV260 (read-only)…');try{const c=await api('/api/board/check',{});state.board=c.available;state.boardDetails=c;state.boardActivity=null;notice(c.available?'KV260 connected: '+c.cable_serial:'KV260 not detected: '+(c.reason||''),!c.available);}catch(e){notice(e.message,true);}finally{state.boardActivity=null;setBusy(false);}}
 async function generateSpec(){
  if(state.busy||!state.ai)return;const b=$('generate');setBusy(true);b.textContent='Drafting the specification…';notice('Asking the AI to turn your prompt into a hardware specification…');
  try{const draft=await api('/api/spec',{prompt:$('prompt').value,target:'kv260'});
@@ -188,13 +188,14 @@ async function runPipeline(){
   step('handoff','running');
   for(const l of lanes)pipe.handoffs[l]=await api(`/api/runs/${pipe.sims[l].id}/handoff.json`);
   step('sim','done');step('handoff','done');
-  if(spec.size!==8){for(const k of ['vivado','board','run','import'])pipe.status[k]='skipped';pipe.error.vivado='The KV260 bitstreams are built for 8 × 8 only. This 16 × 16 run stops after simulation (a new Vivado build takes about 10–12 minutes per configuration).';step('compare','done');pipe.note='Simulation complete. Vivado and board steps were skipped: only 8 × 8 has a KV260 bitstream.';return;}
+  if(spec.size!==8){for(const k of ['vivado','board','run','import'])pipe.status[k]='skipped';pipe.error.vivado='The saved KV260 bitstreams were built for 8 × 8 only. This 16 × 16 run stops after simulation.';step('compare','done');pipe.note='Simulation complete. Saved Vivado reports are available only for matching 8 × 8 RTL. A live board run requires the separate runner.';return;}
   await psleep(STEP_DWELL_MS);
   step('vivado','running');notice('Re-checking each bitstream and its Vivado reports against this RTL…');
-  await Promise.all([loadBuilds(),psleep(900)]);if(!pipe.builds)throw stepError('vivado','Vivado build evidence is unavailable.');
+  await Promise.all([loadBuilds(),psleep(900)]);if(!pipe.builds){if(state.publicDemo){pipe.status.vivado='skipped';pipe.status.board='skipped';pipe.status.run='skipped';pipe.status.import='skipped';step('compare','done');pipe.note='RTL simulation complete. Saved Vivado build reports are unavailable on this host; live board measurements require the separate KV260 runner.';notice(pipe.note);return;}throw stepError('vivado','Vivado build evidence is unavailable.');}
   for(const l of lanes){const b=pipe.builds[l];if(!b||b.rtl_sha256['matmul.sv']!==pipe.sims[l].source_sha256['matmul.sv']||!b.bitstream_verified||!b.timing.met||!b.drc_clean||!b.reports.every(r=>r.verified))throw stepError('vivado',`The ${laneName(l)} bitstream was not built from this RTL, or its files changed. A new Vivado build would be needed.`);
    try{pipe.excerpts[l]=timingExcerpt(await fetchText(`/api/fpga/builds/${l}/reports/timing_summary.rpt`));}catch(_){}}
   step('vivado','done');
+  if(state.publicDemo){for(const k of ['board','run','import'])pipe.status[k]='skipped';step('compare','done');pipe.elapsed=Math.round((Date.now()-pipe.startedAt)/1000);pipe.note='RTL simulations passed and matching saved Vivado reports were checked. Live board measurements require the separate KV260 runner; signed board-result import is unavailable in this hosted demo.';notice(pipe.note);return;}
   await psleep(STEP_DWELL_MS);
   state.boardActivity='checking';step('board','running');notice('Scanning JTAG for the KV260 (read-only)…');
   pipe.check=await api('/api/board/check',{});state.board=pipe.check.available;state.boardDetails=pipe.check;state.boardActivity=null;
@@ -218,7 +219,7 @@ async function runPipeline(){
  finally{pipe.running=false;state.boardActivity=null;setBusy(false);try{await history();}catch(_){}renderPipeline();}
 }
 async function showRecorded(){
- if(state.busy||pipe.running)return;
+ if(state.busy||pipe.running||state.publicDemo)return;
  try{
   const runs=await api('/api/runs');state.runs=runs;
   const boards=runs.filter(r=>r.evidence==='board_measured');let pair=null;
