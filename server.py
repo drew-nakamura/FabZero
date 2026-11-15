@@ -158,9 +158,12 @@ class Handler(BaseHTTPRequestHandler):
                 finally: RUN_LOCK.release()
                 result["build_recipe"]=catalog.plan(result["spec"],result["lanes"])
                 result.update(id=str(uuid.uuid4()),created_at=now())
-                with connect() as db: db.execute("INSERT INTO runs VALUES (?,?)",(result["id"],json.dumps(result)))
+                with connect() as db:
+                    db.execute("INSERT INTO runs VALUES (?,?)",(result["id"],json.dumps(result)))
+                    db.execute("INSERT INTO events VALUES (?,?)",(now(),path))
             else: return self.reply(404,{"error":"Not found"})
-            with connect() as db: db.execute("INSERT INTO events VALUES (?,?)",(now(),path))
+            if path not in ("/api/simulate","/api/asic/synthesize"):
+                with connect() as db: db.execute("INSERT INTO events VALUES (?,?)",(now(),path))
             self.reply(200,result)
         except (ValueError,TypeError,KeyError) as error: self.reply(400,{"error":str(error)})
         except Exception:
