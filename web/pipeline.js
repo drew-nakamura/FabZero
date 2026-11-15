@@ -23,7 +23,7 @@ function flowStatus(key){const s=pipe.status,shown=pipe.specShown||pipe.mode;ret
 function flowError(key){const e=pipe.error;return {diagram:diag.error,rtl:e.sim||e.handoff,vivado:e.vivado,board:e.board||e.run||e.import,results:e.compare}[key];}
 
 // ---------------------------------------------------------------- 02 spec & architecture
-function specOriginText(){const o=state.specOrigin||{};if(o.kind==='ai')return `Drafted by AI${o.model?' ('+escapeHtml(o.model)+')':''} from your prompt${o.edited?', then edited by hand':''}. Review it, then build.`;if(o.kind==='example')return `Built-in example, no AI used${o.edited?', then edited by hand':''}. Review it, then build.`;if(o.kind==='recorded')return 'From the recorded run.';return 'Review the specification, then build. Both architectures run on the same inputs.';}
+function specOriginText(){const o=state.specOrigin||{};if(o.kind==='ai')return `Drafted by AI${o.model?' ('+escapeHtml(o.model)+')':''} from your prompt${o.edited?', then edited by hand':''}. Review it, then build.`;if(o.kind==='example')return `Built-in example${o.edited?', then edited by hand':''}. Review it, then build.`;if(o.kind==='recorded')return 'From the recorded run.';return 'Review the specification, then build. Both architectures run on the same inputs.';}
 function specNotes(){const o=state.specOrigin||{};if(o.kind!=='ai')return '';return `${o.prompt?`<blockquote class="prompt-quote">“${escapeHtml(o.prompt)}”</blockquote>`:''}${o.explanation?`<p class="subtle"><b>AI:</b> ${escapeHtml(o.explanation)}</p>`:''}${o.unresolved?.length?`<p class="subtle"><b>Open questions:</b> ${o.unresolved.map(escapeHtml).join(' · ')}</p>`:''}`;}
 function renderArch(data){
  pipe.archData=data;const el=$('arch-view');if(!el)return;const sp=data.spec;
@@ -172,7 +172,7 @@ async function generateSpec(){
 }
 async function useExample(){
  if(state.busy)return;const spec={operation:'matrix_multiply',size:8,precision:'int8',target:'kv260',frequency_mhz:100,max_dsps:16,max_lanes:4,objective:'minimize_latency'};
- fillSpec(spec,Object.fromEntries(Object.keys(spec).map(k=>[k,'built-in example (not AI generated)'])),{kind:'example'});
+ fillSpec(spec,Object.fromEntries(Object.keys(spec).map(k=>[k,'built-in example'])),{kind:'example'});
  resetPipe(null);showSpecStep();await explore();notice('Loaded the built-in 8 × 8 INT8 example. Review it, then build.');
  if($('step-spec')?.scrollIntoView)$('step-spec').scrollIntoView({behavior:'smooth',block:'start'});
 }

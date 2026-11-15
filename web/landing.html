@@ -54,7 +54,7 @@
     <section id="how-it-works" class="section wrap" aria-labelledby="how-title">
       <div class="section-heading"><div><p class="section-kicker">WHAT THE DEMO SHOWS</p><h2 id="how-title">A visible chain from idea to proof.</h2></div><p>Each stage has its own evidence level. You can inspect architectural projections, simulation results, and recorded implementation reports.</p></div>
       <div class="stage-grid">
-        <article class="stage-card"><div class="stage-number">01</div><h3>Review the specification</h3><p>Start from the built-in example without an AI account. Review size, lane limit, and clock assumption before running anything.</p><span class="stage-label">IN THE BROWSER</span></article>
+        <article class="stage-card"><div class="stage-number">01</div><h3>Review the specification</h3><p>Start from the built-in example. Review size, lane limit, and clock assumption before running anything.</p><span class="stage-label">IN THE BROWSER</span></article>
         <article class="stage-card"><div class="stage-number">02</div><h3>Compare verified RTL</h3><p>Where the hosted simulator is available, run both checked-in designs on identical inputs. Outputs are checked against an independent integer oracle.</p><span class="stage-label">SERVER-SIDE SIMULATION</span></article>
         <article class="stage-card"><div class="stage-number">03</div><h3>Inspect build reports</h3><p>For matching 8 × 8 RTL, inspect saved Vivado reports checked against their file hashes. A new FPGA measurement needs the KV260 and connected runner.</p><span class="stage-label">IMPLEMENTATION EVIDENCE</span></article>
       </div>
@@ -69,11 +69,11 @@
     <section id="demo-guide" class="section guide-section wrap" aria-labelledby="guide-title">
       <div class="section-heading"><div><p class="section-kicker">FOR JUDGES · ABOUT 3 MINUTES</p><h2 id="guide-title">Try it in three steps.</h2></div><p>No login or hardware is needed for the browser path.</p></div>
       <ol class="guide-list">
-        <li><span class="guide-num">1</span><div><h3>Load the example</h3><p>Open the workbench and choose <strong>“Use the example · no AI”</strong>. Review the supported 8 × 8 INT8 specification.</p></div></li>
+        <li><span class="guide-num">1</span><div><h3>Load the example</h3><p>Open the workbench and choose <strong>“Use the example”</strong>. Review the supported 8 × 8 INT8 specification.</p></div></li>
         <li><span class="guide-num">2</span><div><h3>Explore the architectures</h3><p>Compare the one-lane and four-lane choices. Note that the clock is a target assumption and more lanes use more arithmetic capacity.</p></div></li>
         <li><span class="guide-num">3</span><div><h3>Run and inspect</h3><p>Choose <strong>“Run RTL simulations &amp; inspect saved build reports”</strong>. Then open <strong>“Run history &amp; tools”</strong> to inspect the simulation record or compare the architectures manually.</p></div></li>
       </ol>
-      <div class="guide-action"><div><strong>Ready to see the working app?</strong><span>Start with the example; it works without AI credentials.</span></div><a class="button button-primary" href="/app">Open interactive workbench <span aria-hidden="true">↗</span></a></div>
+      <div class="guide-action"><div><strong>Ready to see the working app?</strong><span>Start with the example and inspect the evidence yourself.</span></div><a class="button button-primary" href="/app">Open interactive workbench <span aria-hidden="true">↗</span></a></div>
     </section>
   </main>
 
