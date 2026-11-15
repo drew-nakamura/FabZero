@@ -14,6 +14,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -152,6 +153,8 @@ def accept(parent, envelope, wrapper_sha256, key=None, key_id=None):
         "created_at": datetime.now(timezone.utc).isoformat(),
         "evidence": "board_measured", "correct": True, "physical_fpga": True, "physical_asic": False,
         "parent_run_id": parent["id"], "runner_result_id": r["runner_result_id"],
+        "runner_result_folder": signer.get("result_folder") if re.fullmatch(
+            r"\d{8}T\d{6}Z_n8_l[14](?:-\d+)?", str(signer.get("result_folder"))) else None,
         "spec": spec, "lanes": lanes, "seed": parent.get("seed"), "parameters": {"N": n, "LANES": lanes},
         "cycles": run["cycles"], "kernel_time_us": round(run["cycles"] / clock * 1e6, 3),
         "clock_status": "configured PS clock from the implementation manifest; not measured on the board",

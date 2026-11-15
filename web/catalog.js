@@ -11,11 +11,11 @@
   if(state.busy||!document.getElementById('spec-form').reportValidity())return;
   const spec=readSpec(),button=section.querySelector('#build-recipe'),progress=section.querySelector('#build-progress');
   setBusy(true);progress.hidden=false;section.setAttribute('aria-busy','true');button.textContent='Verifying design…';
-  status.textContent=spec.target==='asic'?'Running RTL simulation, generic synthesis, and netlist verification. Larger designs can take a minute.':'Running RTL simulation and checking every output against the integer reference.';
+  status.textContent='Running RTL simulation and checking every output against the integer reference.';
   try{
    const result=await api('/api/build',{spec});
-   renderResult(result);if(result.synthesis)renderSynthesis(result.synthesis);
-   status.textContent='Verified '+result.build_recipe.block_id+' · '+result.cycles+' simulated cycles'+(result.synthesis?' · '+result.synthesis.cell_count+' generic cells':'')+'. Export the report below for the complete evidence bundle. Physical deployment remains pending.';
+   renderResult(result);
+   status.textContent='Verified '+result.build_recipe.block_id+' · '+result.cycles+' simulated cycles. Export the report below for the complete evidence bundle. Use the live pipeline to run it on the KV260.';
    try{await history();}catch(_){status.textContent+=' History refresh failed; the verified report is still available.';}
   }catch(error){status.textContent='Build not accepted: '+error.message;}
   finally{setBusy(false);progress.hidden=true;section.setAttribute('aria-busy','false');button.textContent='Build verified design →';}

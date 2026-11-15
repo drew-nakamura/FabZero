@@ -20,16 +20,14 @@ class BuildTests(unittest.TestCase):
         h.headers={'Content-Length':str(len(body))};h.rfile=io.BytesIO(body)
         replies=[];h.reply=lambda code,result:replies.append((code,result))
         h.do_POST();return replies[0]
-    def test_real_asic_bundle_and_atomic_failure(self):
-        spec={**DEFAULT,'target':'asic','max_lanes':1}
-        code,result=self.post(spec)
+    def test_real_kv260_bundle_and_removed_asic_target(self):
+        code,result=self.post({**DEFAULT,'max_lanes':1})
         self.assertEqual(code,200,result)
-        self.assertTrue(result['synthesis']['netlist_verified'])
-        self.assertEqual(result['source_sha256'],result['synthesis']['source_sha256'])
+        self.assertNotIn('synthesis',result)
         self.assertEqual(result['cycles'],512)
-        with patch('server.asic.synthesize',side_effect=ValueError('Synthesis unavailable')):
-            code,result=self.post(spec)
+        code,result=self.post({**DEFAULT,'target':'asic'})
         self.assertEqual(code,400)
+        self.assertIn('KV260',result['error'])
         self.assertFalse(server.RUN_LOCK.locked())
         with server.connect() as db:
             self.assertEqual(db.execute('select count(*) from runs').fetchone()[0],1)

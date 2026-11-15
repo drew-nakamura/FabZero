@@ -4,7 +4,7 @@
 
 Build an open-source hardware architecture workbench for the November 13–15, 2026 CPVC × OCOB × CPE hackathon. Read README.md for current capability and SILICONOS_PLAN.md for strategy. The human team has two members, a KV260 available Saturday, and a partner's Windows machine with Vivado/Vitis; Vivado/Vitis 2025.2 on Windows 11 and a visible KV260 board preset were confirmed by the user (supersedes the earlier 2026.1.1 report). Board SKU: SK-KV260-G. Actual Vivado synthesis and board execution remain unverified.
 
-Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1 or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency. Targets now include KV260 FPGA and custom ASIC exploration. ASIC generic Yosys synthesis is not PDK mapping, layout, timing closure or tapeout; DSP budgets apply only to FPGA.
+Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1 or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency. The only target is the KV260 FPGA (the ASIC path was removed on drew/demo-integration, 2026-11-14).
 
 ## Evidence rules
 
@@ -15,7 +15,7 @@ Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation,
 - A wider datapath is capacity scaling, not a resource-matched architectural improvement. Disclose additional resources and excluded loading/communication costs.
 - Preserve explicit unsupported requirements. A camera/complete neural model does not silently become a supported GEMM implementation.
 - AI may draft specifications, generate candidate RTL and explain supplied evidence. Deterministic code validates constraints, computes metrics, and ranks candidates. AI cannot create measurement fields.
-- Generated source must pass `rtlgen.gate` before tool execution, real simulation with unchanged `hardware/tb.sv`, the Python integer oracle, and the trusted execution-cycle monitor. No result/source may be shown or persisted on failure. ASIC generation additionally requires Yosys plus netlist oracle verification before the single atomic run/event commit. Keep its `generic_synthesis` report separate with `source_origin: ai_generated_rtl`.
+- Generated source must pass `rtlgen.gate` before tool execution, real simulation with unchanged `hardware/tb.sv`, the Python integer oracle, and the trusted execution-cycle monitor. No result/source may be shown or persisted on failure.
 - Preserve the checked-in `matmul.sv` and default `source_override=None` path. Generated schedules need observed cycles, not the curated N³/L assertion. Retain exact source/testbench/monitor snapshots and hashes; a passing vector set is not universal correctness or physical evidence.
 - Keep API keys on the server, out of Git, logs, reports, and browser code. Missing AI configuration must be visible; no unlabeled mock fallback.
 
@@ -44,7 +44,7 @@ node --test tests/test_web.js
 git diff --check
 ```
 
-Python 3.10+; Icarus `iverilog` and `vvp` must be on PATH. No Python dependencies are required. Yosys is required for synthesis tests; Node is only needed for the separate dependency-free UI test harness, not to run the app. Server binds to 127.0.0.1:8000; this is not a production hosting configuration. Set GROQ_API_KEY and GROQ_MODEL in the process environment to enable AI; `.env` is not auto-loaded.
+Python 3.10+; Icarus `iverilog` and `vvp` must be on PATH. No Python dependencies are required. Node is only needed for the separate dependency-free UI test harness, not to run the app. Server binds to 127.0.0.1:8000; this is not a production hosting configuration. Set GROQ_API_KEY and GROQ_MODEL in the process environment to enable AI; `.env` is not auto-loaded.
 
 Test signed extremes, zero/identity and random matrices, repeated jobs/reset behavior, unsupported spec rejection, and unverified resource budgets. Preserve raw simulator/implementation artifacts where practical. Any schedule change must update projections and cycle assertions together. Browser-check the main flow and mobile layout after substantive UI changes. Do not claim live API, Vivado, or board validation without actually running it.
 

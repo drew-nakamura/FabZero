@@ -51,15 +51,12 @@ class GeneratedRtlApiTests(unittest.TestCase):
         with server.connect() as db:
             self.assertEqual(json.loads(db.execute('SELECT payload FROM runs').fetchone()[0]), result)
 
-    def test_asic_runs_real_synthesis_and_keeps_evidence_separate(self):
-        with patch('server.ai.generate_rtl', return_value=SLOW_SOURCE):
+    def test_asic_target_is_rejected_before_generation(self):
+        with patch('server.ai.generate_rtl') as provider:
             status, result = self.post({**self.body, 'spec': {**DEFAULT, 'target': 'asic'}})
-        self.assertEqual(status, 200, result)
-        self.assertEqual(result['evidence'], 'ai_generated_rtl')
-        self.assertEqual(result['synthesis']['evidence'], 'generic_synthesis')
-        self.assertEqual(result['synthesis']['source_origin'], 'ai_generated_rtl')
-        self.assertEqual(result['source_sha256'], result['synthesis']['source_sha256'])
-        self.assertEqual(self.counts(), (1, 1))
+        self.assertEqual(status, 400, result)
+        provider.assert_not_called()
+        self.assertEqual(self.counts(), (0, 0))
 
     def test_generation_gate_compile_and_oracle_failures_persist_nothing(self):
         cases = [ValueError('Provider refused generation'), SOURCE + '`include "x"',
@@ -74,10 +71,10 @@ class GeneratedRtlApiTests(unittest.TestCase):
             self.assertEqual(self.counts(), (0, 0))
             self.assertFalse(server.RUN_LOCK.locked())
 
-    def test_synthesis_failure_does_not_save_successful_rtl_stage(self):
-        for error in (ValueError('Netlist oracle rejected'), RuntimeError('unexpected tool failure')):
-            with patch('server.ai.generate_rtl', return_value=SOURCE), patch('server.asic.synthesize', side_effect=error):
-                status, result = self.post({**self.body, 'spec': {**DEFAULT, 'target': 'asic'}})
+    def test_simulation_failure_does_not_save_a_run(self):
+        for error in (ValueError('Simulation rejected'), RuntimeError('unexpected tool failure')):
+            with patch('server.ai.generate_rtl', return_value=SOURCE), patch('server.simulate', side_effect=error):
+                status, result = self.post()
             self.assertIn(status, (400, 502))
             self.assertEqual(set(result), {'error'})
             self.assertEqual(self.counts(), (0, 0))

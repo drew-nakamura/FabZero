@@ -14,9 +14,9 @@ def blocks():
     for lanes, identifier in ENGINE_IDS.items():
         result.append(dict(id=identifier,kind='compute',operation='matrix_multiply',
             precision='int8',accumulator='int32',sizes=[8,16],lanes=lanes,
-            targets=['kv260','asic'],license='MIT',source='hardware/matmul.sv',
+            targets=['kv260'],license='MIT',source='hardware/matmul.sv',
             source_sha256=digest('hardware/matmul.sv'),
-            qualification='RTL regression and generic netlist simulation; physical deployment pending',
+            qualification='RTL regression in Icarus; the 8x8 builds are implemented in Vivado and measured on the KV260',
             runnable=True))
     vendor=ROOT/'hardware/vendor/wb2axip'
     manifest=json.loads((vendor/'manifest.json').read_text())

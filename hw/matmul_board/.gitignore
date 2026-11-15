@@ -11,4 +11,5 @@ __pycache__/
 # Live board state and xsdb/hw_server scratch (not evidence).
 results/board_check.json
 results/.xsdb/
+results/.app/
 dfx_runtime.txt

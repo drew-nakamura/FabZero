@@ -7,6 +7,7 @@ const vm = require('node:vm');
 const root = path.join(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'web/index.html'), 'utf8');
 const script = fs.readFileSync(path.join(root, 'web/app.js'), 'utf8');
+const pipelineScript = fs.readFileSync(path.join(root, 'web/pipeline.js'), 'utf8');
 
 class Element {
   constructor(tag, attrs = {}) {
@@ -61,9 +62,6 @@ const spec = {operation: 'matrix_multiply', size: 8, precision: 'int8', target: 
 function rtlReport(overrides = {}) {
   return {id: 'fixture-run', created_at: '2026-11-14T00:00:00Z', evidence: 'ai_generated_rtl', correct: true, spec: {...spec}, lanes: 4, seed: 42, prompt: 'Multiply signed INT8 matrices', cycles: 129, projected_us: 1.29, outputs: [123], limitations: ['UI fixture only'], simulator: 'Icarus fixture', source_sha256: {'matmul.sv': 'generated-fixture-hash', 'tb.sv': 'testbench-fixture-hash'}, input_sha256: 'input-fixture-hash', output_sha256: 'output-fixture-hash', source_files: {'matmul.sv': 'verified-fixture-source'}, ...overrides};
 }
-function asicReport(overrides = {}) {
-  return {evidence: 'generic_synthesis', source_origin: 'ai_generated_rtl', correct: true, spec: {...spec, target: 'asic'}, lanes: 4, cell_count: 123, cell_counts: {'$add': 4}, limitations: ['UI fixture only'], netlist_verilog: 'netlist-fixture', synthesis_script: 'script-fixture', ...overrides};
-}
 async function app(options = {}) {
   const document = documentFixture(), calls = [], routes = new Map();
   const reports = options.runs || [];
@@ -72,20 +70,21 @@ async function app(options = {}) {
     calls.push({url, body});
     let data, ok = true;
     if (routes.has(url)) {const response = await routes.get(url)(body); data = response.data; ok = response.ok !== false;}
-    else if (url === '/api/status') data = {ai: true, simulator: true, asic_synthesis: true, ...options.status};
+    else if (url === '/api/status') data = {ai: true, simulator: true, ...options.status};
+    else if (url === '/api/fpga/builds') data = {builds: [buildEvidence(1), buildEvidence(4)]};
     else if (url === '/api/runs') data = reports;
     else if (url === '/api/explore') data = {spec: body.spec, candidates: [1, 4].map(lanes => ({lanes, id: 'mac' + lanes, within_lane_limit: lanes <= body.spec.max_lanes, cycles: 512 / lanes, projected_us: 5.12 / lanes})), provisional: 'mac4', warning: 'Unverified resources.'};
     else throw new Error('Unconfigured fixture URL: ' + url);
-    return {ok, json: async () => data};
+    return {ok, json: async () => data, text: async () => typeof data === 'string' ? data : JSON.stringify(data)};
   };
   const context = vm.createContext({document, fetch, Blob, URL, setTimeout, matchMedia: () => ({matches: true})});
-  vm.runInContext(script + '\n;globalThis.ui={state,readSpec,fillSpec,updateTarget,updateGenerateRtl,setBusy,comparable,comparison,renderResult,renderSynthesis,history,generateRtl};', context);
+  vm.runInContext(script + '\n' + pipelineScript + '\n;globalThis.ui={state,readSpec,fillSpec,updateTarget,updateGenerateRtl,setBusy,comparable,comparison,renderResult,history,generateRtl,pipe,renderPipeline,runPipeline,showRecorded,generateSpec};', context);
   await new Promise(resolve => setImmediate(resolve));
   const get = id => document.getElementById(id);
   return {ui: context.ui, get, document, routes, calls, reports, prompt(value) {get('prompt').value = value; get('prompt').oninput();}};
 }
 
-test('generation requires AI, simulator, nonempty prompt, idle state, and synthesis for ASIC', async () => {
+test('generation requires AI, simulator, nonempty prompt, and idle state', async () => {
   const a = await app();
   assert.equal(a.get('generate-rtl').disabled, true);
   a.prompt('   '); assert.equal(a.get('generate-rtl').disabled, true);
@@ -96,13 +95,7 @@ test('generation requires AI, simulator, nonempty prompt, idle state, and synthe
     await a.ui.generateRtl(); assert.equal(a.calls.some(call => call.url === '/api/generate-rtl'), false);
     a.ui.state[key] = true;
   }
-  a.ui.state.asicSynthesis = false; a.ui.updateGenerateRtl();
-  assert.equal(a.get('generate-rtl').disabled, false, 'FPGA does not require Yosys');
-  a.ui.state.spec.target = 'asic'; a.ui.updateTarget();
-  assert.equal(a.get('generate-rtl').disabled, true);
-  assert.match(a.get('generate-rtl-help').textContent, /Requires Yosys synthesis/);
-  a.ui.state.asicSynthesis = true; a.ui.updateGenerateRtl();
-  assert.equal(a.get('generate-rtl').disabled, false);
+  assert.match(a.get('generate-rtl-help').textContent, /no KV260 bitstream/);
   a.ui.setBusy(true); assert.equal(a.get('generate-rtl').disabled, true);
   a.ui.setBusy(false); assert.equal(a.get('generate-rtl').disabled, false);
   a.get('objective').value = 'minimize_lanes'; a.get('objective').oninput();
@@ -127,28 +120,6 @@ test('one click sends the reviewed spec and prompt, then renders verified genera
   assert.equal(a.get('export').disabled, false);
 });
 
-test('ASIC completion labels synthesis separately and both reports become stale on prompt or spec edits', async () => {
-  const a = await app(), result = rtlReport({spec: {...spec, target: 'asic'}, synthesis: asicReport(), synthesis_verified: true});
-  a.ui.fillSpec(result.spec); a.prompt(result.prompt);
-  a.routes.set('/api/generate-rtl', async () => ({data: result}));
-  await a.get('generate-rtl').onclick();
-  assert.equal(a.ui.state.synthesis, result.synthesis);
-  assert.match(a.get('synthesis-result').innerHTML, /GENERIC SYNTHESIS · NOT A PHYSICAL CHIP/);
-  assert.match(a.get('synthesis-result').innerHTML, /Source: AI-generated RTL, verified by simulation against an integer oracle/);
-  assert.match(a.get('synthesis-result').innerHTML, /not standard-cell area/);
-  assert.equal(a.get('stale-result').hidden, true);
-  assert.equal(a.get('stale-synthesis').hidden, true);
-  assert.equal(a.get('export-netlist').disabled, false);
-  a.prompt(result.prompt + ' changed');
-  assert.equal(a.get('stale-result').hidden, false);
-  assert.equal(a.get('stale-synthesis').hidden, false);
-  a.prompt(result.prompt);
-  assert.equal(a.get('stale-synthesis').hidden, true);
-  a.get('size').value = '16'; a.get('size').oninput();
-  assert.equal(a.get('stale-result').hidden, false);
-  assert.equal(a.get('stale-synthesis').hidden, false);
-});
-
 test('rejection preserves prior verified evidence and reports an honest visible error', async () => {
   const a = await app(), prior = rtlReport({id: 'prior-verified'});
   a.prompt(prior.prompt); a.ui.renderResult(prior);
@@ -164,12 +135,11 @@ test('rejection preserves prior verified evidence and reports an honest visible 
 });
 
 test('unverified or incomplete successful responses never replace accepted evidence', async () => {
-  for (const result of [rtlReport({correct: false}), rtlReport({evidence: 'rtl_simulation'}), rtlReport({spec: {...spec, target: 'asic'}})]) {
+  for (const result of [rtlReport({correct: false}), rtlReport({evidence: 'rtl_simulation'})]) {
     const a = await app(); a.ui.fillSpec(result.spec); a.prompt(result.prompt);
     a.routes.set('/api/generate-rtl', async () => ({data: result}));
     await a.get('generate-rtl').onclick();
     assert.equal(a.ui.state.result, null);
-    assert.equal(a.ui.state.synthesis, null);
     assert.match(a.get('notice').textContent, /did not return a fully verified/);
     assert.equal(a.get('export').disabled, true);
   }
@@ -189,17 +159,23 @@ test('comparisons require identical evidence origin and source hashes', async ()
   assert.match(a.ui.comparison(generated), /physical resource usage remains unknown/);
 });
 
-test('history retrieves the full generated report and nested synthesis from a light summary', async () => {
-  const full = rtlReport({spec: {...spec, target: 'asic'}, synthesis: asicReport(), synthesis_verified: true});
-  const {synthesis, source_files, ...summary} = full;
+test('history retrieves the full generated report from a light summary', async () => {
+  const full = rtlReport();
+  const {source_files, ...summary} = full;
   const a = await app({runs: [summary]}); a.prompt(full.prompt);
   a.routes.set('/api/runs/' + full.id, async () => ({data: full}));
-  assert.match(a.get('history').innerHTML, /AI-generated RTL · generic synthesis verified/);
+  assert.match(a.get('history').innerHTML, /AI-generated RTL · simulation only/);
   await a.document.querySelectorAll('[data-view]')[0].onclick();
   assert.equal(a.ui.state.result, full);
-  assert.equal(a.ui.state.synthesis, full.synthesis);
-  assert.equal(a.get('asic-stage').hidden, false);
-  assert.equal(a.get('stale-synthesis').hidden, true);
+  assert.equal(a.get('stale-result').hidden, true);
+});
+
+test('the page has no ASIC target or synthesis controls', async () => {
+  assert.doesNotMatch(html, /asic|yosys|generic synthesis/i);
+  const a = await app();
+  assert.equal(a.document.querySelectorAll('[data-target]').length, 0);
+  assert.equal(a.ui.readSpec().target, 'kv260');
+  assert.equal(a.get('generate-rtl').hidden, true, 'AI-written RTL is hidden in the demo');
 });
 
 test('curated reports stay distinct and prompt edits do not make them stale', async () => {
@@ -268,4 +244,126 @@ test('board status is shown only from a fresh passing check', async () => {
   assert.match(stale.get('target-state').textContent, /not confirmed · last board check is 900 s old/);
   const none = await app();
   assert.match(none.get('target-state').textContent, /not checked/);
+});
+
+const RTL = 'f81498d1fdb9a73a32e7f70a5d55c09b6198d2f03f00ab27d9099a63d82f418c';
+function buildEvidence(lanes, overrides = {}) {
+  return {lanes, N: 8, vivado: '2025.2', part: 'xck26-sfvc784-2LV-c', build_started_at: '2026-11-14T15:43:04-08:00', build_minutes: 10.2, rtl_sha256: {'matmul.sv': RTL}, rtl_matches_app: true, bitstream: `matmul_board_n8_l${lanes}.bit`, bitstream_sha256: 'bit' + lanes, bitstream_verified: true, configured_clock_hz: 99999001, timing: {met: true, WNS_ns: lanes === 1 ? 4.757 : 3.885, WHS_ns: 0.001, fmax_estimate_mhz: lanes === 1 ? 190.7 : 163.5, kernel_worst_path: {slack_ns: 4.9, source: 'k_reg', destination: 'acc_reg', logic_levels: 13}}, area: {'Total LUTs': lanes === 1 ? 354 : 3612, FFs: lanes === 1 ? 318 : 2470, 'DSP Blocks': 0, RAMB36: 0, RAMB18: 0}, area_scope: 'instance u_matmul (matmul_axi)', power: {kernel_w: 0.002, total_w: 2.723}, drc_clean: true, synthesis: {rtl_components: [{category: 'Adders', item: '2 Input 32 Bit Adders', count: 5}]}, reports: [{name: 'timing_summary.rpt', verified: true}, {name: 'utilization.rpt', verified: true}, {name: 'power.rpt', verified: true}], ...overrides};
+}
+function simRun(lanes, overrides = {}) {
+  return rtlReport({id: 'sim-' + lanes, evidence: 'rtl_simulation', prompt: undefined, lanes, cycles: 512 / lanes, outputs: Array(64).fill(7), source_sha256: {'matmul.sv': RTL, 'tb.sv': 'tb'}, input_sha256: 'same-inputs', simulator_stdout: 'CYCLES ' + 512 / lanes + '\nOUT 7', ...overrides});
+}
+const TIMING_RPT = ['| Design Timing Summary', '| ---------------------', '-----', '', '    WNS(ns)      TNS(ns)', '    -------      -------', '      4.757        0.000', '', '', 'All user specified timing constraints are met.'].join('\n');
+const XSDB_LOG = ['MM BEGIN n=8 base=0xA0000000', 'MM ID 1397312513', 'MM JOB first status=2 polls=0 timeout=0 cycles_lo=512 cycles_hi=0 host_ns=810362000', 'MM OUT first ' + Array(64).fill(7).join(' '), 'MM END'].join('\n');
+function pipelineApp(a, {check = {available: true, checked_at: '2026-11-15T06:00:00Z', cable_serial: 'XFL13U31JOU3A', devices: ['1  Xilinx X-MLCC-01 XFL13U31JOU3A', '2  xck26 (idcode 04724093 irlen 12 fpga)', '3  arm_dap (idcode 5ba00477 irlen 4)']}, builds} = {}) {
+  a.routes.set('/api/simulate', async body => ({data: simRun(body.lanes, {spec: body.spec})}));
+  for (const lanes of [1, 4]) {
+    const folder = `20261115T06000${lanes}Z_n8_l${lanes}`;
+    a.routes.set(`/api/runs/sim-${lanes}/handoff.json`, async () => ({data: {files: [{name: 'hardware/matmul.sv', sha256: RTL}, {name: 'manifest.json', sha256: null}]}}));
+    a.routes.set(`/api/runs/sim-${lanes}/board-run`, async () => ({data: {id: 'job-' + lanes, status: 'done', stage: 'done', child_id: 'board-' + lanes, zip_sha256: 'zip' + lanes, result_folder: folder, log: []}}));
+    a.routes.set('/api/runs/board-' + lanes, async () => ({data: boardReport(lanes, {runner_result_folder: folder, interface_check: {identity: 1397312513, compiled_n: 8, compiled_lanes: lanes, base_address: '0xA0000000'}})}));
+    a.routes.set(`/api/fpga/builds/${lanes}/reports/timing_summary.rpt`, async () => ({data: TIMING_RPT}));
+    a.routes.set(`/api/board/results/${folder}/xsdb.log`, async () => ({data: XSDB_LOG}));
+  }
+  a.routes.set('/api/board/check', async () => ({data: check}));
+  if (builds) a.routes.set('/api/fpga/builds', async () => ({data: {builds}}));
+  return a;
+}
+const flowHtml = a => ['art-rtl', 'art-vivado', 'art-board', 'art-results'].map(id => a.get(id).innerHTML).join('\n');
+const called = (a, url) => a.calls.some(call => call.url === url);
+
+test('the AI spec appears with both architectures, and nothing runs until Build is clicked', async () => {
+  const a = pipelineApp(await app());
+  a.routes.set('/api/spec', async body => ({data: {supported: true, explanation: 'Supported 8x8 INT8 GEMM.', spec: {...spec}, provenance: {size: 'user', max_lanes: 'user'}, unresolved: []}}));
+  assert.equal(a.get('step-spec').hidden, true);
+  a.prompt('Fast 8x8 INT8 matmul on the KV260');
+  a.ui.state.aiDetails = {model: 'openai/gpt-oss-20b'};
+  await a.ui.generateSpec();
+  assert.equal(a.get('step-spec').hidden, false);
+  assert.equal(a.ui.state.specOrigin.kind, 'ai');
+  assert.match(a.get('spec-origin').textContent, /Drafted by AI \(openai\/gpt-oss-20b\)/);
+  assert.match(a.get('spec-notes').innerHTML, /Fast 8x8 INT8 matmul on the KV260/);
+  assert.match(a.get('arch-view').innerHTML, /1 lane · Sequential MAC/);
+  assert.match(a.get('arch-view').innerHTML, /4 lanes · Parallel MAC array/);
+  assert.match(a.get('arch-view').innerHTML, /KV260 bitstream ready/);
+  assert.equal(called(a, '/api/simulate'), false);
+  assert.equal(a.get('step-rtl').hidden, true);
+  a.routes.set('/api/spec', async () => ({data: {supported: false, explanation: 'Camera inference is unsupported.', spec: {...spec}, provenance: {}, unresolved: []}}));
+  const b = pipelineApp(await app());
+  b.routes.set('/api/spec', async () => ({data: {supported: false, explanation: 'Camera inference is unsupported.', spec: {...spec}, provenance: {}, unresolved: []}}));
+  b.prompt('detect cats on a camera');
+  await b.ui.generateSpec();
+  assert.equal(b.get('step-spec').hidden, true);
+  assert.match(b.get('notice').textContent, /Camera inference is unsupported/);
+});
+
+test('Build runs every step in order and shows each step\'s artifacts and a 1 vs 4 lane chart', async () => {
+  const a = pipelineApp(await app());
+  a.ui.fillSpec({...spec}, {size: 'user'}, {kind: 'ai', prompt: 'Fast 8x8 INT8 matmul on the KV260', model: 'openai/gpt-oss-20b'});
+  await a.ui.runPipeline();
+  for (const step of ['sim', 'handoff', 'vivado', 'board', 'run', 'import', 'compare']) assert.equal(a.ui.pipe.status[step], 'done', step);
+  for (const id of ['step-spec', 'step-rtl', 'step-vivado', 'step-board', 'step-results']) assert.equal(a.get(id).hidden, false, id);
+  assert.match(a.get('flow-progress').innerHTML, /class="done"><a href="#step-results"><b>✓<\/b>Results/);
+  assert.match(a.get('art-rtl').innerHTML, /hardware\/matmul\.sv/);
+  assert.match(a.get('art-rtl').innerHTML, /64\/64 ✓/);
+  assert.match(a.get('art-vivado').innerHTML, /reused, not rebuilt/);
+  assert.match(a.get('art-vivado').innerHTML, /All user specified timing constraints are met\./);
+  assert.match(a.get('art-vivado').innerHTML, /\/api\/fpga\/builds\/1\/reports\/timing_summary\.rpt/);
+  assert.match(a.get('art-board').innerHTML, /KV260 connected/);
+  assert.match(a.get('art-board').innerHTML, /MM JOB first status=2/);
+  assert.match(a.get('art-board').innerHTML, /\(64 values\)/);
+  assert.match(a.get('art-board').innerHTML, /Identity register 0x53494C01/);
+  assert.match(a.get('art-board').innerHTML, /\/api\/board\/results\/20261115T060001Z_n8_l1\/xsdb\.log/);
+  const results = a.get('art-results').innerHTML;
+  assert.match(results, /<strong>4\.00×<\/strong><span>fewer kernel cycles, measured on the KV260/);
+  assert.match(results, /<strong>10\.2×<\/strong>/);
+  assert.match(results, /Kernel cycles · measured on the KV260/);
+  assert.match(results, /Matmul LUTs/);
+  assert.match(results, /not a stopwatch time/);
+  assert.match(a.get('live-final').innerHTML, /Pipeline complete/);
+  assert.equal(a.ui.state.busy, false);
+});
+
+test('Build stops before programming when the board is not detected', async () => {
+  const a = pipelineApp(await app(), {check: {available: false, reason: 'board not detected', devices: []}});
+  await a.ui.runPipeline();
+  assert.equal(a.ui.pipe.status.board, 'failed');
+  assert.notEqual(a.ui.pipe.status.run, 'done');
+  assert.equal(called(a, '/api/runs/sim-1/board-run'), false);
+  assert.match(a.get('art-board').innerHTML, /J4/);
+  assert.equal(a.get('step-results').hidden, true);
+  assert.equal(a.get('notice').className, 'notice error');
+});
+
+test('Build refuses a bitstream that was not built from the simulated RTL', async () => {
+  const a = pipelineApp(await app(), {builds: [buildEvidence(1, {rtl_sha256: {'matmul.sv': 'other'}}), buildEvidence(4)]});
+  await a.ui.runPipeline();
+  assert.equal(a.ui.pipe.status.vivado, 'failed');
+  assert.equal(called(a, '/api/board/check'), false);
+  assert.match(a.get('art-vivado').innerHTML, /not built from this RTL/);
+  assert.equal(a.get('step-board').hidden, true);
+});
+
+test('16 x 16 runs stop after simulation and never touch the board', async () => {
+  const a = pipelineApp(await app());
+  a.get('size').value = '16';
+  await a.ui.runPipeline();
+  assert.equal(a.ui.pipe.status.sim, 'done');
+  for (const step of ['vivado', 'board', 'run', 'import']) assert.equal(a.ui.pipe.status[step], 'skipped', step);
+  assert.equal(called(a, '/api/board/check'), false);
+  assert.match(a.get('art-vivado').innerHTML, /built for 8 × 8 only/);
+  assert.doesNotMatch(flowHtml(a), /measured on the KV260/);
+});
+
+test('the recorded run is labelled as recorded, not live', async () => {
+  const one = boardReport(1, {parent_run_id: 'sim-1'}), four = boardReport(4, {parent_run_id: 'sim-4'});
+  const a = pipelineApp(await app({runs: [four, one]}));
+  a.routes.set('/api/runs/board-1', async () => ({data: one}));
+  a.routes.set('/api/runs/board-4', async () => ({data: four}));
+  a.routes.set('/api/runs/sim-1', async () => ({data: simRun(1)}));
+  a.routes.set('/api/runs/sim-4', async () => ({data: simRun(4)}));
+  await a.ui.showRecorded();
+  assert.match(a.get('live-final').innerHTML, /Recorded real run \(not live\)/);
+  assert.match(a.get('art-results').innerHTML, /fewer kernel cycles, measured on the KV260/);
+  assert.equal(called(a, '/api/board/check'), false);
 });

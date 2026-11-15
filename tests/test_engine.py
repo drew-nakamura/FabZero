@@ -26,16 +26,12 @@ class EngineTests(unittest.TestCase):
             replay=subprocess.run(['vvp','sim'],cwd=root,check=True,capture_output=True,text=True,timeout=20)
             self.assertEqual(replay.stdout,result['simulator_stdout'])
 
-    def test_asic_target_preserves_unverified_physical_metrics(self):
-        spec={**DEFAULT,'target':'asic'}
-        data=explore(spec)
-        self.assertEqual(data['spec']['target'],'asic')
-        self.assertIn('DSP budget does not apply',data['warning'])
+    def test_only_the_kv260_target_is_supported(self):
+        data=explore(DEFAULT)
         self.assertIsNone(data['hardware_recommendation'])
-        result=simulate(spec,1)
-        self.assertFalse(result['physical_asic'])
-        self.assertEqual(result['cycles'],512)
-        with self.assertRaises(ValueError): validate({**spec,'target':'unknown'})
+        self.assertIn('Vivado',data['warning'])
+        for target in ('asic','unknown'):
+            with self.assertRaisesRegex(ValueError,'KV260'): validate({**DEFAULT,'target':target})
 
     def test_constraints(self):
         self.assertEqual(explore({**DEFAULT,"max_lanes":1})['provisional'],'mac1')

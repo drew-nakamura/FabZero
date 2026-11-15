@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai, asic, rtlgen, catalog, handoff, board
+from siliconos import ai, rtlgen, catalog, handoff, board, fpga
 from siliconos.engine import explore, simulate, validate
 
 ROOT=Path(__file__).resolve().parent
@@ -19,6 +19,7 @@ DB=ROOT/"data"/"siliconos.db"
 BOARD_CHECK=ROOT/"hw"/"matmul_board"/"results"/"board_check.json"
 RUN_LOCK=threading.Lock()
 BOARD_LOCK=threading.Lock()
+BOARD_CHECK_LOCK=threading.Lock()
 
 class _Connection(sqlite3.Connection):
     """`with connect() as db:` commits/rolls back as before, then closes the file
@@ -79,12 +80,41 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Cache-Control","no-store"); self.send_header("Content-Length",str(len(body)))
         self.end_headers(); self.wfile.write(body)
 
+    def send_file(self,body,mime):
+        self.send_response(200); self.send_header("Content-Type",mime); self.send_header("Cache-Control","no-store")
+        self.send_header("X-Content-Type-Options","nosniff"); self.send_header("Content-Length",str(len(body)))
+        self.end_headers(); self.wfile.write(body)
+
+    def load_run(self,run_id):
+        with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(run_id,)).fetchone()
+        return json.loads(row[0]) if row else None
+
     def do_GET(self):
         path=urlparse(self.path).path
         if path=="/api/status":
-            import shutil
             board_details=board.board_status(BOARD_CHECK)
-            return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=board_details["available"],board_details=board_details,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
+            return self.reply(200,dict(ai=ai.configured(),ai_details=ai.details(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=board_details["available"],board_details=board_details))
+        if path=="/api/fpga/builds":
+            return self.reply(200,{"builds":[fpga.build_evidence(lanes) for lanes in (1,4)]})
+        match=re.fullmatch(r'/api/fpga/builds/([14])/reports/([a-z_]+\.(?:rpt|txt))',path)
+        if match:
+            try: return self.send_file(fpga.report_text(int(match.group(1)),match.group(2)),"text/plain; charset=utf-8")
+            except LookupError as error: return self.reply(404,{"error":str(error)})
+            except ValueError as error: return self.reply(409,{"error":str(error)})
+        match=re.fullmatch(r'/api/board/jobs/([a-f0-9-]{36})',path)
+        if match:
+            job=fpga.get_job(match.group(1))
+            return self.reply(200,job) if job else self.reply(404,{"error":"Board job not found"})
+        match=re.fullmatch(r'/api/board/results/([^/]+)/([a-z.-]+)',path)
+        if match:
+            try: return self.send_file(*fpga.result_file(match.group(1),match.group(2)))
+            except LookupError as error: return self.reply(404,{"error":str(error)})
+        match=re.fullmatch(r'/api/runs/([a-f0-9-]{36})/handoff.json',path)
+        if match:
+            run=self.load_run(match.group(1))
+            if not run: return self.reply(404,{"error":"Run not found"})
+            try: return self.reply(200,fpga.handoff_contents(run))
+            except (ValueError,TypeError,KeyError): return self.reply(400,{"error":"This run lacks valid handoff evidence."})
         if path=="/api/catalog":
             return self.reply(200,{"blocks":catalog.blocks()})
         if path=="/api/runs":
@@ -106,9 +136,12 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers();self.wfile.write(body)
             return
         if path.startswith("/api/runs/"):
-            with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(path.rsplit("/",1)[-1],)).fetchone()
-            return self.reply(200,json.loads(row[0])) if row else self.reply(404,{"error":"Run not found"})
-        files={"/":("index.html","text/html"),"/app.js":("app.js","application/javascript"),"/catalog.js":("catalog.js","application/javascript"),"/style.css":("style.css","text/css")}
+            run=self.load_run(path.rsplit("/",1)[-1])
+            if not run: return self.reply(404,{"error":"Run not found"})
+            if run.get("evidence")=="board_measured" and not run.get("runner_result_folder"):
+                run["runner_result_folder"]=fpga.find_result_folder(run.get("runner_result_id"))
+            return self.reply(200,run)
+        files={"/":("index.html","text/html"),"/app.js":("app.js","application/javascript"),"/pipeline.js":("pipeline.js","application/javascript"),"/catalog.js":("catalog.js","application/javascript"),"/style.css":("style.css","text/css")}
         if path not in files: return self.reply(404,{"error":"Not found"})
         name,mime=files[path]; body=(ROOT/"web"/name).read_bytes()
         self.send_response(200); self.send_header("Content-Type",mime); self.send_header("Content-Length",str(len(body)))
@@ -129,6 +162,15 @@ class Handler(BaseHTTPRequestHandler):
             if board_route:
                 try: return self.reply(200,import_board_result(board_route.group(1),data))
                 except LookupError as error: return self.reply(404,{"error":str(error)})
+            run_route=re.fullmatch(r'/api/runs/([a-f0-9-]{36})/board-run',path)
+            if run_route:
+                run=self.load_run(run_route.group(1))
+                if not run: return self.reply(404,{"error":"Run not found"})
+                return self.reply(200,fpga.start_board_run(run,import_board_result))
+            if path=="/api/board/check":
+                if not BOARD_CHECK_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A board check is already running."})
+                try: return self.reply(200,fpga.check_board(BOARD_CHECK))
+                finally: BOARD_CHECK_LOCK.release()
             if path=="/api/explore": result=explore(data.get("spec"))
             elif path=="/api/spec": result=ai.generate(data.get("prompt"),data.get("target"))
             elif path=="/api/plan": result=catalog.plan(data.get("spec"),data.get("lanes"),data.get("block_id"))
@@ -142,12 +184,6 @@ class Handler(BaseHTTPRequestHandler):
                     expected={Path(k).name:v for k,v in recipe['source_sha256'].items()}
                     if result['source_sha256']!=expected:
                         raise ValueError('Sources changed during the build. Retry with a fresh recipe.')
-                    if spec['target']=='asic':
-                        synthesis=asic.synthesize(spec,lanes)
-                        if synthesis['source_sha256']!=expected:
-                            raise ValueError('Sources changed between verification and synthesis. No build accepted.')
-                        result['synthesis']=synthesis
-                        result['synthesis_verified']=True
                     result.update(build_recipe=recipe,id=str(uuid.uuid4()),created_at=now())
                     with connect() as db:
                         db.execute('INSERT INTO runs VALUES (?,?)',(result['id'],json.dumps(result)))
@@ -168,15 +204,11 @@ class Handler(BaseHTTPRequestHandler):
                         raise ValueError('Candidate exceeds the lane limit or is unsupported.')
                     if type(seed) is not int or not 0<=seed<=2**31-1:
                         raise ValueError('Seed must be an integer between 0 and 2147483647.')
-                    required=('iverilog','vvp','yosys') if spec['target']=='asic' else ('iverilog','vvp')
-                    missing=[name for name in required if not shutil.which(name)]
+                    missing=[name for name in ('iverilog','vvp') if not shutil.which(name)]
                     if missing: raise ValueError('RTL generation and verification require: '+', '.join(missing))
                     source=ai.generate_rtl(spec,prompt)
                     rtlgen.gate(source)
                     result=simulate(spec,lanes,seed,source_override=source)
-                    if spec['target']=='asic':
-                        result['synthesis']=asic.synthesize(spec,lanes,source_override=source)
-                        result['synthesis_verified']=True
                     result.update(id=str(uuid.uuid4()),created_at=now(),prompt=prompt)
                     # Commit the whole pipeline and its event atomically; no partial RTL run.
                     with connect() as db:
@@ -184,10 +216,10 @@ class Handler(BaseHTTPRequestHandler):
                         db.execute('INSERT INTO events VALUES (?,?)',(now(),path))
                 finally: RUN_LOCK.release()
                 return self.reply(200,result)
-            elif path in ("/api/simulate","/api/asic/synthesize"):
+            elif path=="/api/simulate":
                 if not RUN_LOCK.acquire(blocking=False): return self.reply(409,{"error":"A hardware tool run is already active. Try again shortly."})
                 try:
-                    result=(asic.synthesize(data.get("spec"),data.get("lanes")) if path=="/api/asic/synthesize" else simulate(data.get("spec"),data.get("lanes"),data.get("seed",42)))
+                    result=simulate(data.get("spec"),data.get("lanes"),data.get("seed",42))
                 finally: RUN_LOCK.release()
                 result["build_recipe"]=catalog.plan(result["spec"],result["lanes"])
                 result.update(id=str(uuid.uuid4()),created_at=now())
