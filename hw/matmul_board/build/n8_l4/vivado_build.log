@@ -1,0 +1,1371 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sat Nov 14 15:53:26 2026
+# Process ID         : 74680
+# Current directory  : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4
+# Command line       : vivado.exe -mode batch -nojournal -log C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l4\vivado_build.log -source C:\Users\drewa\FabZero\hw\matmul_board\build.tcl -tclargs 8 4 C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l4 full
+# Log file           : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/vivado_build.log
+# Journal file       : 
+# Running On         : DrewsLaptop
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i7-13620H
+# CPU Frequency      : 2918 MHz
+# CPU Physical cores : 10
+# CPU Logical cores  : 16
+# Host memory        : 34014 MB
+# Swap memory        : 13365 MB
+# Total Virtual      : 47379 MB
+# Available Virtual  : 9279 MB
+#-----------------------------------------------------------
+source {C:\Users\drewa\FabZero\hw\matmul_board\build.tcl}
+# if {$argc < 3 || $argc > 4} { error "Usage: build.tcl N LANES OUT_DIR ?full|bd?" }
+# lassign $argv N LANES out stage
+# if {$stage eq ""} { set stage full }
+# if {$stage ni {full bd}} { error "STAGE must be full or bd, got '$stage'" }
+# if {!(($N == 8 || $N == 16) && ($LANES == 1 || $LANES == 4))} {
+#   error "Supported: N 8|16, LANES 1|4 (got N=$N LANES=$LANES)"
+# }
+# set here [file normalize [file dirname [info script]]]
+# set out  [file normalize $out]
+# file mkdir $out
+# set part      xck26-sfvc784-2LV-c
+# set boardpart xilinx.com:kv260_som:part0:1.4
+# create_project matmul_board $out/proj -part $part -force
+# set_property board_part $boardpart [current_project]
+# create_bd_design matmul_board_bd
+Wrote  : <C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l4\proj\matmul_board.srcs\sources_1\bd\matmul_board_bd\matmul_board_bd.bd> 
+create_bd_cell: Time (s): cpu = 00:00:12 ; elapsed = 00:00:18 . Memory (MB): peak = 750.402 ; gain = 173.574
+# set ps [create_bd_cell -type ip -vlnv xilinx.com:ip:zynq_ultra_ps_e zynq_ultra_ps_e_0]
+# apply_bd_automation -rule xilinx.com:bd_rule:zynq_ultra_ps_e \
+#   -config {apply_board_preset "1"} $ps
+apply_bd_automation: Time (s): cpu = 00:00:04 ; elapsed = 00:00:05 . Memory (MB): peak = 750.402 ; gain = 0.000
+# set_property -dict [list CONFIG.PSU__USE__M_AXI_GP0 {1} CONFIG.PSU__USE__M_AXI_GP1 {0} \
+#   CONFIG.PSU__USE__M_AXI_GP2 {0}] $ps
+# set sc [create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect smartconnect_0]
+# set_property -dict [list CONFIG.NUM_SI {1} CONFIG.NUM_MI {1}] $sc
+INFO: [Ipptcl 7-1463] No Compatible Board Interface found. Board Tab not created in customize GUI
+# set rst [create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset rst_pl_clk0]
+# set m [create_bd_intf_port -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M_AXI]
+# set_property -dict [list CONFIG.PROTOCOL {AXI4LITE} CONFIG.DATA_WIDTH {32} \
+#   CONFIG.ADDR_WIDTH {32} CONFIG.HAS_PROT {0}] $m
+# create_bd_port -dir O -type clk pl_clk0
+# create_bd_port -dir O -type rst pl_rst_n
+# set_property CONFIG.ASSOCIATED_BUSIF {M_AXI} [get_bd_ports pl_clk0]
+# set_property CONFIG.ASSOCIATED_RESET {pl_rst_n} [get_bd_ports pl_clk0]
+# set_property CONFIG.POLARITY {ACTIVE_LOW} [get_bd_ports pl_rst_n]
+# connect_bd_intf_net [get_bd_intf_pins $ps/M_AXI_HPM0_FPD] [get_bd_intf_pins $sc/S00_AXI]
+# connect_bd_intf_net [get_bd_intf_pins $sc/M00_AXI] $m
+# connect_bd_net [get_bd_pins $ps/pl_clk0] [get_bd_pins $ps/maxihpm0_fpd_aclk] \
+#   [get_bd_pins $sc/aclk] [get_bd_pins $rst/slowest_sync_clk] [get_bd_ports pl_clk0]
+# connect_bd_net [get_bd_pins $ps/pl_resetn0] [get_bd_pins $rst/ext_reset_in]
+# connect_bd_net [get_bd_pins $rst/interconnect_aresetn] [get_bd_pins $sc/aresetn]
+# connect_bd_net [get_bd_pins $rst/peripheral_aresetn] [get_bd_ports pl_rst_n]
+# assign_bd_address -target_address_space /zynq_ultra_ps_e_0/Data [get_bd_addr_segs M_AXI/Reg]
+Slave segment '/M_AXI/Reg' is being assigned into address space '/zynq_ultra_ps_e_0/Data' at <0xA000_0000 [ 64K ]>.
+# set segs [get_bd_addr_segs -of_objects [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] \
+#   -filter {NAME =~ *M_AXI*}]
+# if {[llength $segs] != 1} { error "expected one M_AXI address segment, found: $segs" }
+# set_property RANGE 4K $segs
+# validate_bd_design
+INFO: [BD 5-943] Reserving offset range <0xA000_0000 [ 4K ]> from slave interface '/smartconnect_0/S00_AXI' to master interface '/smartconnect_0/M00_AXI'. This will be used by smartconnect on path for routing.
+INFO: [xilinx.com:ip:smartconnect:1.0-1] matmul_board_bd_smartconnect_0_0: SmartConnect matmul_board_bd_smartconnect_0_0 is in Low-Area Mode.
+INFO: [Ipptcl 7-1463] No Compatible Board Interface found. Board Tab not created in customize GUI
+xit::source_ipfile: Time (s): cpu = 00:00:05 ; elapsed = 00:00:09 . Memory (MB): peak = 768.309 ; gain = 17.906
+validate_bd_design: Time (s): cpu = 00:00:10 ; elapsed = 00:00:17 . Memory (MB): peak = 774.262 ; gain = 23.859
+# save_bd_design
+Wrote  : <C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l4\proj\matmul_board.srcs\sources_1\bd\matmul_board_bd\matmul_board_bd.bd> 
+# set base  [get_property OFFSET $segs]
+# set range [get_property RANGE $segs]
+# set clk_hz [get_property CONFIG.FREQ_HZ [get_bd_pins $ps/pl_clk0]]
+# set port_hz [get_property CONFIG.FREQ_HZ $m]
+# set fh [open $out/addresses.tcl w]
+# puts $fh "# Generated by build.tcl from the block design address map."
+# puts $fh "set MATMUL_BASE $base"
+# puts $fh "set MATMUL_RANGE $range"
+# close $fh
+# set fh [open $out/build_info.txt w]
+# puts $fh "vivado=[version -short]"
+# puts $fh "part=$part"
+# puts $fh "board_part=$boardpart"
+# puts $fh "board_top=matmul_board_top"
+# puts $fh "logical_top=matmul_axi"
+# puts $fh "kernel_instance=u_matmul"
+# puts $fh "N=$N"
+# puts $fh "LANES=$LANES"
+# puts $fh "address_segment=$segs"
+# puts $fh "base_address=$base"
+# puts $fh "address_range=$range"
+# puts $fh "pl_clk0_freq_hz=$clk_hz"
+# puts $fh "m_axi_freq_hz=$port_hz"
+# close $fh
+# puts "MATMUL_BASE=$base RANGE=$range PL_CLK0_HZ=$clk_hz M_AXI_HZ=$port_hz"
+MATMUL_BASE=0xA0000000 RANGE=0x00001000 PL_CLK0_HZ=99999001 M_AXI_HZ=99999001
+# make_wrapper -files [get_files matmul_board_bd.bd] -top
+INFO: [BD 41-1662] The design 'matmul_board_bd.bd' is already validated. Therefore parameter propagation will not be re-run.
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/sim/matmul_board_bd.v
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v
+# add_files -norecurse [glob $out/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v]
+# add_files -norecurse [list $here/rtl/matmul.sv $here/rtl/matmul_axi.sv $here/matmul_board_top.sv]
+# set_property top matmul_board_top [current_fileset]
+# set_property generic "N=$N LANES=$LANES" [current_fileset]
+# update_compile_order -fileset sources_1
+# if {$stage eq "bd"} { puts "BD_DONE"; return }
+# launch_runs synth_1 -jobs 8
+INFO: [BD 41-1662] The design 'matmul_board_bd.bd' is already validated. Therefore parameter propagation will not be re-run.
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/sim/matmul_board_bd.v
+Verilog Output written to : C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v
+INFO: [xilinx.com:ip:zynq_ultra_ps_e:3.5-0] matmul_board_bd_zynq_ultra_ps_e_0_0: 
+Changes in your design (including the PCW configuration settings) are not automatically exported from Vivado to Amd's SDK, Petalinux or Yocto.
+This is by design to avoid disrupting existing embedded development efforts. To have any changes of your design taking effect in the embedded software flow please export your
+design by going through Vivado's main menu, click on File, then Export finally select Export Hardware, please ensure you click on the Include BitStream option.
+The auto-generated HDF file is all you need to import in Amd's SDK, Petalinux or Yocto for your changes to be reflected in the Embedded Software Flow.
+For more information, please consult PG201, section: Exporting PCW Settings to Embedded Software Flows
+INFO: [PSU-0] Address Range of DDR (0x7ff00000 to 0x7fffffff) is reserved by PMU for internal purpose.
+INFO: [IP_Flow 19-5611] Unable to find an associated reset port for the interface 'M_AXI_HPM0_FPD'. A default connection has been created.
+INFO: [BD 41-1029] Generation completed for the IP Integrator block zynq_ultra_ps_e_0 .
+Exporting to file c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/bd_0/hw_handoff/matmul_board_bd_smartconnect_0_0.hwh
+Generated Hardware Definition File c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/bd_0/synth/matmul_board_bd_smartconnect_0_0.hwdef
+INFO: [BD 41-1029] Generation completed for the IP Integrator block smartconnect_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_pl_clk0 .
+Exporting to file C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hw_handoff/matmul_board_bd.hwh
+Generated Hardware Definition File C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.hwdef
+INFO: [BD 41-3262] Generated VHDL Instantiation Template file c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/matmul_board_bd.vho
+INFO: [BD 41-3262] Generated Verilog Instantiation Template file c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/matmul_board_bd.veo
+INFO: [BD 41-3262] Generated System Verilog Instantiation Template file c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/matmul_board_bd_sv.sveo
+WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
+[Sat Nov 14 15:55:09 2026] Launched matmul_board_bd_smartconnect_0_0_synth_1, matmul_board_bd_zynq_ultra_ps_e_0_0_synth_1, matmul_board_bd_rst_pl_clk0_0_synth_1...
+Run output will be captured here:
+matmul_board_bd_smartconnect_0_0_synth_1: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/matmul_board_bd_smartconnect_0_0_synth_1/runme.log
+matmul_board_bd_zynq_ultra_ps_e_0_0_synth_1: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/matmul_board_bd_zynq_ultra_ps_e_0_0_synth_1/runme.log
+matmul_board_bd_rst_pl_clk0_0_synth_1: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/matmul_board_bd_rst_pl_clk0_0_synth_1/runme.log
+[Sat Nov 14 15:55:09 2026] Launched synth_1...
+Run output will be captured here: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/runme.log
+launch_runs: Time (s): cpu = 00:00:35 ; elapsed = 00:00:40 . Memory (MB): peak = 849.375 ; gain = 57.453
+# wait_on_run synth_1
+[Sat Nov 14 15:55:09 2026] Waiting for synth_1 to finish...
+
+*** Running vivado
+    with args -log matmul_board_top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source matmul_board_top.tcl
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Sat Nov 14 15:56:40 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source matmul_board_top.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+Command: synth_design -top matmul_board_top -part xck26-sfvc784-2LV-c
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Device 21-403] Loading part xck26-sfvc784-2LV-c
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 26780
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 1862.121 ; gain = 210.426
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_top' [C:/Users/drewa/FabZero/hw/matmul_board/matmul_board_top.sv:9]
+	Parameter N bound to: 32'sb00000000000000000000000000001000 
+	Parameter LANES bound to: 32'sb00000000000000000000000000000100 
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_bd_wrapper' [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v:13]
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_bd' [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:13]
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_bd_rst_pl_clk0_0' [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_rst_pl_clk0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_bd_rst_pl_clk0_0' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_rst_pl_clk0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'mb_reset' of module 'matmul_board_bd_rst_pl_clk0_0' is unconnected for instance 'rst_pl_clk0' [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:121]
+WARNING: [Synth 8-7071] port 'bus_struct_reset' of module 'matmul_board_bd_rst_pl_clk0_0' is unconnected for instance 'rst_pl_clk0' [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:121]
+WARNING: [Synth 8-7071] port 'peripheral_reset' of module 'matmul_board_bd_rst_pl_clk0_0' is unconnected for instance 'rst_pl_clk0' [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:121]
+WARNING: [Synth 8-7023] instance 'rst_pl_clk0' of module 'matmul_board_bd_rst_pl_clk0_0' has 10 connections declared, but only 7 given [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:121]
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_bd_smartconnect_0_0' [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_smartconnect_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_bd_smartconnect_0_0' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_smartconnect_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'matmul_board_bd_zynq_ultra_ps_e_0_0' [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_zynq_ultra_ps_e_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_bd_zynq_ultra_ps_e_0_0' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/.Xil/Vivado-62788-DrewsLaptop/realtime/matmul_board_bd_zynq_ultra_ps_e_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'pl_clk1' of module 'matmul_board_bd_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:190]
+WARNING: [Synth 8-7023] instance 'zynq_ultra_ps_e_0' of module 'matmul_board_bd_zynq_ultra_ps_e_0_0' has 44 connections declared, but only 43 given [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:190]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_bd' (0#1) [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/synth/matmul_board_bd.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_bd_wrapper' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v:13]
+WARNING: [Synth 8-7071] port 'M_AXI_arprot' of module 'matmul_board_bd_wrapper' is unconnected for instance 'u_bd' [C:/Users/drewa/FabZero/hw/matmul_board/matmul_board_top.sv:18]
+WARNING: [Synth 8-7071] port 'M_AXI_awprot' of module 'matmul_board_bd_wrapper' is unconnected for instance 'u_bd' [C:/Users/drewa/FabZero/hw/matmul_board/matmul_board_top.sv:18]
+WARNING: [Synth 8-7023] instance 'u_bd' of module 'matmul_board_bd_wrapper' has 21 connections declared, but only 19 given [C:/Users/drewa/FabZero/hw/matmul_board/matmul_board_top.sv:18]
+INFO: [Synth 8-6157] synthesizing module 'matmul_axi' [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul_axi.sv:2]
+	Parameter N bound to: 8 - type: integer 
+	Parameter LANES bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'matmul' [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul.sv:4]
+	Parameter N bound to: 8 - type: integer 
+	Parameter LANES bound to: 4 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'matmul' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul.sv:4]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_axi' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul_axi.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'matmul_board_top' (0#1) [C:/Users/drewa/FabZero/hw/matmul_board/matmul_board_top.sv:9]
+WARNING: [Synth 8-4767] Trying to implement RAM ' ' in registers. Block RAM or DRAM implementation is not possible; see log for reasons. [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul.sv:39]
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Invalid write to RAM. 
+	3: Invalid write to RAM. 
+	4: Invalid write to RAM. 
+	5: Unable to determine number of words or word size in RAM. 
+	6: No valid clock found for write to RAM. 
+WARNING: [Synth 8-4767] Trying to implement RAM 'c_reg' in registers. Block RAM or DRAM implementation is not possible; see log for reasons. [C:/Users/drewa/FabZero/hw/matmul_board/rtl/matmul.sv:39]
+Reason is one or more of the following :
+	1: RAM has multiple writes via different ports in same process. If RAM inferencing intended, write to one port per process. 
+	2: Invalid write to RAM. 
+	3: Invalid write to RAM. 
+	4: No valid clock found for write to RAM. 
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2006.309 ; gain = 354.613
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2006.309 ; gain = 354.613
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 2006.309 ; gain = 354.613
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.048 . Memory (MB): peak = 2006.309 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0'
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/matmul_board_bd_smartconnect_0_0/matmul_board_bd_smartconnect_0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/matmul_board_bd_smartconnect_0_0/matmul_board_bd_smartconnect_0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0'
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/rst_pl_clk0'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0_in_context.xdc] for cell 'u_bd/matmul_board_bd_i/rst_pl_clk0'
+Parsing XDC File [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2099.602 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 2099.602 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2099.602 ; gain = 447.906
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xck26-sfvc784-2LV-c
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2099.602 ; gain = 447.906
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2099.602 ; gain = 447.906
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6904] The RAM "matmul:/a_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+INFO: [Synth 8-6904] The RAM "matmul:/b_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:28 ; elapsed = 00:00:30 . Memory (MB): peak = 2242.293 ; gain = 590.598
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 9     
+	   2 Input    6 Bit       Adders := 1     
++---Registers : 
+	               32 Bit    Registers := 72    
+	                8 Bit    Registers := 2     
+	                4 Bit    Registers := 1     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 8     
++---RAMs : 
+	              512 Bit	(64 X 8 bit)          RAMs := 2     
++---Muxes : 
+	   2 Input   32 Bit        Muxes := 9     
+	   4 Input   32 Bit        Muxes := 1     
+	   3 Input    2 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 14    
+	   4 Input    1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1248 (col length:96)
+BRAMs: 288 (col length: RAMB18 96 RAMB36 48)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6904] The RAM "matmul_board_top/b_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+INFO: [Synth 8-6904] The RAM "matmul_board_top/a_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+INFO: [Synth 8-6904] The RAM "matmul_board_top/b_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+INFO: [Synth 8-6904] The RAM "matmul_board_top/a_reg" of size (depth=64 x width=8) is automatically implemented using LUTRAM. BRAM implementation would be inefficient 
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:01:24 ; elapsed = 00:01:36 . Memory (MB): peak = 2242.293 ; gain = 590.598
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++-----------------+------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+------------+-----------+----------------------+--------------+
+|matmul_board_top | b_reg      | Implied   | 64 x 8               | RAM64M8 x 8  | 
+|matmul_board_top | a_reg      | Implied   | 64 x 8               | RAM64M8 x 2  | 
++-----------------+------------+-----------+----------------------+--------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:01:32 ; elapsed = 00:01:44 . Memory (MB): peak = 2773.469 ; gain = 1121.773
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:01:56 ; elapsed = 00:02:08 . Memory (MB): peak = 3045.527 ; gain = 1393.832
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping Report
++-----------------+------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+------------+-----------+----------------------+--------------+
+|matmul_board_top | b_reg      | Implied   | 64 x 8               | RAM64M8 x 8  | 
+|matmul_board_top | a_reg      | Implied   | 64 x 8               | RAM64M8 x 2  | 
++-----------------+------------+-----------+----------------------+--------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:01:58 ; elapsed = 00:02:10 . Memory (MB): peak = 3051.441 ; gain = 1399.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:02:00 ; elapsed = 00:02:13 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:01 ; elapsed = 00:02:13 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:01 ; elapsed = 00:02:13 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:01 ; elapsed = 00:02:13 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:02 ; elapsed = 00:02:14 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:02 ; elapsed = 00:02:14 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+------------------------------------+----------+
+|      |BlackBox name                       |Instances |
++------+------------------------------------+----------+
+|1     |matmul_board_bd_rst_pl_clk0_0       |         1|
+|2     |matmul_board_bd_smartconnect_0_0    |         1|
+|3     |matmul_board_bd_zynq_ultra_ps_e_0_0 |         1|
++------+------------------------------------+----------+
+
+Report Cell Usage: 
++------+----------------------------------+------+
+|      |Cell                              |Count |
++------+----------------------------------+------+
+|1     |matmul_board_bd_rst_pl_clk0       |     1|
+|2     |matmul_board_bd_smartconnect_0    |     1|
+|3     |matmul_board_bd_zynq_ultra_ps_e_0 |     1|
+|4     |CARRY8                            |    89|
+|5     |LUT1                              |    10|
+|6     |LUT2                              |   383|
+|7     |LUT3                              |    45|
+|8     |LUT4                              |  1180|
+|9     |LUT5                              |  1096|
+|10    |LUT6                              |  1025|
+|11    |MUXF7                             |   384|
+|12    |MUXF8                             |   148|
+|13    |RAM64M8                           |     5|
+|14    |RAM64X1D                          |     5|
+|15    |FDRE                              |  2470|
++------+----------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:02 ; elapsed = 00:02:14 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:50 ; elapsed = 00:02:08 . Memory (MB): peak = 3106.840 ; gain = 1361.852
+Synthesis Optimization Complete : Time (s): cpu = 00:02:02 ; elapsed = 00:02:14 . Memory (MB): peak = 3106.840 ; gain = 1455.145
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.038 . Memory (MB): peak = 3106.840 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 631 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'matmul_board_top' is not ideal for floorplanning, since the cellview 'matmul' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 3106.840 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 10 instances were transformed.
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 5 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 5 instances
+
+Synth Design complete | Checksum: 3fa2c6ba
+INFO: [Common 17-83] Releasing license: Synthesis
+40 Infos, 12 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:02:08 ; elapsed = 00:02:24 . Memory (MB): peak = 3106.840 ; gain = 2511.984
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 3106.840 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/synth_1/matmul_board_top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file matmul_board_top_utilization_synth.rpt -pb matmul_board_top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 14 15:59:14 2026...
+[Sat Nov 14 15:59:17 2026] synth_1 finished
+wait_on_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:04:08 . Memory (MB): peak = 849.375 ; gain = 0.000
+# if {[get_property PROGRESS [get_runs synth_1]] ne "100%"} { error "synthesis failed" }
+# launch_runs impl_1 -to_step write_bitstream -jobs 8
+[Sat Nov 14 15:59:19 2026] Launched impl_1...
+Run output will be captured here: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/runme.log
+# wait_on_run impl_1
+[Sat Nov 14 15:59:19 2026] Waiting for impl_1 to finish...
+
+*** Running vivado
+    with args -log matmul_board_top.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source matmul_board_top.tcl -notrace
+
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Sat Nov 14 15:59:26 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source matmul_board_top.tcl -notrace
+create_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:16 . Memory (MB): peak = 530.898 ; gain = 218.391
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+Command: link_design -top matmul_board_top -part xck26-sfvc784-2LV-c
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xck26-sfvc784-2LV-c
+INFO: [Project 1-5699] Read binary netlist with skipMacroContent - 1
+INFO: [Project 1-454] Reading design checkpoint 'c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0.dcp' for cell 'u_bd/matmul_board_bd_i/rst_pl_clk0'
+INFO: [Project 1-454] Reading design checkpoint 'c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/matmul_board_bd_smartconnect_0_0.dcp' for cell 'u_bd/matmul_board_bd_i/smartconnect_0'
+INFO: [Project 1-454] Reading design checkpoint 'c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0.dcp' for cell 'u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0'
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.185 . Memory (MB): peak = 1676.004 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 643 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0.xdc] for cell 'u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst'
+create_clock: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1676.004 ; gain = 0.000
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_zynq_ultra_ps_e_0_0/matmul_board_bd_zynq_ultra_ps_e_0_0.xdc] for cell 'u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst'
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/bd_0/ip/ip_1/bd_c088_psr_aclk_0_board.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/bd_0/ip/ip_1/bd_c088_psr_aclk_0_board.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0/inst/clk_map/psr_aclk/U0'
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/smartconnect.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0/inst'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_smartconnect_0_0/smartconnect.xdc] for cell 'u_bd/matmul_board_bd_i/smartconnect_0/inst'
+Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0_board.xdc] for cell 'u_bd/matmul_board_bd_i/rst_pl_clk0/U0'
+Finished Parsing XDC File [c:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/matmul_board_bd_rst_pl_clk0_0/matmul_board_bd_rst_pl_clk0_0_board.xdc] for cell 'u_bd/matmul_board_bd_i/rst_pl_clk0/U0'
+INFO: [Project 1-1714] 18 XPM XDC files have been applied to the design.
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2411.922 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 10 instances were transformed.
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 5 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 5 instances
+
+15 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 2411.922 ; gain = 1815.176
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.559 . Memory (MB): peak = 2411.922 ; gain = 0.000
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.320 . Memory (MB): peak = 2411.922 ; gain = 0.000
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 2864.672 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 2864.672 ; gain = 0.000
+Phase 1 Initialization | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 2864.672 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Detect if minReqCache needed
+Phase 2.1 Detect if minReqCache needed | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.026 . Memory (MB): peak = 2864.676 ; gain = 0.004
+
+Phase 2.2 Timer Update
+Phase 2.2 Timer Update | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.124 . Memory (MB): peak = 2864.676 ; gain = 0.004
+
+Phase 2.3 Timing Data Collection
+Phase 2.3 Timing Data Collection | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.133 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Phase 2 Timer Update And Timing Data Collection | Checksum: 23648d3b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.136 . Memory (MB): peak = 2864.676 ; gain = 0.004
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-138] Pushed 29 inverter(s) to 222 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 19f46bcb8
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.346 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Retarget | Checksum: 19f46bcb8
+INFO: [Opt 31-389] Phase Retarget created 3 cells and removed 297 cells
+INFO: [Opt 31-1021] In phase Retarget, 20 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 4 Constant propagation | Checksum: 1a1c59174
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.406 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Constant propagation | Checksum: 1a1c59174
+INFO: [Opt 31-389] Phase Constant propagation created 2 cells and removed 4 cells
+INFO: [Opt 31-1021] In phase Constant propagation, 20 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.003 . Memory (MB): peak = 2864.676 ; gain = 0.000
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2864.676 ; gain = 0.000
+Phase 5 Sweep | Checksum: 1a8f4fe10
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.797 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Sweep | Checksum: 1a8f4fe10
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 239 cells
+INFO: [Opt 31-1021] In phase Sweep, 26 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 6 BUFG optimization
+INFO: [Opt 31-1077] Phase BUFG optimization inserted 0 global clock buffer(s) for CLOCK_LOW_FANOUT.
+Phase 6 BUFG optimization | Checksum: 1a8f4fe10
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.863 . Memory (MB): peak = 2864.676 ; gain = 0.004
+BUFG optimization | Checksum: 1a8f4fe10
+INFO: [Opt 31-662] Phase BUFG optimization created 0 cells of which 0 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 1a8f4fe10
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.882 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Shift Register Optimization | Checksum: 1a8f4fe10
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 232be56a1
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.918 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Post Processing Netlist | Checksum: 232be56a1
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Post Processing Netlist, 20 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2864.676 ; gain = 0.004
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 2864.676 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Phase 9 Finalization | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2864.676 ; gain = 0.004
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               3  |             297  |                                             20  |
+|  Constant propagation         |               2  |               4  |                                             20  |
+|  Sweep                        |               0  |             239  |                                             26  |
+|  BUFG optimization            |               0  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                             20  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2864.676 ; gain = 0.004
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 2864.676 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 195d05de4
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 2864.676 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2864.676 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+41 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2864.676 ; gain = 452.754
+INFO: [Vivado 12-24828] Executing command : report_drc -file matmul_board_top_drc_opted.rpt -pb matmul_board_top_drc_opted.pb -rpx matmul_board_top_drc_opted.rpx
+Command: report_drc -file matmul_board_top_drc_opted.rpt -pb matmul_board_top_drc_opted.pb -rpx matmul_board_top_drc_opted.rpx
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_drc_opted.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 3593.055 ; gain = 728.379
+generate_parallel_reports: Time (s): cpu = 00:00:30 ; elapsed = 00:00:31 . Memory (MB): peak = 3593.055 ; gain = 728.379
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.069 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_opt.dcp' has been generated.
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 15d216d29
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 151e76c9b
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 24b16042d
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 24b16042d
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 24b16042d
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+
+Phase 2.1.1 Partition Driven Placement
+
+Phase 2.1.1.1 PBP: Partition Driven Placement
+Phase 2.1.1.1 PBP: Partition Driven Placement | Checksum: 19d06898f
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.1.1.2 PBP: Clock Region Placement
+INFO: [Place 30-3162] Check ILP status : ILP-based clock placer completed successfully.
+Phase 2.1.1.2 PBP: Clock Region Placement | Checksum: 1aa612b2a
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:14 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.1.1.3 PBP: Compute Congestion
+Phase 2.1.1.3 PBP: Compute Congestion | Checksum: 1aa612b2a
+
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.1.1.4 PBP: UpdateTiming
+Phase 2.1.1.4 PBP: UpdateTiming | Checksum: 221447c4c
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.1.1.5 PBP: Add part constraints
+Phase 2.1.1.5 PBP: Add part constraints | Checksum: 221447c4c
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 2.1.1 Partition Driven Placement | Checksum: 221447c4c
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 2.1 Floorplanning | Checksum: 1d0163f7f
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: 1d0163f7f
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: 1d0163f7f
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:25 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.4 Global Place Phase1
+Phase 2.4 Global Place Phase1 | Checksum: 245e85a80
+
+Time (s): cpu = 00:00:54 ; elapsed = 00:00:35 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.5 Global Place Phase2
+
+Phase 2.5.1 UpdateTiming Before Physical Synthesis
+Phase 2.5.1 UpdateTiming Before Physical Synthesis | Checksum: 20ac01f81
+
+Time (s): cpu = 00:00:54 ; elapsed = 00:00:36 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.5.2 Physical Synthesis In Placer
+INFO: [Physopt 32-1035] Found 0 LUTNM shape to break, 92 LUT instances to create LUTNM shape
+INFO: [Physopt 32-1044] Break lutnm for timing: one critical 0, two critical 0, total 0, new lutff created 0
+INFO: [Physopt 32-1138] End 1 Pass. Optimized 40 nets or LUTs. Breaked 0 LUT, combined 40 existing LUTs and moved 0 existing LUT
+INFO: [Physopt 32-670] No setup violation found.  Equivalent Driver Rewiring was not performed.
+INFO: [Physopt 32-65] No nets found for high-fanout optimization.
+INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-670] No setup violation found.  DSP Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register to Pipeline Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  BRAM Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  URAM Register Optimization was not performed.
+INFO: [Physopt 32-949] No candidate nets found for dynamic/static region interface net replication
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization                                     |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT Combining                                    |            0  |             40  |                    40  |           0  |           1  |  00:00:00  |
+|  Retime                                           |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Equivalent Driver Rewiring                       |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Very High Fanout                                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  DSP Register                                     |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register to Pipeline                       |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register                                   |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  BRAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  URAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Dynamic/Static Region Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Total                                            |            0  |             40  |                    40  |           0  |           4  |  00:00:00  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Phase 2.5.2 Physical Synthesis In Placer | Checksum: 25c932baa
+
+Time (s): cpu = 00:00:55 ; elapsed = 00:00:36 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 2.5 Global Place Phase2 | Checksum: 2315ecfa6
+
+Time (s): cpu = 00:01:03 ; elapsed = 00:00:40 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 2 Global Placement | Checksum: 2315ecfa6
+
+Time (s): cpu = 00:01:03 ; elapsed = 00:00:40 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 224541194
+
+Time (s): cpu = 00:01:10 ; elapsed = 00:00:44 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 2d35c0d08
+
+Time (s): cpu = 00:01:11 ; elapsed = 00:00:45 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3.3 Small Shape DP
+
+Phase 3.3.1 Small Shape Clustering
+Phase 3.3.1 Small Shape Clustering | Checksum: 2cd3ad96a
+
+Time (s): cpu = 00:01:26 ; elapsed = 00:00:53 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3.3.2 Slice Area Swap
+
+Phase 3.3.2.1 Slice Area Swap Initial
+Phase 3.3.2.1 Slice Area Swap Initial | Checksum: 2b8437f18
+
+Time (s): cpu = 00:01:34 ; elapsed = 00:00:57 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 3.3.2 Slice Area Swap | Checksum: 2b8437f18
+
+Time (s): cpu = 00:01:34 ; elapsed = 00:00:57 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 3.3 Small Shape DP | Checksum: 2b49f2bab
+
+Time (s): cpu = 00:01:50 ; elapsed = 00:01:06 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3.4 Re-assign LUT pins
+Phase 3.4 Re-assign LUT pins | Checksum: 285d802fa
+
+Time (s): cpu = 00:01:50 ; elapsed = 00:01:06 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3.5 Pipeline Register Optimization
+Phase 3.5 Pipeline Register Optimization | Checksum: 2664f321c
+
+Time (s): cpu = 00:01:50 ; elapsed = 00:01:06 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 3 Detail Placement | Checksum: 2664f321c
+
+Time (s): cpu = 00:01:50 ; elapsed = 00:01:06 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: 287867682
+
+Phase 4.1.1.1 BUFG Insertion
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=4.479 | TNS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 1af2c39b5
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.099 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Place 46-35] Processed net u_matmul/kernel/c[63][31]_i_1_n_0, inserted BUFG to drive 2048 loads.
+INFO: [Place 46-56] BUFG insertion identified 1 candidate nets. Inserted BUFG: 1, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 0, Skipped due to Timing Degradation: 0, Skipped due to netlist editing failed: 0.
+Ending Physical Synthesis Task | Checksum: 2df7b13b1
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.460 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 4.1.1.1 BUFG Insertion | Checksum: 2d5b263ba
+
+Time (s): cpu = 00:02:01 ; elapsed = 00:01:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4.1.1.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=4.479. For the most accurate timing information please run report_timing.
+Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: 317acea68
+
+Time (s): cpu = 00:02:01 ; elapsed = 00:01:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Time (s): cpu = 00:02:01 ; elapsed = 00:01:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 4.1 Post Commit Optimization | Checksum: 317acea68
+
+Time (s): cpu = 00:02:01 ; elapsed = 00:01:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 27248fa50
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion 
+ ________________________________________________________________________
+|           | Global Congestion | Long Congestion   | Short Congestion  |
+| Direction | Region Size       | Region Size       | Region Size       |
+|___________|___________________|___________________|___________________|
+|      North|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|      South|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|       East|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+|       West|                1x1|                1x1|                1x1|
+|___________|___________________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 27248fa50
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 4.3 Placer Reporting | Checksum: 27248fa50
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 294f0c9ce
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Ending Placer Task | Checksum: 1cf19d55e
+
+Time (s): cpu = 00:02:11 ; elapsed = 00:01:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+79 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:02:18 ; elapsed = 00:01:26 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado 12-24838] Running report commands "report_control_sets, report_io, report_utilization" in parallel.
+Running report generation with 2 threads.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file matmul_board_top_utilization_placed.rpt -pb matmul_board_top_utilization_placed.pb
+INFO: [Vivado 12-24828] Executing command : report_control_sets -verbose -file matmul_board_top_control_sets_placed.rpt
+report_control_sets: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_io -file matmul_board_top_io_placed.rpt
+report_io: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.131 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.369 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.052 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.028 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.478 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_placed.dcp' has been generated.
+Command: phys_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+
+Starting Initial Update Timing Task
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado_Tcl 4-2279] Estimated Timing Summary | WNS= 4.479 | TNS= 0.000 | 
+INFO: [Vivado_Tcl 4-383] Design worst setup slack (WNS) is greater than or equal to 0.000 ns. All physical synthesis setup optimizations will be skipped.
+INFO: [Vivado_Tcl 4-232] No setup violation found. The netlist was not modified.
+INFO: [Common 17-83] Releasing license: Implementation
+90 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PlaceDB: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.371 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.025 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.466 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_physopt.dcp' has been generated.
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: e208de17 ConstDB: 0 ShapeSum: cc5d6113 RouteDB: 20b39634
+Nodegraph reading from file.  Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.591 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Post Restoration Checksum: NetGraph: 8bf76584 | NumContArr: eb63b041 | Constraints: dbe47d48 | Timing: c2a8fa9d
+Phase 1 Build RT Design | Checksum: 315e88daa
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 315e88daa
+
+Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 315e88daa
+
+Time (s): cpu = 00:00:11 ; elapsed = 00:00:09 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.3 Global Clock Net Routing
+ Number of Nodes with overlaps = 0
+Phase 2.3 Global Clock Net Routing | Checksum: 28bc1c467
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:11 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 2.4 Update Timing
+Phase 2.4 Update Timing | Checksum: 20e21e20f
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=4.706  | TNS=0.000  | WHS=-0.056 | THS=-4.609 |
+
+
+Phase 2.5 Soft Constraint Pins - Fast Budgeting
+Phase 2.5 Soft Constraint Pins - Fast Budgeting | Checksum: 278ac8208
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.000228651 %
+  Global Horizontal Routing Utilization  = 4.71983e-05 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 5332
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 4778
+  Number of Partially Routed Nets     = 554
+  Number of Node Overlaps             = 1
+
+Phase 2 Router Initialization | Checksum: 21c980c0a
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 3 Global Routing
+Phase 3 Global Routing | Checksum: 21c980c0a
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:13 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 4 Initial Routing
+
+Phase 4.1 Initial Net Routing Pass
+Phase 4.1 Initial Net Routing Pass | Checksum: 1208007de
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:14 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 4 Initial Routing | Checksum: 201cd4a35
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:14 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 5 Rip-up And Reroute
+
+Phase 5.1 Global Iteration 0
+ Number of Nodes with overlaps = 1079
+ Number of Nodes with overlaps = 40
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=3.873  | TNS=0.000  | WHS=0.034  | THS=0.000  |
+
+Phase 5.1 Global Iteration 0 | Checksum: 20c009492
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 5.2 Additional Iteration for Hold
+Phase 5.2 Additional Iteration for Hold | Checksum: 257648aec
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 5 Rip-up And Reroute | Checksum: 257648aec
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 6 Delay and Skew Optimization
+
+Phase 6.1 Delay CleanUp
+Phase 6.1 Delay CleanUp | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 6.2 Clock Skew Optimization
+Phase 6.2 Clock Skew Optimization | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 6 Delay and Skew Optimization | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Hold Fix Iter
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=3.873  | TNS=0.000  | WHS=0.034  | THS=0.000  |
+
+Phase 7.1 Hold Fix Iter | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:24 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Phase 7 Post Hold Fix | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:24 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.464528 %
+  Global Horizontal Routing Utilization  = 0.491429 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 8 Route finalize | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:18 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 11 Resolve XTalk
+Phase 11 Resolve XTalk | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 12 Post Process Routing
+Phase 12 Post Process Routing | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Phase 13 Post Router Timing
+INFO: [Route 35-57] Estimated Timing Summary | WNS=3.873  | TNS=0.000  | WHS=0.034  | THS=0.000  |
+
+INFO: [Route 35-327] The final timing numbers are based on the router estimated timing analysis. For a complete and accurate timing signoff, please run report_timing_summary.
+Phase 13 Post Router Timing | Checksum: 2761777a6
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Total Elapsed time in route_design: 19.048 secs
+
+Phase 14 Post-Route Event Processing
+Phase 14 Post-Route Event Processing | Checksum: 1c7834468
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Route 35-16] Router Completed Successfully
+Ending Routing Task | Checksum: 1c7834468
+
+Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+101 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:00:25 ; elapsed = 00:00:19 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_drc -file matmul_board_top_drc_routed.rpt -pb matmul_board_top_drc_routed.pb -rpx matmul_board_top_drc_routed.rpx
+Command: report_drc -file matmul_board_top_drc_routed.rpt -pb matmul_board_top_drc_routed.pb -rpx matmul_board_top_drc_routed.rpx
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_drc_routed.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:07 ; elapsed = 00:00:05 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_methodology -file matmul_board_top_methodology_drc_routed.rpt -pb matmul_board_top_methodology_drc_routed.pb -rpx matmul_board_top_methodology_drc_routed.rpx
+Command: report_methodology -file matmul_board_top_methodology_drc_routed.rpt -pb matmul_board_top_methodology_drc_routed.pb -rpx matmul_board_top_methodology_drc_routed.rpx
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 2 threads
+INFO: [Vivado_Tcl 2-1520] The results of Report Methodology are in file C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_methodology_drc_routed.rpt.
+report_methodology completed successfully
+INFO: [Vivado 12-24828] Executing command : report_timing_summary -max_paths 10 -routable_nets -report_unconstrained -file matmul_board_top_timing_summary_routed.rpt -pb matmul_board_top_timing_summary_routed.pb -rpx matmul_board_top_timing_summary_routed.rpx -warn_on_violation 
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2LV, Temperature grade: C, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Vivado 12-24838] Running report commands "report_incremental_reuse, report_route_status" in parallel.
+Running report generation with 2 threads.
+INFO: [Vivado 12-24828] Executing command : report_incremental_reuse -file matmul_board_top_incremental_reuse_routed.rpt
+INFO: [Vivado_Tcl 4-1062] Incremental flow is disabled. No incremental reuse Info to report.
+INFO: [Vivado 12-24828] Executing command : report_route_status -file matmul_board_top_route_status.rpt -pb matmul_board_top_route_status.pb
+INFO: [Vivado 12-24828] Executing command : report_power -file matmul_board_top_power_routed.rpt -pb matmul_board_top_power_summary_routed.pb -rpx matmul_board_top_power_routed.rpx
+Command: report_power -file matmul_board_top_power_routed.rpt -pb matmul_board_top_power_summary_routed.pb -rpx matmul_board_top_power_routed.rpx
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+118 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+INFO: [Vivado 12-24828] Executing command : report_clock_utilization -file matmul_board_top_clock_utilization_routed.rpt
+report_clock_utilization: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Vivado 12-24828] Executing command : report_bus_skew -warn_on_violation -file matmul_board_top_bus_skew_routed.rpt -pb matmul_board_top_bus_skew_routed.pb -rpx matmul_board_top_bus_skew_routed.rpx
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2LV, Temperature grade: C, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+generate_parallel_reports: Time (s): cpu = 00:00:20 ; elapsed = 00:00:17 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.163 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PlaceDB: Time (s): cpu = 00:00:03 ; elapsed = 00:00:02 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.339 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.040 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.148 . Memory (MB): peak = 3593.055 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.runs/impl_1/matmul_board_top_routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 3593.055 ; gain = 0.000
+
+WARNING::74 - Unsupported FPGA device name 'xck26-sfvc784-2LV-c'. Verify that the specified device is a valid customer supported device.
+-p xck26-sfvc784-2LV-c
+   ^
+
+Command: write_bitstream -force matmul_board_top.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado 12-3199] DRC finished with 0 Errors
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+Integrating Hard IP ELF/MEM with the PDI.
+INFO: [Designutils 20-2272] Running write_bitstream with 2 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./matmul_board_top.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Common 17-83] Releasing license: Implementation
+132 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:00:49 ; elapsed = 00:00:48 . Memory (MB): peak = 3593.055 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 14 16:03:51 2026...
+[Sat Nov 14 16:03:58 2026] impl_1 finished
+wait_on_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:04:39 . Memory (MB): peak = 849.375 ; gain = 0.000
+# if {[get_property PROGRESS [get_runs impl_1]] ne "100%"} { error "implementation/bitstream failed" }
+# open_run impl_1
+INFO: [Device 21-403] Loading part xck26-sfvc784-2LV-c
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.121 . Memory (MB): peak = 1799.992 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 643 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 1799.992 ; gain = 0.000
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1979.012 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1979.012 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.976 . Memory (MB): peak = 1987.844 ; gain = 8.395
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1987.844 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2492.621 ; gain = 504.777
+Read Physdb Files: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2492.621 ; gain = 513.609
+Restored from archive | CPU: 6.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2492.621 ; gain = 513.609
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 2492.621 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 10 instances were transformed.
+  RAM64M8 => RAM64M8 (RAMD64E(x8)): 5 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 5 instances
+
+open_run: Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2492.621 ; gain = 1643.246
+# set rpt $out/reports
+# file mkdir $rpt
+# report_clocks -file $rpt/clocks.rpt
+# check_timing -verbose -file $rpt/check_timing.rpt
+check_timing: Time (s): cpu = 00:00:10 ; elapsed = 00:00:07 . Memory (MB): peak = 2550.168 ; gain = 9.816
+# report_route_status -file $rpt/route_status.rpt
+# report_pulse_width -file $rpt/pulse_width.rpt
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -2LV, Temperature grade: C, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+# set k [get_cells u_matmul]
+# set fh [open $out/build_info.txt a]
+# foreach p {N LANES} {
+#   if {[catch {get_property $p $k} v] || $v eq ""} { set v unknown }
+#   puts $fh "elaborated_$p=$v"
+# }
+# foreach s {WNS TNS WHS THS TPWS} {
+#   puts $fh "impl_$s=[get_property STATS.$s [get_runs impl_1]]"
+# }
+# puts $fh "built_at=[clock format [clock seconds] -format {%Y-%m-%dT%H:%M:%S%z}]"
+# close $fh
+# set tag n${N}_l${LANES}
+# file copy -force [glob $out/proj/matmul_board.runs/impl_1/matmul_board_top.bit] $out/matmul_board_$tag.bit
+# file copy -force [glob $out/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/ip/*zynq_ultra_ps_e_0*/psu_init.tcl] $out/psu_init.tcl
+# write_hw_platform -fixed -include_bit -force $out/matmul_board_$tag.xsa
+INFO: [Projectvivado 1-1918] Creating Hardware Platform: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/matmul_board_n8_l4.xsa ...
+INFO: [Projectvivado 1-1943] The Hardware Platform can be used for Hardware
+INFO: [Projectvivado 1-1941] Successfully created Hardware Platform: C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/matmul_board_n8_l4.xsa
+INFO: [Hsi 55-2053] elapsed time for repository (C:/AMDDesignTools/2025.2/Vivado/data/embeddedsw) loading 1 seconds
+write_hw_platform: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 2746.973 ; gain = 180.887
+# write_bd_tcl -force $out/matmul_board_bd_export.tcl
+INFO: [BD 5-148] Tcl file written out <C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/matmul_board_bd_export.tcl>.
+
+# puts "WNS=[get_property STATS.WNS [get_runs impl_1]] WHS=[get_property STATS.WHS [get_runs impl_1]] TPWS=[get_property STATS.TPWS [get_runs impl_1]]"
+WNS=3.885077 WHS=0.034686 TPWS=0.000000
+# puts "BUILD_DONE"
+BUILD_DONE
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 14 16:04:42 2026...

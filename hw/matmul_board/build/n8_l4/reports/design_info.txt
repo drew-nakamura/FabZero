@@ -1,0 +1,6 @@
+vivado=2025.2
+opened=project C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/proj/matmul_board.xpr run impl_1
+top=matmul_board_top
+part=xck26-sfvc784-2LV-c
+kernel_instance=u_matmul
+collected_at=2026-11-14T16:05:30-0800

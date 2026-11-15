@@ -1,0 +1,415 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date              : Sat Nov 14 16:05:30 2026
+| Host              : DrewsLaptop running 64-bit major release  (build 9200)
+| Command           : report_timing -max_paths 5 -nworst 1 -to [get_pins -quiet -of_objects [get_cells -quiet -hierarchical -filter {NAME =~ u_matmul/* && IS_SEQUENTIAL}] -filter {REF_PIN_NAME == D}] -file C:/Users/drewa/FabZero/hw/matmul_board/build/n8_l4/reports/kernel_paths.rpt
+| Design            : matmul_board_top
+| Device            : xck26-sfvc784
+| Speed File        : -2LV  PRODUCTION 1.30 05-15-2022
+| Design State      : Routed
+| Temperature Grade : C
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             3.885ns  (required time - arrival time)
+  Source:                 u_matmul/kernel/col_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_matmul/kernel/c_reg[50][5]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_pl_0 rise@10.000ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        5.897ns  (logic 0.624ns (10.581%)  route 5.273ns (89.419%))
+  Logic Levels:           3  (CARRY8=1 LUT4=1 LUT5=1)
+  Clock Path Skew:        -0.101ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.086ns = ( 12.086 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.361ns
+    Clock Pessimism Removal (CPR):    0.173ns
+  Clock Uncertainty:      0.160ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.312ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.094ns (routing 1.045ns, distribution 1.049ns)
+  Clock Net Delay (Destination): 1.870ns (routing 0.955ns, distribution 0.915ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r  
+    PS8_X0Y0             PS8                          0.000     0.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        2.094     2.361    u_matmul/kernel/pl_clk0
+    SLICE_X3Y116         FDRE                                         r  u_matmul/kernel/col_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X3Y116         FDRE (Prop_AFF_SLICEL_C_Q)
+                                                      0.114     2.475 r  u_matmul/kernel/col_reg[2]/Q
+                         net (fo=36, routed)          0.284     2.759    u_matmul/kernel/col_reg[2]
+    SLICE_X4Y116         CARRY8 (Prop_CARRY8_SLICEM_S[0]_O[2])
+                                                      0.187     2.946 r  u_matmul/kernel/c_reg[63][31]_i_14/O[2]
+                         net (fo=144, routed)         1.817     4.763    u_matmul/kernel/c_reg[63][31]_i_14_n_13
+    SLICE_X18Y138        LUT4 (Prop_D5LUT_SLICEM_I3_O)
+                                                      0.135     4.898 r  u_matmul/kernel/c[51][31]_i_2/O
+                         net (fo=128, routed)         3.105     8.003    u_matmul/kernel/c[51][31]_i_2_n_0
+    SLICE_X9Y90          LUT5 (Prop_B6LUT_SLICEL_I3_O)
+                                                      0.188     8.191 r  u_matmul/kernel/c[50][5]_i_1/O
+                         net (fo=1, routed)           0.067     8.258    u_matmul/kernel/c__0[421]
+    SLICE_X9Y90          FDRE                                         r  u_matmul/kernel/c_reg[50][5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.000    10.000 r  
+    PS8_X0Y0             PS8                          0.000    10.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.181    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.216 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        1.870    12.086    u_matmul/kernel/pl_clk0
+    SLICE_X9Y90          FDRE                                         r  u_matmul/kernel/c_reg[50][5]/C
+                         clock pessimism              0.173    12.259    
+                         clock uncertainty           -0.160    12.099    
+    SLICE_X9Y90          FDRE (Setup_BFF_SLICEL_C_D)
+                                                      0.044    12.143    u_matmul/kernel/c_reg[50][5]
+  -------------------------------------------------------------------
+                         required time                         12.143    
+                         arrival time                          -8.258    
+  -------------------------------------------------------------------
+                         slack                                  3.885    
+
+Slack (MET) :             3.913ns  (required time - arrival time)
+  Source:                 u_matmul/kernel/row_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_matmul/kernel/c_reg[33][24]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_pl_0 rise@10.000ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        5.917ns  (logic 2.508ns (42.383%)  route 3.409ns (57.617%))
+  Logic Levels:           15  (CARRY8=7 LUT2=2 LUT3=1 LUT4=2 LUT5=1 LUT6=1 RAMD64E=1)
+  Clock Path Skew:        -0.054ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.175ns = ( 12.175 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.370ns
+    Clock Pessimism Removal (CPR):    0.141ns
+  Clock Uncertainty:      0.160ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.312ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.103ns (routing 1.045ns, distribution 1.058ns)
+  Clock Net Delay (Destination): 1.959ns (routing 0.955ns, distribution 1.004ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r  
+    PS8_X0Y0             PS8                          0.000     0.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        2.103     2.370    u_matmul/kernel/pl_clk0
+    SLICE_X4Y117         FDRE                                         r  u_matmul/kernel/row_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X4Y117         FDRE (Prop_AFF_SLICEM_C_Q)
+                                                      0.113     2.483 r  u_matmul/kernel/row_reg[0]/Q
+                         net (fo=7, routed)           0.340     2.823    u_matmul/kernel/p_0_in__0__0[3]
+    SLICE_X5Y112         LUT2 (Prop_D5LUT_SLICEM_I1_O)
+                                                      0.220     3.043 r  u_matmul/kernel/a_reg_0_63_0_6_i_3/O
+                         net (fo=8, routed)           0.314     3.358    u_matmul/kernel/a_reg_0_63_0_6/ADDRD3
+    SLICE_X7Y111         RAMD64E (Prop_D6LUT_SLICEM_RADR3_O)
+                                                      0.134     3.492 r  u_matmul/kernel/a_reg_0_63_0_6/RAMD/O
+                         net (fo=70, routed)          0.525     4.016    u_matmul/kernel/a_reg_0_63_0_6_n_3
+    SLICE_X5Y117         LUT6 (Prop_G6LUT_SLICEM_I1_O)
+                                                      0.186     4.202 r  u_matmul/kernel/acc[1][0]_i_33/O
+                         net (fo=2, routed)           0.174     4.376    u_matmul/kernel/acc[1][0]_i_33_n_0
+    SLICE_X7Y116         LUT5 (Prop_D6LUT_SLICEM_I0_O)
+                                                      0.134     4.510 r  u_matmul/kernel/acc[1][0]_i_40/O
+                         net (fo=1, routed)           0.032     4.542    u_matmul/kernel/acc[1][0]_i_40_n_0
+    SLICE_X7Y116         CARRY8 (Prop_CARRY8_SLICEM_S[3]_CO[7])
+                                                      0.232     4.774 r  u_matmul/kernel/acc_reg[1][0]_i_4/CO[7]
+                         net (fo=1, routed)           0.030     4.804    u_matmul/kernel/acc_reg[1][0]_i_4_n_0
+    SLICE_X7Y117         CARRY8 (Prop_CARRY8_SLICEM_CI_O[1])
+                                                      0.106     4.910 r  u_matmul/kernel/acc_reg[1][0]_i_45/O[1]
+                         net (fo=2, routed)           0.236     5.146    u_matmul/kernel/acc_reg[1][0]_i_45_n_14
+    SLICE_X7Y117         LUT3 (Prop_E6LUT_SLICEM_I1_O)
+                                                      0.223     5.369 r  u_matmul/kernel/acc[1][0]_i_14/O
+                         net (fo=2, routed)           0.256     5.625    u_matmul/kernel/acc[1][0]_i_14_n_0
+    SLICE_X6Y117         LUT4 (Prop_G6LUT_SLICEL_I0_O)
+                                                      0.137     5.762 r  u_matmul/kernel/acc[1][0]_i_22/O
+                         net (fo=1, routed)           0.012     5.774    u_matmul/kernel/acc[1][0]_i_22_n_0
+    SLICE_X6Y117         CARRY8 (Prop_CARRY8_SLICEL_S[6]_CO[7])
+                                                      0.171     5.945 r  u_matmul/kernel/acc_reg[1][0]_i_3/CO[7]
+                         net (fo=1, routed)           0.030     5.975    u_matmul/kernel/acc_reg[1][0]_i_3_n_0
+    SLICE_X6Y118         CARRY8 (Prop_CARRY8_SLICEL_CI_O[1])
+                                                      0.106     6.081 r  u_matmul/kernel/acc_reg[1][8]_i_2/O[1]
+                         net (fo=3, routed)           0.384     6.466    u_matmul/kernel/p_0_in[13]
+    SLICE_X9Y117         LUT2 (Prop_F6LUT_SLICEL_I1_O)
+                                                      0.150     6.616 r  u_matmul/kernel/c[61][15]_i_5/O
+                         net (fo=1, routed)           0.015     6.631    u_matmul/kernel/c[61][15]_i_5_n_0
+    SLICE_X9Y117         CARRY8 (Prop_CARRY8_SLICEL_S[5]_CO[7])
+                                                      0.232     6.863 r  u_matmul/kernel/c_reg[61][15]_i_2/CO[7]
+                         net (fo=1, routed)           0.030     6.893    u_matmul/kernel/c_reg[61][15]_i_2_n_0
+    SLICE_X9Y118         CARRY8 (Prop_CARRY8_SLICEL_CI_CO[7])
+                                                      0.065     6.958 r  u_matmul/kernel/c_reg[61][23]_i_2/CO[7]
+                         net (fo=1, routed)           0.030     6.988    u_matmul/kernel/c_reg[61][23]_i_2_n_0
+    SLICE_X9Y119         CARRY8 (Prop_CARRY8_SLICEL_CI_O[0])
+                                                      0.078     7.066 r  u_matmul/kernel/c_reg[61][31]_i_2/O[0]
+                         net (fo=16, routed)          0.934     7.999    u_matmul/kernel/c_reg[61][31]_i_2_n_15
+    SLICE_X14Y141        LUT4 (Prop_D6LUT_SLICEL_I0_O)
+                                                      0.221     8.220 r  u_matmul/kernel/c[33][24]_i_1/O
+                         net (fo=1, routed)           0.067     8.287    u_matmul/kernel/c[984]
+    SLICE_X14Y141        FDRE                                         r  u_matmul/kernel/c_reg[33][24]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.000    10.000 r  
+    PS8_X0Y0             PS8                          0.000    10.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.181    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.216 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        1.959    12.175    u_matmul/kernel/pl_clk0
+    SLICE_X14Y141        FDRE                                         r  u_matmul/kernel/c_reg[33][24]/C
+                         clock pessimism              0.141    12.316    
+                         clock uncertainty           -0.160    12.156    
+    SLICE_X14Y141        FDRE (Setup_DFF_SLICEL_C_D)
+                                                      0.044    12.200    u_matmul/kernel/c_reg[33][24]
+  -------------------------------------------------------------------
+                         required time                         12.200    
+                         arrival time                          -8.287    
+  -------------------------------------------------------------------
+                         slack                                  3.913    
+
+Slack (MET) :             3.938ns  (required time - arrival time)
+  Source:                 u_matmul/kernel/col_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_matmul/kernel/c_reg[31][4]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_pl_0 rise@10.000ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        5.876ns  (logic 0.587ns (9.990%)  route 5.289ns (90.010%))
+  Logic Levels:           3  (CARRY8=1 LUT4=2)
+  Clock Path Skew:        -0.070ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.118ns = ( 12.118 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.361ns
+    Clock Pessimism Removal (CPR):    0.173ns
+  Clock Uncertainty:      0.160ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.312ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.094ns (routing 1.045ns, distribution 1.049ns)
+  Clock Net Delay (Destination): 1.902ns (routing 0.955ns, distribution 0.947ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r  
+    PS8_X0Y0             PS8                          0.000     0.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        2.094     2.361    u_matmul/kernel/pl_clk0
+    SLICE_X3Y116         FDRE                                         r  u_matmul/kernel/col_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X3Y116         FDRE (Prop_AFF_SLICEL_C_Q)
+                                                      0.114     2.475 r  u_matmul/kernel/col_reg[2]/Q
+                         net (fo=36, routed)          0.284     2.759    u_matmul/kernel/col_reg[2]
+    SLICE_X4Y116         CARRY8 (Prop_CARRY8_SLICEM_S[0]_O[2])
+                                                      0.187     2.946 r  u_matmul/kernel/c_reg[63][31]_i_14/O[2]
+                         net (fo=144, routed)         1.817     4.763    u_matmul/kernel/c_reg[63][31]_i_14_n_13
+    SLICE_X18Y138        LUT4 (Prop_D6LUT_SLICEM_I2_O)
+                                                      0.134     4.897 r  u_matmul/kernel/c[31][31]_i_2/O
+                         net (fo=128, routed)         3.120     8.018    u_matmul/kernel/c[31][31]_i_2_n_0
+    SLICE_X14Y91         LUT4 (Prop_B6LUT_SLICEL_I1_O)
+                                                      0.152     8.170 r  u_matmul/kernel/c_inferred__0/c[31][4]_i_1/O
+                         net (fo=1, routed)           0.067     8.237    u_matmul/kernel/c__0[1028]
+    SLICE_X14Y91         FDRE                                         r  u_matmul/kernel/c_reg[31][4]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.000    10.000 r  
+    PS8_X0Y0             PS8                          0.000    10.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.181    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.216 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        1.902    12.118    u_matmul/kernel/pl_clk0
+    SLICE_X14Y91         FDRE                                         r  u_matmul/kernel/c_reg[31][4]/C
+                         clock pessimism              0.173    12.291    
+                         clock uncertainty           -0.160    12.131    
+    SLICE_X14Y91         FDRE (Setup_BFF_SLICEL_C_D)
+                                                      0.044    12.175    u_matmul/kernel/c_reg[31][4]
+  -------------------------------------------------------------------
+                         required time                         12.175    
+                         arrival time                          -8.237    
+  -------------------------------------------------------------------
+                         slack                                  3.938    
+
+Slack (MET) :             3.946ns  (required time - arrival time)
+  Source:                 u_matmul/kernel/row_reg[0]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_matmul/kernel/c_reg[21][25]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_pl_0 rise@10.000ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        5.902ns  (logic 2.503ns (42.410%)  route 3.399ns (57.590%))
+  Logic Levels:           15  (CARRY8=7 LUT2=2 LUT3=1 LUT4=2 LUT5=1 LUT6=1 RAMD64E=1)
+  Clock Path Skew:        -0.035ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.194ns = ( 12.194 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.370ns
+    Clock Pessimism Removal (CPR):    0.141ns
+  Clock Uncertainty:      0.160ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.312ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.103ns (routing 1.045ns, distribution 1.058ns)
+  Clock Net Delay (Destination): 1.978ns (routing 0.955ns, distribution 1.023ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r  
+    PS8_X0Y0             PS8                          0.000     0.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        2.103     2.370    u_matmul/kernel/pl_clk0
+    SLICE_X4Y117         FDRE                                         r  u_matmul/kernel/row_reg[0]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X4Y117         FDRE (Prop_AFF_SLICEM_C_Q)
+                                                      0.113     2.483 r  u_matmul/kernel/row_reg[0]/Q
+                         net (fo=7, routed)           0.340     2.823    u_matmul/kernel/p_0_in__0__0[3]
+    SLICE_X5Y112         LUT2 (Prop_D5LUT_SLICEM_I1_O)
+                                                      0.220     3.043 r  u_matmul/kernel/a_reg_0_63_0_6_i_3/O
+                         net (fo=8, routed)           0.314     3.358    u_matmul/kernel/a_reg_0_63_0_6/ADDRD3
+    SLICE_X7Y111         RAMD64E (Prop_D6LUT_SLICEM_RADR3_O)
+                                                      0.134     3.492 r  u_matmul/kernel/a_reg_0_63_0_6/RAMD/O
+                         net (fo=70, routed)          0.525     4.016    u_matmul/kernel/a_reg_0_63_0_6_n_3
+    SLICE_X5Y117         LUT6 (Prop_G6LUT_SLICEM_I1_O)
+                                                      0.186     4.202 r  u_matmul/kernel/acc[1][0]_i_33/O
+                         net (fo=2, routed)           0.174     4.376    u_matmul/kernel/acc[1][0]_i_33_n_0
+    SLICE_X7Y116         LUT5 (Prop_D6LUT_SLICEM_I0_O)
+                                                      0.134     4.510 r  u_matmul/kernel/acc[1][0]_i_40/O
+                         net (fo=1, routed)           0.032     4.542    u_matmul/kernel/acc[1][0]_i_40_n_0
+    SLICE_X7Y116         CARRY8 (Prop_CARRY8_SLICEM_S[3]_CO[7])
+                                                      0.232     4.774 r  u_matmul/kernel/acc_reg[1][0]_i_4/CO[7]
+                         net (fo=1, routed)           0.030     4.804    u_matmul/kernel/acc_reg[1][0]_i_4_n_0
+    SLICE_X7Y117         CARRY8 (Prop_CARRY8_SLICEM_CI_O[1])
+                                                      0.106     4.910 r  u_matmul/kernel/acc_reg[1][0]_i_45/O[1]
+                         net (fo=2, routed)           0.236     5.146    u_matmul/kernel/acc_reg[1][0]_i_45_n_14
+    SLICE_X7Y117         LUT3 (Prop_E6LUT_SLICEM_I1_O)
+                                                      0.223     5.369 r  u_matmul/kernel/acc[1][0]_i_14/O
+                         net (fo=2, routed)           0.256     5.625    u_matmul/kernel/acc[1][0]_i_14_n_0
+    SLICE_X6Y117         LUT4 (Prop_G6LUT_SLICEL_I0_O)
+                                                      0.137     5.762 r  u_matmul/kernel/acc[1][0]_i_22/O
+                         net (fo=1, routed)           0.012     5.774    u_matmul/kernel/acc[1][0]_i_22_n_0
+    SLICE_X6Y117         CARRY8 (Prop_CARRY8_SLICEL_S[6]_CO[7])
+                                                      0.171     5.945 r  u_matmul/kernel/acc_reg[1][0]_i_3/CO[7]
+                         net (fo=1, routed)           0.030     5.975    u_matmul/kernel/acc_reg[1][0]_i_3_n_0
+    SLICE_X6Y118         CARRY8 (Prop_CARRY8_SLICEL_CI_O[1])
+                                                      0.106     6.081 r  u_matmul/kernel/acc_reg[1][8]_i_2/O[1]
+                         net (fo=3, routed)           0.384     6.466    u_matmul/kernel/p_0_in[13]
+    SLICE_X9Y117         LUT2 (Prop_F6LUT_SLICEL_I1_O)
+                                                      0.150     6.616 r  u_matmul/kernel/c[61][15]_i_5/O
+                         net (fo=1, routed)           0.015     6.631    u_matmul/kernel/c[61][15]_i_5_n_0
+    SLICE_X9Y117         CARRY8 (Prop_CARRY8_SLICEL_S[5]_CO[7])
+                                                      0.232     6.863 r  u_matmul/kernel/c_reg[61][15]_i_2/CO[7]
+                         net (fo=1, routed)           0.030     6.893    u_matmul/kernel/c_reg[61][15]_i_2_n_0
+    SLICE_X9Y118         CARRY8 (Prop_CARRY8_SLICEL_CI_CO[7])
+                                                      0.065     6.958 r  u_matmul/kernel/c_reg[61][23]_i_2/CO[7]
+                         net (fo=1, routed)           0.030     6.988    u_matmul/kernel/c_reg[61][23]_i_2_n_0
+    SLICE_X9Y119         CARRY8 (Prop_CARRY8_SLICEL_CI_O[1])
+                                                      0.106     7.094 r  u_matmul/kernel/c_reg[61][31]_i_2/O[1]
+                         net (fo=16, routed)          0.909     8.003    u_matmul/kernel/c_reg[61][31]_i_2_n_14
+    SLICE_X13Y138        LUT4 (Prop_B6LUT_SLICEM_I0_O)
+                                                      0.188     8.191 r  u_matmul/kernel/c[21][25]_i_1/O
+                         net (fo=1, routed)           0.081     8.272    u_matmul/kernel/c[1369]
+    SLICE_X13Y138        FDRE                                         r  u_matmul/kernel/c_reg[21][25]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.000    10.000 r  
+    PS8_X0Y0             PS8                          0.000    10.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.181    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.216 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        1.978    12.194    u_matmul/kernel/pl_clk0
+    SLICE_X13Y138        FDRE                                         r  u_matmul/kernel/c_reg[21][25]/C
+                         clock pessimism              0.141    12.335    
+                         clock uncertainty           -0.160    12.175    
+    SLICE_X13Y138        FDRE (Setup_BFF_SLICEM_C_D)
+                                                      0.043    12.218    u_matmul/kernel/c_reg[21][25]
+  -------------------------------------------------------------------
+                         required time                         12.218    
+                         arrival time                          -8.272    
+  -------------------------------------------------------------------
+                         slack                                  3.946    
+
+Slack (MET) :             3.978ns  (required time - arrival time)
+  Source:                 u_matmul/kernel/col_reg[2]/C
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            u_matmul/kernel/c_reg[48][5]/D
+                            (rising edge-triggered cell FDRE clocked by clk_pl_0  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.000ns  (clk_pl_0 rise@10.000ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        5.803ns  (logic 0.570ns (9.822%)  route 5.233ns (90.178%))
+  Logic Levels:           3  (CARRY8=1 LUT4=1 LUT5=1)
+  Clock Path Skew:        -0.102ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.086ns = ( 12.086 - 10.000 ) 
+    Source Clock Delay      (SCD):    2.361ns
+    Clock Pessimism Removal (CPR):    0.173ns
+  Clock Uncertainty:      0.160ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.312ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.094ns (routing 1.045ns, distribution 1.049ns)
+  Clock Net Delay (Destination): 1.870ns (routing 0.955ns, distribution 0.915ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r  
+    PS8_X0Y0             PS8                          0.000     0.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        2.094     2.361    u_matmul/kernel/pl_clk0
+    SLICE_X3Y116         FDRE                                         r  u_matmul/kernel/col_reg[2]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X3Y116         FDRE (Prop_AFF_SLICEL_C_Q)
+                                                      0.114     2.475 r  u_matmul/kernel/col_reg[2]/Q
+                         net (fo=36, routed)          0.284     2.759    u_matmul/kernel/col_reg[2]
+    SLICE_X4Y116         CARRY8 (Prop_CARRY8_SLICEM_S[0]_O[2])
+                                                      0.187     2.946 r  u_matmul/kernel/c_reg[63][31]_i_14/O[2]
+                         net (fo=144, routed)         1.817     4.763    u_matmul/kernel/c_reg[63][31]_i_14_n_13
+    SLICE_X18Y138        LUT4 (Prop_D5LUT_SLICEM_I3_O)
+                                                      0.135     4.898 r  u_matmul/kernel/c[51][31]_i_2/O
+                         net (fo=128, routed)         3.036     7.934    u_matmul/kernel/c[51][31]_i_2_n_0
+    SLICE_X8Y92          LUT5 (Prop_D6LUT_SLICEM_I3_O)
+                                                      0.134     8.068 r  u_matmul/kernel/c[48][5]_i_1/O
+                         net (fo=1, routed)           0.096     8.164    u_matmul/kernel/c[485]
+    SLICE_X8Y92          FDRE                                         r  u_matmul/kernel/c_reg[48][5]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.000    10.000 r  
+    PS8_X0Y0             PS8                          0.000    10.000 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.181    u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.216 r  u_bd/matmul_board_bd_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3372, routed)        1.870    12.086    u_matmul/kernel/pl_clk0
+    SLICE_X8Y92          FDRE                                         r  u_matmul/kernel/c_reg[48][5]/C
+                         clock pessimism              0.173    12.259    
+                         clock uncertainty           -0.160    12.099    
+    SLICE_X8Y92          FDRE (Setup_DFF_SLICEM_C_D)
+                                                      0.043    12.142    u_matmul/kernel/c_reg[48][5]
+  -------------------------------------------------------------------
+                         required time                         12.142    
+                         arrival time                          -8.164    
+  -------------------------------------------------------------------
+                         slack                                  3.978    
+
+
+
+
