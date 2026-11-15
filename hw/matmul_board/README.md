@@ -2,7 +2,7 @@
 
 This folder puts the teammate's **unchanged** `matmul_axi` (signed INT8 matrix multiply behind an AXI4-Lite register interface) next to the Zynq processor on the Kria KV260. It builds one bitstream per configuration and holds the runner that will test it on the board over JTAG. Task record: MATMUL-BOARD-001 (local, `docs/team/tasks/`).
 
-Status (2026-11-14): both N=8 builds meet timing, and both **passed on Drew's KV260** with the identity/ramp workload: all 64 outputs correct on the first run, on a repeat, and after reset + reload. Cycles were 512 for LANES=1 and 128 for LANES=4. Results: `results/20261115T001327Z_n8_l1/`, `results/20261115T001604Z_n8_l4/`. Archived SiliconeOS vectors have not been run yet.
+Status (2026-11-14): both N=8 builds meet timing, and both **passed on Drew's KV260** with the identity/ramp workload: all 64 outputs correct on the first run, on a repeat, and after reset + reload. Cycles were 512 for LANES=1 and 128 for LANES=4. Results: `results/20261115T001327Z_n8_l1/`, `results/20261115T001604Z_n8_l4/`. The app's own handoff ZIPs (parents `6bccf63e…` L1 and `3abe54e6…` L4) also passed: `results/20261115T011930Z_n8_l1/` and `results/20261115T012007Z_n8_l4/`. For the app side, start with `APP_SIDE_UPDATE.md`.
 
 ## What is in here
 
@@ -33,6 +33,10 @@ python hw/matmul_board/build.py --lanes 1      # ~15-20 min -> build/n8_l1/
 python hw/matmul_board/build.py --lanes 4      # separate artifact -> build/n8_l4/
 python hw/matmul_board/build.py --compare      # build/compare_n8/summary.md
 ```
+
+`python hw/matmul_board/build.py --handoff app.zip` builds from the RTL **inside an app handoff ZIP** instead of `rtl/`. It verifies the ZIP and writes `hardware/matmul.sv` and `integration/matmul_axi.sv` to `build/n8_l<LANES>/rtl/`. The manifest records the ZIP hash, the parent run and the parent source map. A clean-room rebuild from the app's ZIPs on 2026-11-14 gave the same circuit: identical timing and area, and only the bitstream header timestamp differs.
+
+`python hw/matmul_board/tests/product_fit_check.py RESULT_DIR ZIP BUILD_DIR` is an independent check (it does not import the runner) that a result fits the app's import rules and is bound to the actual `.bit`, reports and ZIP.
 
 `--force` rebuilds an existing folder; `--stage bd` stops after the block design (quick check). A rebuild may produce a different bitstream hash; the manifest records the one actually built. Each `build/n8_l<LANES>/` holds the `.bit`, `.xsa`, `psu_init.tcl`, `addresses.tcl`, `reports/`, `summary/`, `implementation_manifest.json` (+ `.sha256`) and the Vivado logs. `build/` is git-ignored.
 
