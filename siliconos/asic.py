@@ -34,7 +34,7 @@ def synthesize(spec, lanes, source_override=None):
     spec = validate(spec)
     if spec['target'] != 'asic':
         raise ValueError('Generic ASIC synthesis requires target=asic.')
-    if type(lanes) is not int or lanes not in (1, 4) or lanes > spec['max_lanes']:
+    if type(lanes) is not int or lanes not in (1, 2, 4) or lanes > spec['max_lanes']:
         raise ValueError('Candidate exceeds the lane limit or is unsupported.')
     if source_override is not None:
         from .rtlgen import gate, CYCLE_MONITOR
@@ -45,22 +45,23 @@ def synthesize(spec, lanes, source_override=None):
         raise ValueError('Generic synthesis and netlist verification require: ' + ', '.join(missing))
     # Direct callers must also prove the candidate before running synthesis.
     verified_rtl = simulate(spec, lanes, source_override=source_override) if source_override is not None else None
-    n = spec['size']
+    n = spec['size']; bits = int(spec['precision'][3:])
     sources = {name: (ROOT / 'hardware' / name).read_bytes() for name in ('matmul.sv', 'tb.sv')}
     if source_override is not None:
         sources['matmul.sv'] = source_override.encode('utf-8')
         sources['rtl_monitor.sv'] = CYCLE_MONITOR.encode('utf-8')
     # Yosys specializes the kernel parameters; the harness still needs N for input loading.
-    tb = sources['tb.sv'].decode().replace('matmul #(.N(N),.LANES(LANES)) dut(.*);', 'matmul dut(.*);')
+    tb = sources['tb.sv'].decode().replace('matmul #(.N(N),.LANES(LANES),.INPUT_BITS(INPUT_BITS)) dut(.*);', 'matmul dut(.*);')
     if tb == sources['tb.sv'].decode():
         raise ValueError('Netlist testbench specialization failed; no result accepted.')
-    script = (f'read_verilog -sv matmul.sv\nchparam -set N {n} -set LANES {lanes} matmul\n'
+    script = (f'read_verilog -sv matmul.sv\nchparam -set N {n} -set LANES {lanes} -set INPUT_BITS {bits} matmul\n'
               'synth -top matmul\ncheck -assert\ntee -o statistics.json stat -json\n'
               'write_verilog -noattr netlist.v\n')
     seed = 42
     rng = random.Random(seed)
-    a = [rng.randrange(-128, 128) for _ in range(n*n)]
-    b = [rng.randrange(-128, 128) for _ in range(n*n)]
+    low, high = -(1 << (bits-1)), 1 << (bits-1)
+    a = [rng.randrange(low, high) for _ in range(n*n)]
+    b = [rng.randrange(low, high) for _ in range(n*n)]
     expected = reference(a, b, n)
     begin = time.monotonic()
     with tempfile.TemporaryDirectory(prefix='siliconos-asic-') as td:
@@ -81,7 +82,7 @@ def synthesize(spec, lanes, source_override=None):
             raise ValueError('Invalid generic cell statistics; no result accepted.')
         netlist = (path / 'netlist.v').read_text()
         command = [binaries['iverilog'], '-g2012', '-s', 'tb', f'-Ptb.N={n}',
-                   f'-Ptb.LANES={lanes}', '-o', 'netlist_sim', 'netlist.v', 'netlist_tb.sv']
+                   f'-Ptb.LANES={lanes}', f'-Ptb.INPUT_BITS={bits}', '-o', 'netlist_sim', 'netlist.v', 'netlist_tb.sv']
         if source_override is not None:
             command[1:1] = ['-s', 'rtl_monitor']
             command.append('rtl_monitor.sv')
@@ -95,7 +96,7 @@ def synthesize(spec, lanes, source_override=None):
         simulator = _run([binaries['iverilog'], '-V'], td, 5).stdout.splitlines()[0]
     result = dict(
         evidence='generic_synthesis', correct=True, spec=spec, lanes=lanes, seed=seed,
-        cycles=cycles[0], parameters={'N': n, 'LANES': lanes},
+        cycles=cycles[0], parameters={'N': n, 'LANES': lanes, 'INPUT_BITS': bits},
         cell_count=cell_count, cell_counts=cell_counts,
         resources={'generic_cells': cell_count, 'cell_types': cell_counts, 'dsp': None, 'lut': None, 'bram': None},
         tool='Yosys', tool_version=version, simulator=simulator,

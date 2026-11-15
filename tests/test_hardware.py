@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class HardwareLifecycleTests(unittest.TestCase):
     def test_lifecycle(self):
         for n in (8, 16):
-            for lanes in (1, 4):
+            for lanes in (1, 2, 4):
                 with self.subTest(n=n, lanes=lanes), tempfile.TemporaryDirectory() as td:
                     binary = str(Path(td) / "lifecycle")
                     subprocess.run([

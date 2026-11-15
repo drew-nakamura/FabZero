@@ -15,11 +15,12 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(a['recipe_sha256'],plan(dict(reversed(list(DEFAULT.items()))))['recipe_sha256'])
         self.assertNotEqual(a['recipe_sha256'],plan(DEFAULT,1)['recipe_sha256'])
         self.assertEqual(plan({**DEFAULT,'max_lanes':1})['parameters']['LANES'],1)
+        self.assertEqual(plan({**DEFAULT,'max_lanes':2})['parameters']['LANES'],2)
         self.assertEqual(plan({**DEFAULT,'objective':'minimize_lanes'})['parameters']['LANES'],1)
     def test_fail_closed(self):
         for block in ('../../evil','zipcpu.skidbuffer.registered8.v1','unknown'):
             with self.assertRaises(ValueError):plan(DEFAULT,block_id=block)
-        for lanes in (True,2,0,'4'):
+        for lanes in (True,3,0,'4'):
             with self.assertRaises(ValueError):plan(DEFAULT,lanes)
         with self.assertRaises(ValueError):plan(DEFAULT,1,'siliconos.matmul.parallel4.v1')
     def test_ai_rejects_invalid_envelope_and_target_drift(self):

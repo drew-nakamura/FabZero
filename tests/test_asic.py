@@ -22,7 +22,7 @@ class AsicValidationTests(unittest.TestCase):
 @unittest.skipUnless(all(shutil.which(t) for t in ('yosys', 'iverilog', 'vvp')), 'Yosys and Icarus required')
 class ActualAsicSynthesisTests(unittest.TestCase):
     def test_generic_netlists(self):
-        for lanes in (1, 4):
+        for lanes in (1, 2, 4):
             with self.subTest(lanes=lanes):
                 result = synthesize({**DEFAULT, 'target': 'asic', 'size': 8}, lanes)
                 self.assertTrue(result['netlist_verified'])

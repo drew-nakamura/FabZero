@@ -2,9 +2,9 @@
 
 ## Mission and scope
 
-Build an open-source hardware architecture workbench for the November 13–15, 2026 CPVC × OCOB × CPE hackathon. Read README.md for current capability and SILICONOS_PLAN.md for strategy. The human team has two members, a KV260 available Saturday, and a partner's Windows machine with Vivado/Vitis; Vivado/Vitis 2025.2 on Windows 11 and a visible KV260 board preset were confirmed by the user (supersedes the earlier 2026.1.1 report). Board SKU: SK-KV260-G. Actual Vivado synthesis and board execution remain unverified.
+Build an open-source hardware architecture workbench for the November 13–15, 2026 CPVC × OCOB × CPE hackathon. Read README.md for current capability and SILICONOS_PLAN.md for strategy. The human team has two members, a KV260 available Saturday, and a partner's Windows machine with Vivado/Vitis; Vivado/Vitis 2025.2 on Windows 11 and a visible KV260 board preset were confirmed by the user (supersedes the earlier 2026.1.1 report). Board SKU: SK-KV260-G. Saved partner Vivado builds and KV260 result artifacts exist for N=8 INT8 one- and four-lane configurations; physical claims in the app require hash-gated report validation and authenticated import against matching parent runs.
 
-Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1 or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency. Targets now include KV260 FPGA and custom ASIC exploration. ASIC generic Yosys synthesis is not PDK mapping, layout, timing closure or tapeout; DSP budgets apply only to FPGA.
+Current kernel contract: signed INT8 square matrix multiply, INT32 accumulation, N=8 or 16, LANES=1, 2, or 4. Do not expand the committed workload without evidence that the existing path works. Physical deployment is the highest-risk dependency. Targets now include KV260 FPGA and custom ASIC exploration. The app's generic Yosys synthesis is separate from the recorded standalone SKY130 PDK-mapped and routed experiments in `docs/ASIC_WORKFLOW.md`; those physical runs still have unresolved electrical and antenna checks and are not fabrication signoff. DSP budgets apply only to FPGA.
 
 ## Evidence rules
 

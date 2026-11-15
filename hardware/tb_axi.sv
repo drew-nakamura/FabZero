@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 module tb_axi;
- parameter N=8, LANES=1;
+ parameter N=8, LANES=1, INPUT_BITS=8;
  reg aclk=0,aresetn=0;
  reg [7:0] s_axi_awaddr=0,s_axi_araddr=0;
  reg s_axi_awvalid=0,s_axi_wvalid=0,s_axi_bready=0,s_axi_arvalid=0,s_axi_rready=0;
@@ -11,7 +11,7 @@ module tb_axi;
  wire [31:0] s_axi_rdata;
  integer i,j,expected;
  reg [31:0] value;
- matmul_axi #(.N(N),.LANES(LANES)) dut(.*);
+ matmul_axi #(.N(N),.LANES(LANES),.INPUT_BITS(INPUT_BITS)) dut(.*);
  always #5 aclk=~aclk;
  task send_aw(input [7:0] addr,input integer delay_cycles);
    begin

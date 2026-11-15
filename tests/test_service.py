@@ -43,7 +43,7 @@ class ServiceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'not configured'): ai.generate('Make a matrix multiplier')
 
     def test_bad_simulation_arguments(self):
-        for lanes in (True,0,2,16,'4'):
+        for lanes in (True,0,3,16,'4'):
             with self.assertRaises(ValueError): simulate(DEFAULT,lanes)
         with self.assertRaises(ValueError): simulate(DEFAULT,4,seed=-1)
 

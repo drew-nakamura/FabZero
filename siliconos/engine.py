@@ -20,10 +20,10 @@ def validate(spec):
     for key in ("size", "frequency_mhz", "max_dsps", "max_lanes"):
         if type(result[key]) is not int:
             raise ValueError(key + " must be an integer.")
-    if result["operation"] != "matrix_multiply" or result["precision"] != "int8" or result["target"] not in ("kv260","asic"):
-        raise ValueError("Currently supported: INT8 matrix multiplication targeting KV260 or a custom ASIC.")
-    if result["size"] not in (8,16) or result["max_lanes"] not in (1,4):
-        raise ValueError("Supported sizes are 8/16; lane limits are 1/4.")
+    if result["operation"] != "matrix_multiply" or result["precision"] not in ("int2", "int4", "int8") or result["target"] not in ("kv260","asic"):
+        raise ValueError("Currently supported: signed INT2/INT4/INT8 matrix multiplication targeting KV260 or a custom ASIC.")
+    if result["size"] not in (8,16) or result["max_lanes"] not in (1,2,4):
+        raise ValueError("Supported sizes are 8/16; lane limits are 1/2/4.")
     if not 1 <= result["frequency_mhz"] <= 200 or not 0 <= result["max_dsps"] <= 1248:
         raise ValueError("Clock must be 1–200 MHz; DSP budget must be 0–1248.")
     if result["objective"] not in ("minimize_latency", "minimize_lanes"):
@@ -34,7 +34,7 @@ def explore(spec):
     spec = validate(spec)
     n = spec["size"]
     candidates = []
-    for lanes in (1,4):
+    for lanes in (1,2,4):
         cycles = n**3 // lanes
         candidates.append(dict(id=f"mac{lanes}", lanes=lanes, cycles=cycles,
             projected_us=cycles/spec["frequency_mhz"], gops=2*lanes*spec["frequency_mhz"]/1000,
@@ -51,7 +51,7 @@ def reference(a,b,n):
 
 def simulate(spec, lanes, seed=42, vectors=None, source_override=None):
     spec=validate(spec)
-    if type(lanes) is not int or lanes not in (1,4) or lanes>spec["max_lanes"]:
+    if type(lanes) is not int or lanes not in (1,2,4) or lanes>spec["max_lanes"]:
         raise ValueError("Candidate exceeds the lane limit or is unsupported.")
     if type(seed) is not int or not 0<=seed<=2**31-1:
         raise ValueError("Seed must be an integer between 0 and 2147483647.")
@@ -60,8 +60,11 @@ def simulate(spec, lanes, seed=42, vectors=None, source_override=None):
         gate(source_override)
     if not shutil.which("iverilog") or not shutil.which("vvp"):
         raise ValueError("Icarus Verilog is unavailable. Install iverilog to run RTL simulation.")
-    n=spec["size"]; rng=random.Random(seed)
-    a,b=vectors or ([rng.randrange(-128,128) for _ in range(n*n)], [rng.randrange(-128,128) for _ in range(n*n)])
+    n=spec["size"]; bits=int(spec['precision'][3:]); low, high=-(1 << (bits-1)), 1 << (bits-1)
+    rng=random.Random(seed)
+    a,b=vectors or ([rng.randrange(low,high) for _ in range(n*n)], [rng.randrange(low,high) for _ in range(n*n)])
+    if any(not isinstance(values, list) or len(values) != n*n or any(type(value) is not int or not low <= value < high for value in values) for values in (a,b)):
+        raise ValueError(f"Inputs must be {n}×{n} signed {spec['precision'].upper()} values.")
     expected=reference(a,b,n)
     source_bytes={name:(ROOT/"hardware"/name).read_bytes() for name in ("matmul.sv","tb.sv")}
     if source_override is not None:
@@ -73,7 +76,7 @@ def simulate(spec, lanes, seed=42, vectors=None, source_override=None):
         (path/"inputs.hex").write_text("\n".join(f"{x&255:02x}" for x in a+b)+"\n")
         for name,content in source_bytes.items():
             (path/name).write_bytes(content)
-        command=["iverilog","-g2012","-s","tb",f"-Ptb.N={n}",f"-Ptb.LANES={lanes}","-o",str(path/"sim"),"matmul.sv","tb.sv"]
+        command=["iverilog","-g2012","-s","tb",f"-Ptb.N={n}",f"-Ptb.LANES={lanes}",f"-Ptb.INPUT_BITS={bits}","-o",str(path/"sim"),"matmul.sv","tb.sv"]
         begin=time.monotonic()
         if source_override is None:
             subprocess.run(command,cwd=td,check=True,capture_output=True,timeout=20)
@@ -97,14 +100,22 @@ def simulate(spec, lanes, seed=42, vectors=None, source_override=None):
         if source_override is None: raise
         raise ValueError('Generated RTL produced unknown or malformed outputs/cycles; no result accepted.') from exc
     if outputs != expected or len(cycles)!=1:
-        raise ValueError("RTL correctness failed. No performance result accepted.")
+        if outputs != expected:
+            first = next((index for index, (actual, wanted) in enumerate(zip(outputs, expected)) if actual != wanted), None)
+            if first is None:
+                detail = f"expected {len(expected)} outputs but observed {len(outputs)}"
+            else:
+                actual = outputs[first] if first < len(outputs) else "missing"
+                detail = f"output {first}: expected {expected[first]}, observed {actual}"
+            raise ValueError("RTL correctness failed (" + detail + "). No performance result accepted.")
+        raise ValueError("RTL correctness failed: expected exactly one cycle report. No performance result accepted.")
     version=subprocess.run(["iverilog","-V"],capture_output=True,text=True,timeout=5).stdout.splitlines()[0]
     if source_override is not None and cycles[0] <= 0:
         raise ValueError('Generated RTL must have positive observed execution cycles; no result accepted.')
     return dict(evidence="rtl_simulation" if source_override is None else "ai_generated_rtl",correct=True,spec=spec,lanes=lanes,seed=seed,cycles=cycles[0],
         projected_us=cycles[0]/spec["frequency_mhz"],clock_status="assumed target; not measured",physical_fpga=False,physical_asic=False,
         simulator=version,simulator_wall_seconds=wall,source_sha256=sources,
-        simulator_stdout=run.stdout,parameters={"N":n,"LANES":lanes},
+        simulator_stdout=run.stdout,parameters={"N":n,"LANES":lanes,"INPUT_BITS":bits},
         source_files={name:content.decode("utf-8") for name,content in source_bytes.items()},
         input_sha256=hashlib.sha256(bytes(x&255 for x in a+b)).hexdigest(),
         output_sha256=hashlib.sha256(json.dumps(outputs).encode()).hexdigest(),

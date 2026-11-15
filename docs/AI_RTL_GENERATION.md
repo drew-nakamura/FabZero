@@ -1,6 +1,6 @@
 # Generate, verify and synthesize candidate RTL
 
-**Generate & verify RTL** requests a new SystemVerilog matrix-multiply implementation from Groq and accepts it only after actual tool execution and Python integer-oracle checks. The supported workload remains signed INT8 square matrix multiplication with INT32 accumulation, N=8/16 and LANES=1/4. This is a student prototype; a successful run does not establish board operation or a physical ASIC implementation.
+**Generate & verify RTL** requests a new SystemVerilog matrix-multiply implementation from Groq and accepts it only after actual tool execution and Python integer-oracle checks. The supported workload remains signed INT8 square matrix multiplication with INT32 accumulation, N=8/16 and LANES=1/2/4. This is a student prototype; a successful run does not establish board operation or a physical ASIC implementation.
 
 ## Use
 
@@ -12,7 +12,7 @@ The selected objective chooses a requested lane parameter: one lane for `minimiz
 
 ## Acceptance sequence
 
-1. `POST /api/generate-rtl` validates the supported `spec` and a `prompt` of 1–4000 characters after trimming surrounding whitespace. Optional `lanes` must be 1 or 4 within the lane limit; optional `seed` is an integer from 0 through 2147483647, default 42. The existing same-origin check, 16 KiB request-body cap and shared nonblocking `RUN_LOCK` apply.
+1. `POST /api/generate-rtl` validates the supported `spec` and a `prompt` of 1–4000 characters after trimming surrounding whitespace. Optional `lanes` must be 1, 2, or 4 within the lane limit; optional `seed` is an integer from 0 through 2147483647, default 42. The existing same-origin check, 16 KiB request-body cap and shared nonblocking `RUN_LOCK` apply.
 2. `ai.generate_rtl(spec, prompt)` requests raw source, with no testbench, Markdown or measurement fields. Missing configuration, refusal, incomplete responses and provider errors reject the request.
 3. `rtlgen.gate(source)` accepts only one ANSI `module matmul` with exactly the required N/LANES parameters and port names, directions, signedness and widths. Its conservative subset forbids directives such as `` `include ``, external modules, hierarchical references, attributes, initial/final blocks, delays, strings and system tasks/file I/O. Only the pure system functions `$signed`, `$unsigned` and `$clog2` are permitted. Source is limited to 64 KiB of ASCII text. It is rejected rather than repaired or stripped, before any compiler or simulator is run.
 4. `engine.simulate(..., source_override=source)` writes the exact candidate into an isolated temporary directory and compiles it with the **unmodified** `hardware/tb.sv`. That trusted testbench loads inputs while idle, starts the job, reads every output and prints the `CYCLES`/`OUT` lines. The generated module cannot print those lines. A separate trusted `rtl_monitor.sv` checks the observed reset/start/busy/done/counter behavior and counts execution clocks independently.

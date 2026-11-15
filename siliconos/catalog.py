@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from .engine import ROOT, validate
 
-ENGINE_IDS = {1: 'siliconos.matmul.serial.v1', 4: 'siliconos.matmul.parallel4.v1'}
+ENGINE_IDS = {1: 'siliconos.matmul.serial.v1', 2: 'siliconos.matmul.parallel2.v1', 4: 'siliconos.matmul.parallel4.v1'}
 
 def digest(path):
     return hashlib.sha256((ROOT/path).read_bytes()).hexdigest()
@@ -13,7 +13,7 @@ def blocks():
     result=[]
     for lanes, identifier in ENGINE_IDS.items():
         result.append(dict(id=identifier,kind='compute',operation='matrix_multiply',
-            precision='int8',accumulator='int32',sizes=[8,16],lanes=lanes,
+            precision=['int2','int4','int8'],accumulator='int32',sizes=[8,16],lanes=lanes,
             targets=['kv260','asic'],license='MIT',source='hardware/matmul.sv',
             source_sha256=digest('hardware/matmul.sv'),
             qualification='RTL regression and generic netlist simulation; physical deployment pending',
@@ -46,7 +46,7 @@ def plan(spec, lanes=None, block_id=None):
         raise ValueError('Unsupported catalog lane configuration.')
     files=['hardware/matmul.sv','hardware/tb.sv']
     recipe=dict(schema_version=1,block_id=ENGINE_IDS[lanes],spec=spec,
-        parameters={'N':spec['size'],'LANES':lanes},
+        parameters={'N':spec['size'],'LANES':lanes,'INPUT_BITS':int(spec['precision'][3:])},
         source_sha256={p:digest(p) for p in files},license='MIT',
         source_files={p:(ROOT/p).read_text() for p in files},
         selection='deterministic constraint selection; no generated RTL',

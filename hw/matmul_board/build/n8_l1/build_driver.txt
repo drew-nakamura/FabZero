@@ -1,0 +1,7 @@
+RTL hashes match the pinned commit 84fcae1000f056f869b6b84a28804b98cb7b6a48
+> C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat -mode batch -nojournal -log C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\vivado_build.log -source C:\Users\drewa\FabZero\hw\matmul_board\build.tcl -tclargs 8 1 C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1 full (cwd C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1)
+> C:\AMDDesignTools\2025.2\Vivado\bin\vivado.bat -mode batch -nojournal -log C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\vivado_reports.log -source C:\Users\drewa\FabZero\hw\tools\collect_reports.tcl -tclargs C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\proj\matmul_board.xpr C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\reports u_matmul (cwd C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1)
+wrote C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\summary\summary.md and C:\Users\drewa\FabZero\hw\matmul_board\build\n8_l1\summary\summary.json
+BUILD_RESULT n8_l1: PASS timing_met=True drc_clean=True WNS=4.757 WHS=0.001 WPWS=3.5 base=0xA0000000 clock_hz=99999001
+bitstream hw/matmul_board/build/n8_l1/matmul_board_n8_l1.bit sha256 63c19180aa6ea09513a2b5ec4fb8a2966af64161de3c400614f42cc191909bfc
+manifest  hw/matmul_board/build/n8_l1/implementation_manifest.json sha256 bddb1998aea3d13d29419af43b0555a6595c41f40204a9e05629097f99697efb

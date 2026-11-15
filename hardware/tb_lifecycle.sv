@@ -3,6 +3,7 @@
 module tb_lifecycle;
  parameter N=8;
  parameter LANES=1;
+ parameter INPUT_BITS=8;
  reg clk=0, reset=1, start=0, load=0, operand_b=0;
  reg [15:0] address=0;
  reg signed [7:0] data_in=0;
@@ -11,7 +12,7 @@ module tb_lifecycle;
  wire signed [31:0] data_out;
  integer av[0:N*N-1], bv[0:N*N-1];
  integer i,j,k,expected,mode;
- matmul #(.N(N),.LANES(LANES)) dut(.*);
+ matmul #(.N(N),.LANES(LANES),.INPUT_BITS(INPUT_BITS)) dut(.*);
  always #5 clk=~clk;
  task load_operands(input integer pattern);
    begin

@@ -67,12 +67,22 @@ class GeneratedRtlApiTests(unittest.TestCase):
                  SOURCE.replace('c[address]', "32'sd0"), SOURCE.replace('cycles<=cycles+1;', 'cycles<=1;')]
         for candidate in cases:
             provider = patch('server.ai.generate_rtl', side_effect=candidate) if isinstance(candidate, Exception) else patch('server.ai.generate_rtl', return_value=candidate)
-            with self.subTest(candidate=cases.index(candidate)), provider:
+            with self.subTest(candidate=cases.index(candidate)), provider, patch('server.ai.repair_rtl', side_effect=ValueError('Repair rejected')):
                 status, result = self.post()
             self.assertEqual(status, 400, result)
             self.assertEqual(set(result), {'error'})
             self.assertEqual(self.counts(), (0, 0))
             self.assertFalse(server.RUN_LOCK.locked())
+
+    def test_one_failed_candidate_can_be_repaired_before_atomic_acceptance(self):
+        incorrect = SOURCE.replace('c[address]', "32'sd0")
+        with patch('server.ai.generate_rtl', return_value=incorrect), patch('server.ai.repair_rtl', return_value=SLOW_SOURCE) as repair:
+            status, result = self.post()
+        self.assertEqual(status, 200, result)
+        repair.assert_called_once()
+        self.assertEqual(result['generation_attempts'], 2)
+        self.assertEqual(result['source_files']['matmul.sv'], SLOW_SOURCE)
+        self.assertEqual(self.counts(), (1, 1))
 
     def test_synthesis_failure_does_not_save_successful_rtl_stage(self):
         for error in (ValueError('Netlist oracle rejected'), RuntimeError('unexpected tool failure')):
@@ -92,13 +102,20 @@ class GeneratedRtlApiTests(unittest.TestCase):
         cases = [{**self.body, 'spec': {'size': 32}}, {**self.body, 'spec': None},
                  {**self.body, 'prompt': ''}, {**self.body, 'prompt': 'a'*4001},
                  {**self.body, 'seed': True}, {**self.body, 'seed': -1},
-                 {**self.body, 'lanes': True}, {**self.body, 'lanes': 2}, []]
+                 {**self.body, 'lanes': True}, {**self.body, 'lanes': 3}, []]
         with patch('server.ai.generate_rtl') as provider:
             for body in cases: self.assertEqual(self.post(body)[0], 400)
             with patch('server.shutil.which', return_value=None):
                 self.assertEqual(self.post()[0], 400)
             provider.assert_not_called()
         self.assertEqual(self.counts(), (0, 0))
+
+    def test_two_lanes_are_accepted_for_ai_generation(self):
+        with patch('server.ai.generate_rtl', return_value=SOURCE) as provider:
+            status, result = self.post({**self.body, 'lanes': 2})
+        self.assertEqual(status, 200, result)
+        self.assertEqual(result['lanes'], 2)
+        provider.assert_called_once()
 
     def test_configuration_origin_size_and_lock_gates(self):
         with patch.dict('os.environ', GROQ_API_KEY='', GROQ_MODEL=''):

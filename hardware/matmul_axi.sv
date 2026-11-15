@@ -1,5 +1,5 @@
 // Generic 32-bit AXI4-Lite register slave. No board clock/reset/pin assumptions.
-module matmul_axi #(parameter N=8, parameter LANES=1)(
+module matmul_axi #(parameter N=8, parameter LANES=1, parameter INPUT_BITS=8)(
  input wire aclk, aresetn,
  input wire [7:0] s_axi_awaddr,
  input wire s_axi_awvalid,
@@ -33,7 +33,7 @@ module matmul_axi #(parameter N=8, parameter LANES=1)(
  assign s_axi_awready=aresetn && !aw_pending && !s_axi_bvalid;
  assign s_axi_wready=aresetn && !w_pending && !s_axi_bvalid;
  assign s_axi_arready=aresetn && !s_axi_rvalid;
- matmul #(.N(N),.LANES(LANES)) kernel(
+ matmul #(.N(N),.LANES(LANES),.INPUT_BITS(INPUT_BITS)) kernel(
    .clk(aclk),.reset(!aresetn),.start(start),.load(load),
    .operand_b(address_reg[16]),.address(address_reg[15:0]),.data_in(operand),
    .busy(busy),.done(done),.cycles(cycles),.data_out(result));

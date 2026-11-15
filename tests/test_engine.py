@@ -44,7 +44,7 @@ class EngineTests(unittest.TestCase):
 
     def test_rtl_against_reference(self):
         for n in (8,16):
-            for lanes in (1,4):
+            for lanes in (1,2,4):
                 for seed in range(25):
                     with self.subTest(n=n,lanes=lanes,seed=seed):
                         r=simulate({**DEFAULT,'size':n},lanes,seed)
@@ -54,5 +54,17 @@ class EngineTests(unittest.TestCase):
                 vectors=[([0]*(n*n),[-128]*(n*n)),([-128]*(n*n),[-128]*(n*n)),([127]*(n*n),[-128]*(n*n)),([int(i//n==i%n) for i in range(n*n)],list(range(-128,-128+n*n)))]
                 for a,b in vectors:
                     self.assertTrue(simulate({**DEFAULT,'size':n},lanes,vectors=(a,b))['correct'])
+
+    def test_reduced_precision_storage_and_ranges(self):
+        for precision, bits in (('int2',2),('int4',4)):
+            with self.subTest(precision=precision):
+                spec={**DEFAULT,'precision':precision,'size':8,'max_lanes':2}
+                result=simulate(spec,2,seed=7)
+                low, high=-(1 << (bits-1)), (1 << (bits-1))-1
+                self.assertTrue(result['correct'])
+                self.assertEqual(result['parameters'],{'N':8,'LANES':2,'INPUT_BITS':bits})
+                self.assertTrue(all(low <= value <= high for value in result['inputs']['a']+result['inputs']['b']))
+                with self.assertRaisesRegex(ValueError,precision.upper()):
+                    simulate(spec,2,vectors=([high+1]*64,[0]*64))
 
 if __name__=='__main__': unittest.main()

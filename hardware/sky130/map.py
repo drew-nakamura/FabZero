@@ -28,7 +28,7 @@ def main():
     parser.add_argument('--liberty', required=True, type=Path)
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--size', type=int, choices=(8, 16), default=8)
-    parser.add_argument('--lanes', type=int, choices=(1, 4), default=1)
+    parser.add_argument('--lanes', type=int, choices=(1, 2, 4), default=1)
     args = parser.parse_args()
     liberty = args.liberty.expanduser().resolve(strict=True)
     output = args.output.resolve()

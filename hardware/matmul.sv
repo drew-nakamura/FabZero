@@ -1,7 +1,7 @@
-// SiliconOS signed INT8 GEMM. LANES adjacent output columns per cycle.
+// SiliconOS signed INT2/INT4/INT8 GEMM. LANES adjacent output columns per cycle.
 // Flat local arrays are a functional first implementation, NOT a BRAM/DSP claim.
 // Host loads operands while idle. Outputs remain valid until next job.
-module matmul #(parameter N=8, parameter LANES=1)(
+module matmul #(parameter N=8, parameter LANES=1, parameter INPUT_BITS=8)(
  input wire clk, reset, start, load,
  input wire operand_b,
  input wire [15:0] address,
@@ -10,12 +10,12 @@ module matmul #(parameter N=8, parameter LANES=1)(
  output reg [63:0] cycles,
  output wire signed [31:0] data_out
 );
- reg signed [7:0] a [0:N*N-1];
- reg signed [7:0] b [0:N*N-1];
+ reg signed [INPUT_BITS-1:0] a [0:N*N-1];
+ reg signed [INPUT_BITS-1:0] b [0:N*N-1];
  reg signed [31:0] c [0:N*N-1];
  reg signed [31:0] acc [0:LANES-1];
  integer row, col, k, lane;
- wire signed [15:0] product [0:LANES-1];
+ wire signed [2*INPUT_BITS-1:0] product [0:LANES-1];
  genvar g;
  generate for(g=0;g<LANES;g=g+1) begin: multipliers
    assign product[g] = a[row*N+k] * b[k*N+col+g];
@@ -36,9 +36,9 @@ module matmul #(parameter N=8, parameter LANES=1)(
        cycles<=cycles+1;
        for(lane=0;lane<LANES;lane=lane+1) begin
          if(k==N-1) begin
-           c[row*N+col+lane] <= acc[lane] + {{16{product[lane][15]}},product[lane]};
+           c[row*N+col+lane] <= acc[lane] + product[lane];
            acc[lane]<=0;
-         end else acc[lane] <= acc[lane] + {{16{product[lane][15]}},product[lane]};
+         end else acc[lane] <= acc[lane] + product[lane];
        end
        if(k==N-1) begin
          k<=0;

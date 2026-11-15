@@ -5,7 +5,7 @@ Current evidence: portable SystemVerilog kernel, tested with Icarus Verilog. Inc
 ## Partner on Windows
 
 1. Use the user-confirmed **Vivado/Vitis 2025.2** installation on **Windows 11** (approximately **32 GB RAM**); this supersedes the earlier 2026.1.1 report. The KV260 preset is reported visible. Capture actual tool output with `version -short` for the build record. Reported hardware is **SK-KV260-G** with accessory pack **HW-BACCP01-SK-G**; still confirm board revision and exact FPGA part against the physical board and installed preset.
-2. Run the supplied `hardware/matmul.sv` and `hardware/tb.sv` in Vivado simulation, with matching N=8 and LANES=1 or 4. Generate inputs using the Python simulation runner or use the exported report's signed input values converted to two-digit hex. The testbench expects `inputs.hex`, A then B in row-major order.
+2. Run the supplied `hardware/matmul.sv` and `hardware/tb.sv` in Vivado simulation, with matching N=8, LANES=1, 2, or 4, and INPUT_BITS=2, 4, or 8. Generate inputs using the Python simulation runner or use the exported report's signed input values converted to two-digit hex. The testbench expects `inputs.hex`, A then B in row-major order.
 3. Create a board-matched block design with Zynq PS, clock/reset and AXI interconnect. Integrate `matmul_axi.sv`, the generic AXI4-Lite wrapper, using Vivado interface mapping or IP packaging. Connect the 8-bit byte-addressed slave into an allocated PS address segment. Verify reset polarity and clock domain; this wrapper does not cross clock domains.
 4. Implemented generic register contract: see the AXI section below. There is still no allocated physical base address or usable board driver until the PS block design and board image are built.
 5. The initial RTL uses local arrays with asynchronous reads. Inspect memory inference and critical paths. For a real BRAM implementation, bank B by output lane and account for synchronous read latency in the schedule/counter. Regenerate simulation expectations whenever the schedule changes.
@@ -31,8 +31,8 @@ Use the exact part validated against the physical board and installed board pres
 In a Windows command prompt with `vivado` on PATH, replace `EXACT_INSTALLED_PART` below and run both candidates into separate output directories (10 ns is a requested 100 MHz clock):
 
 ```bat
-vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 1 10 build/mac1
-vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 4 10 build/mac4
+vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 1 8 10 build/mac1
+vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 4 8 10 build/mac4
 ```
 
 If Vivado is not on PATH, launch its supplied command environment or use the full installed path to `vivado.bat`. Preserve the console log and each output directory. Record source identity with PowerShell:
@@ -45,8 +45,8 @@ Review `utilization_synth.rpt`, `timing_synth.rpt`, `drc_synth.rpt`, and `build_
 
 ## Kernel contract and regression
 
-- Valid configurations in this project: N=8/16, LANES=1/4. N must be divisible by LANES; arbitrary parameter values are unsupported.
-- Inputs are signed INT8 and outputs are signed INT32. A complete A and B must be loaded before launch. Address selects an element, not a byte; A and B are each row-major N×N arrays.
+- Valid configurations in this project: N=8/16, LANES=1/2/4, INPUT_BITS=2/4/8. N must be divisible by LANES; arbitrary parameter values are unsupported. Each supported combination passes the repository's Icarus lifecycle and AXI register tests; Vivado synthesis and board execution still need separate evidence.
+- Inputs are signed INT2, INT4, or INT8 according to INPUT_BITS and outputs are signed INT32. A complete A and B must be loaded before launch. Address selects an element, not a byte; A and B are each row-major N×N arrays.
 - Assert `load` while idle for a clock edge to write `data_in` at `address`, selecting A with `operand_b=0` or B with `operand_b=1`. Out-of-range loads are ignored; reads return zero.
 - Pulse `start` for one clock while idle. Busy starts and loads are ignored. Holding start high can initiate another run after completion; the future host wrapper must generate a pulse.
 - `done` stays high until the next start or reset. `cycles` excludes loading and launch and counts exactly N³/LANES compute clocks. Read outputs only after done; output memory is progressively overwritten during a new run.
@@ -69,7 +69,7 @@ Run the independent protocol regression with `python3 -m unittest discover -s te
 | 0x18 | Cycles low | Read-only; SLVERR while busy |
 | 0x1c | Cycles high | Read-only; SLVERR while busy |
 | 0x20 | Compiled N | Read-only matrix dimension, 8 or 16 |
-| 0x24 | Compiled LANES | Read-only lane count, 1 or 4 |
+| 0x24 | Compiled LANES | Read-only lane count, 1, 2, or 4 |
 
 While busy, effective start/address/operand writes return SLVERR and do not change the job. Zero-strobe writes to writable registers are no-ops. An operand write with an out-of-range element index returns SLVERR. The host must load every input before starting; the wrapper does not track operand completeness. Counter halves are stable after completion until a new job; serialize access to avoid another host initiating work between reads. Read results only after polling done. Reset flushes partial AXI transactions and aborts work; the interconnect/master must share an appropriate reset sequence.
 
@@ -78,7 +78,7 @@ Before loading operands, read identity, compiled N and compiled LANES; reject a 
 To synthesize the wrapper plus kernel, append `matmul_axi` to the batch arguments:
 
 ```bat
-vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 4 10 build/axi4 matmul_axi
+vivado -mode batch -source hardware/synth.tcl -tclargs EXACT_INSTALLED_PART 8 4 8 10 build/axi4 matmul_axi
 ```
 
 `python3 -m unittest discover -s tests -p test_axi.py -v` tests all four supported parameter configurations with AW-before-W, W-before-AW, simultaneous AW/W, partial and zero strobes, stalled B/R responses, invalid registers, read-only build configuration, busy write rejection, full arithmetic readback, counters, and reset flushing of a partial write. This is directed simulation, not formal AXI compliance or board validation. The script's optional wrapper synthesis mode is also unexecuted here.

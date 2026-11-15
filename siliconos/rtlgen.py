@@ -104,12 +104,12 @@ def gate(source):
     found = {}
     for item in parameters.split(','):
         parameter = re.fullmatch(r'\s*parameter\s+(?:(?:integer|int)\s+)?'
-                                 r'(N|LANES)\s*=\s*(\d+)\s*', item)
+                                 r'(N|LANES|INPUT_BITS)\s*=\s*(\d+)\s*', item)
         if not parameter or parameter[1] in found:
             _reject('parameters must be exactly N and LANES with literal defaults.')
         found[parameter[1]] = int(parameter[2])
-    if set(found) != {'N', 'LANES'} or found['N'] not in (8, 16) or found['LANES'] not in (1, 4):
-        _reject('supported parameter defaults are N=8/16 and LANES=1/4.')
+    if set(found) != {'N', 'LANES', 'INPUT_BITS'} or found['N'] not in (8, 16) or found['LANES'] not in (1, 2, 4) or found['INPUT_BITS'] not in (2, 4, 8):
+        _reject('supported parameter defaults are N=8/16, LANES=1/2/4, and INPUT_BITS=2/4/8.')
     declared = {}
     declaration = None
     for item in ports.split(','):

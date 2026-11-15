@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class AxiTests(unittest.TestCase):
     def test_register_slave(self):
         for n in (8, 16):
-            for lanes in (1, 4):
+            for lanes in (1, 2, 4):
                 with self.subTest(n=n, lanes=lanes), tempfile.TemporaryDirectory() as td:
                     binary = str(Path(td) / 'axi')
                     subprocess.run([
