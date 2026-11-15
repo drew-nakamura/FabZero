@@ -6,3 +6,9 @@ build/
 *.vcd
 
 .DS_Store
+
+# Vivado session scratch (hardware builds live in hw/matmul_board/, which has its own .gitignore)
+.Xil/
+vivado*.jou
+vivado*.log
+vivado*.str

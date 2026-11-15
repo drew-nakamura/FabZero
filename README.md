@@ -82,3 +82,12 @@ Groq transient connection, rate-limit and server errors receive at most one auto
 `GET /api/runs/<run-id>/handoff.zip` exports an accepted run as a portable archive. It verifies the stored source hashes, input bounds and independent reference outputs before export. The archive contains exact RTL/testbench snapshots, input vectors, expected outputs, file hashes, replay instructions, and separately labeled current integration aids. The latter do not prove that the AXI wrapper works with the archived kernel on a board. The confirmed partner tools are Vivado/Vitis 2025.2 on Windows 11; board SK-KV260-G. Exact device part, firmware/OS and address mapping remain to verify.
 
 For Groq connection failures, compare the same configured server on a known-working network. The user reports successful access on a mobile hotspot and intermittent failures on campus Wi-Fi; network filtering/DNS/TLS/proxy behavior is a hypothesis, not a verified diagnosis. Keep TLS verification enabled. Exported shell variables must be inherited by the actual server process. Never send keys in diagnostics or archives.
+
+## KV260 board (hardware)
+
+The checked-in `matmul_axi` runs on the AMD Kria KV260 over JTAG from the build laptop (no Linux). Everything is in `hw/matmul_board/`; start with its `README.md`.
+
+- Built and board-verified for N=8, LANES=1 and LANES=4 (Vivado 2025.2, `xck26-sfvc784-2LV-c`, base `0xA0000000`, `pl_clk0` 99,999,001 Hz, timing met, DRC clean).
+- `python hw/matmul_board/run_board.py --handoff <run>-handoff.zip` runs an exported run's vectors on the board and writes a result linked to that run; `--check` is a read-only board presence check.
+- `python hw/matmul_board/build.py --handoff <zip>` rebuilds the bitstream from the ZIP's own RTL (~20 min per configuration); unchanged RTL reuses the existing bitstream by hash.
+- `hw/matmul_board/APP_SIDE_UPDATE.md` describes the board-result contract the app imports.
