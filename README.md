@@ -63,7 +63,7 @@ For the Windows build owner, start with the [partner FPGA gameplan](docs/PARTNER
 
 Select **Custom ASIC** to retain RTL verification and enable **Synthesize generic logic**. Requires `yosys`, `iverilog`, and `vvp` on PATH. The server runs Yosys, then simulates the generated netlist against the integer reference before accepting a result. Download the Verilog netlist, synthesis script or complete JSON evidence bundle. The script expects the matching `matmul.sv` source included in that bundle.
 
-Both sizes (8/16) and lane choices (1/4) have passed actual generic synthesis and netlist simulation locally. Generic cell counts are not physical area; no PDK mapping, layout, power, timing closure or fabrication signoff is claimed. See [ASIC workflow](docs/ASIC_WORKFLOW.md) for the remaining physical stages.
+The app's generic ASIC synthesis path is implemented and locally verified for both sizes (8/16) and lane choices (1/4), including synthesized-netlist simulation against the integer oracle. SKY130 physical implementation is a separate research track and is not required for this synthesis feature. Generic cell counts are not physical area; no layout, power, timing closure or fabrication signoff is claimed. See [ASIC workflow](docs/ASIC_WORKFLOW.md) for that separate track.
 
 ### Reusable RTL catalog
 

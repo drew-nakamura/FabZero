@@ -7,7 +7,7 @@ The SiliconOS app uses Yosys to synthesize checked-in or verified AI-generated s
 | Stage | Required work and evidence | Current boundary |
 |---|---|---|
 | Verified RTL | Simulate arithmetic, reset and transaction behavior; preserve sources, parameters and test vectors | Existing RTL tests provide behavioral evidence; record the exact tested revision |
-| Generic synthesis | Elaborate fixed N/LANES, synthesize, check structural errors, export netlist, cell statistics and complete log | Available with installed Yosys; each successful run must be recorded before claiming completion |
+| Generic synthesis | Elaborate fixed N/LANES, synthesize, check structural errors, export netlist, cell statistics and complete log | Implemented and locally verified for N=8/16, LANES=1/4 with Yosys and synthesized-netlist oracle simulation; each new run records its own evidence |
 | Technology mapping | Select compatible process/library; map sequential and combinational logic; apply real constraints | Standalone SKY130 N=8/LANES=1 baseline is recorded below; app generic cell counts do not pass this gate |
 | Floorplan → place → clock tree → route | Define die/core/I/O/power and memory strategy; place cells, build clock distribution, route | Standalone SKY130 physical runs exist; their completion does not establish passed checks |
 | Post-route checks | Extract parasitics; run static timing analysis (STA), design-rule checks (DRC), and layout-versus-schematic checks (LVS); resolve violations | Standalone reports include unresolved timing/electrical/antenna failures; see repair history below |
