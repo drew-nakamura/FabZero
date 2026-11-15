@@ -1,0 +1,3 @@
+# Byte-exact checkout for hashed sources: run hashes, handoff ZIPs and board
+# bitstreams depend on these bytes, so Git must not convert line endings.
+hardware/** -text
