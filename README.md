@@ -79,6 +79,7 @@ Optional challenges ($1,000 each, one per team): the **OpenAI challenge** ("Buil
 
 | Where | Tool | What for |
 |---|---|---|
+| Research and ideas | Google Gemini | Market research and idea generation before and during the build |
 | Building SiliconOS | OpenAI Codex, Claude Code, Cursor, Kiro | Coding agents for the app, RTL, Vivado/JTAG scripts, tests and docs. We checked their work with tests, simulation and the physical board rather than taking the model's word for it. |
 | Inside the product | Groq API running `openai/gpt-oss-20b` | Turns a plain-English request into a structured accelerator specification (strict JSON schema, validated on the server) |
 
@@ -141,9 +142,23 @@ What you need depends on how far you want to go:
 
 No `pip install` is needed: the server uses only the Python standard library.
 
+### Setup time: plan ahead
+
+SiliconOS itself is a quick `git clone`. The hardware tools it drives are not quick to install. **Getting from a fresh Windows PC to a run on the board can take several hours.** Most of that is the AMD Vivado download and install, not SiliconOS. Once everything is installed, building and running both designs on the board takes under a minute.
+
+| Stage | Rough time on a fresh PC |
+|---|---|
+| Git, Python and Icarus Verilog (enough for steps 01–05) | About 15 minutes |
+| AMD Vivado 2025.2: create an AMD account, download, install | **Several hours.** Tens of gigabytes; depends on your connection and disk. |
+| Cable drivers, board wiring and the first board check | About 15 minutes |
+| Rebuilding a bitstream (optional; prebuilt ones are included) | 15–20 minutes per design |
+| **Once set up:** build and run both designs on the KV260 | About 40–60 seconds |
+
+If you only want to see the software side, the [quick start](#quick-start) below needs just the first row.
+
 ## Quick start
 
-Open **PowerShell** and run:
+The quick start covers steps 01–05 (no board, no Vivado). Open **PowerShell** and run:
 
 ```powershell
 # 1. Install the tools (skip any you already have)
@@ -195,6 +210,8 @@ The free Groq tier rate-limits quickly. Wait about a minute between **Generate s
 You need this only to run steps 06–07 on a physical board.
 
 ### 1. Install Vivado 2025.2
+
+This is the long step: expect several hours for the download and install ([setup time](#setup-time-plan-ahead)).
 
 - Install **AMD Vivado 2025.2** to the **default location**, `C:\AMDDesignTools\2025.2`. The runner calls `C:\AMDDesignTools\2025.2\Vivado\bin\xsdb.bat` directly.
 - Include **Zynq UltraScale+ MPSoC** device support and leave **Install Cable Drivers** checked.
