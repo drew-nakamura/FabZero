@@ -157,6 +157,9 @@ def load_handoff(path):
         # The parent's own source map (what the app server compares against).
         "parent_source_sha256": {"matmul.sv": sha("hardware/matmul.sv"), "tb.sv": sha("hardware/tb.sv")},
         "wrapper_sha256": sha("integration/matmul_axi.sv"),
+        # Exact bytes, for build.py --handoff (building from the ZIP's own RTL).
+        "rtl_bytes": {"matmul.sv": entries["hardware/matmul.sv"],
+                      "matmul_axi.sv": entries["integration/matmul_axi.sv"]},
     }
 
 

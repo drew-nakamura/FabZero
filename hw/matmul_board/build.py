@@ -119,8 +119,9 @@ def judge(summary, info, out):
     return met, drc_errors == 0, findings
 
 
-def build(n, lanes, force, stage):
-    verify_rtl()
+def build(n, lanes, force, stage, handoff=None, handoff_path=None):
+    if handoff is None:
+        verify_rtl()
     tag = f"n{n}_l{lanes}"
     out = HERE / "build" / tag
     if out.exists():
@@ -129,9 +130,18 @@ def build(n, lanes, force, stage):
         shutil.rmtree(out)
     out.mkdir(parents=True)
     started = dt.datetime.now().astimezone()
+    rtldir = HERE / "rtl"
+    if handoff is not None:
+        # Build from the RTL inside the app's handoff ZIP, never from rtl/.
+        rtldir = out / "rtl"
+        rtldir.mkdir()
+        for name, data in handoff["rtl_bytes"].items():
+            (rtldir / name).write_bytes(data)
+        print(f"building from handoff ZIP RTL: parent run {handoff['parent_run_id']}, "
+              f"matmul.sv {sha256(rtldir / 'matmul.sv')[:16]}, matmul_axi.sv {sha256(rtldir / 'matmul_axi.sv')[:16]}")
 
     rc = run([VIVADO, "-mode", "batch", "-nojournal", "-log", out / "vivado_build.log",
-              "-source", HERE / "build.tcl", "-tclargs", n, lanes, out, stage],
+              "-source", HERE / "build.tcl", "-tclargs", n, lanes, out, stage, rtldir],
              out, out / "console_build.txt", 3 * 3600)
     log = (out / "vivado_build.log").read_text(errors="replace") if (out / "vivado_build.log").exists() else ""
     done = "BUILD_DONE" if stage == "full" else "BD_DONE"
@@ -186,8 +196,14 @@ def build(n, lanes, force, stage):
                         "range": info.get("address_range"),
                         "decoded_bits": "matmul_axi decodes address[7:0]; map repeats every 0x100 in the segment"},
         "expected_compute_cycles": cycles,
-        "rtl": {"commit": RTL_COMMIT, "origin": RTL_ORIGIN,
-                "sha256": {name: sha256(HERE / "rtl" / name) for name in PINNED}},
+        "rtl": {"commit": RTL_COMMIT if handoff is None else None,
+                "origin": RTL_ORIGIN if handoff is None else "app handoff ZIP (build/<cfg>/rtl/)",
+                "sha256": {name: sha256(rtldir / name) for name in PINNED},
+                "matches_pinned_commit": all(sha256(rtldir / k) == v for k, v in PINNED.items())},
+        "handoff": None if handoff is None else {
+            "zip_sha256": handoff["zip_sha256"], "zip_name": Path(handoff_path).name,
+            "parent_run_id": handoff["parent_run_id"], "source_evidence": handoff["source_evidence"],
+            "parent_source_sha256": handoff["parent_source_sha256"]},
         "build_sources_sha256": {rel(p): sha256(p) for p in
                                  [HERE / "matmul_board_top.sv", HERE / "build.tcl", HERE / "build.py",
                                   TOOLS / "collect_reports.tcl", TOOLS / "vivado_summary.py"]},
@@ -251,11 +267,22 @@ def main():
                     help="bd = block design and address map only (quick check)")
     ap.add_argument("--force", action="store_true", help="delete an existing output folder first")
     ap.add_argument("--compare", action="store_true", help="compare existing LANES=1 and LANES=4 builds")
+    ap.add_argument("--handoff", help="build from the RTL inside this app handoff ZIP (N/LANES from the ZIP)")
     a = ap.parse_args()
     if a.compare:
         compare(a.n)
+    elif a.handoff:
+        sys.path.insert(0, str(HERE))
+        import run_board
+        try:
+            h = run_board.load_handoff(a.handoff)
+        except (ValueError, OSError, json.JSONDecodeError, UnicodeDecodeError) as e:
+            sys.exit(f"refusing handoff ZIP: {e}")
+        if a.lanes is not None and a.lanes != h["LANES"]:
+            sys.exit(f"--lanes {a.lanes} differs from the ZIP's LANES={h['LANES']}")
+        build(h["N"], h["LANES"], a.force, a.stage, h, a.handoff)
     elif a.lanes is None:
-        ap.error("--lanes is required unless --compare")
+        ap.error("--lanes is required unless --compare or --handoff")
     else:
         build(a.n, a.lanes, a.force, a.stage)
 

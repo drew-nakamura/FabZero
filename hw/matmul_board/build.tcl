@@ -2,14 +2,16 @@
 # Normally run through build.py, which verifies the pinned RTL hashes, runs this
 # with the working directory inside OUT_DIR, then collects reports and hashes.
 #
-#   vivado -mode batch -source build.tcl -tclargs N LANES OUT_DIR ?STAGE?
+#   vivado -mode batch -source build.tcl -tclargs N LANES OUT_DIR ?STAGE? ?RTL_DIR?
 #
 # STAGE: "full" (default) = block design, synthesis, place and route, bitstream,
 # XSA, psu_init.tcl and reports; "bd" = stop after the validated block design
 # and address map (quick check, no synthesis).
+# RTL_DIR: folder holding matmul.sv and matmul_axi.sv (default: rtl/ next to this
+# script; build.py --handoff passes the RTL extracted from an app handoff ZIP).
 # Mirrors hw/bringup/build.tcl (the verified bring-up), which is left unchanged.
-if {$argc < 3 || $argc > 4} { error "Usage: build.tcl N LANES OUT_DIR ?full|bd?" }
-lassign $argv N LANES out stage
+if {$argc < 3 || $argc > 5} { error "Usage: build.tcl N LANES OUT_DIR ?full|bd? ?RTL_DIR?" }
+lassign $argv N LANES out stage rtldir
 if {$stage eq ""} { set stage full }
 if {$stage ni {full bd}} { error "STAGE must be full or bd, got '$stage'" }
 if {!(($N == 8 || $N == 16) && ($LANES == 1 || $LANES == 4))} {
@@ -17,6 +19,11 @@ if {!(($N == 8 || $N == 16) && ($LANES == 1 || $LANES == 4))} {
 }
 set here [file normalize [file dirname [info script]]]
 set out  [file normalize $out]
+if {$rtldir eq ""} { set rtldir $here/rtl }
+set rtldir [file normalize $rtldir]
+foreach f {matmul.sv matmul_axi.sv} {
+  if {![file exists $rtldir/$f]} { error "missing $rtldir/$f" }
+}
 file mkdir $out
 set part      xck26-sfvc784-2LV-c
 set boardpart xilinx.com:kv260_som:part0:1.4
@@ -96,7 +103,8 @@ puts "MATMUL_BASE=$base RANGE=$range PL_CLK0_HZ=$clk_hz M_AXI_HZ=$port_hz"
 
 make_wrapper -files [get_files matmul_board_bd.bd] -top
 add_files -norecurse [glob $out/proj/matmul_board.gen/sources_1/bd/matmul_board_bd/hdl/matmul_board_bd_wrapper.v]
-add_files -norecurse [list $here/rtl/matmul.sv $here/rtl/matmul_axi.sv $here/matmul_board_top.sv]
+add_files -norecurse [list $rtldir/matmul.sv $rtldir/matmul_axi.sv $here/matmul_board_top.sv]
+puts "RTL_DIR=$rtldir"
 set_property top matmul_board_top [current_fileset]
 set_property generic "N=$N LANES=$LANES" [current_fileset]
 update_compile_order -fileset sources_1
