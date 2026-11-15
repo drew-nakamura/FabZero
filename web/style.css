@@ -4,6 +4,7 @@
 /* Evidence and keyboard affordances */
 .skip-link{position:fixed;top:-60px;left:20px;z-index:20;background:#183c2f;color:white;padding:12px 18px;border-radius:6px}.skip-link:focus{top:12px}
 .comparison{display:flex;gap:24px;align-items:center;background:#f0f6e9;border:1px solid #d4e3c7;border-radius:7px;padding:18px;margin:20px 0}.comparison>div{flex:1}.comparison h3{font:500 23px 'Space Grotesk',sans-serif;margin:10px 0}.comparison p,.comparison-hint{font-size:12px;line-height:1.7;color:#53694a}.comparison>p{flex:1}.candidate-head,.candidate-footer{gap:12px;flex-wrap:wrap}.metrics{flex-wrap:wrap}.tag{white-space:normal}.builder[aria-busy="true"]{cursor:progress}section{scroll-margin-top:20px}
+.board-tag{background:#183c2f;color:#d5f77d}.board-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:16px 0;font-size:12px;color:#53694a}.board-ok{color:#0a7958;font-weight:600}.linklike{background:none;border:0;padding:0;color:#386645;text-decoration:underline;font-size:inherit}
 .subtle,.candidate p,.result-empty p,.intro p,.method p{color:#64725d}label small,.metric small{color:#707e66}.ai-row>span{color:#637458}
 @media(max-width:420px){.fields{grid-template-columns:1fr}.header-right .chip{display:none}.pipeline{font-size:8px}.button{gap:10px}.comparison{flex-direction:column;align-items:flex-start}.lane-diagram{gap:5px}.lane-link{width:14px}.section-heading{flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}

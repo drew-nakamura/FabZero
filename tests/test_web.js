@@ -231,3 +231,41 @@ test('history refresh failure preserves successful generation without falsely re
   assert.doesNotMatch(a.get('notice').textContent, /generation rejected|previously verified/);
   assert.equal(a.get('export').disabled, false);
 });
+
+function boardReport(lanes, overrides = {}) {
+  return {id: 'board-' + lanes, created_at: '2026-11-15T01:20:00Z', recorded_at: '2026-11-14T17:20:00-08:00', evidence: 'board_measured', correct: true, physical_fpga: true, parent_run_id: 'parent-' + lanes, runner_result_id: 'runner-result-' + lanes, spec: {...spec}, lanes, cycles: 512 / lanes, kernel_time_us: 5.12 / lanes, configured_clock_hz: 99999001, outputs: Array(64).fill(1), input_sha256: 'same-inputs', host_elapsed_ns: 6.3e9, programming_elapsed_ns: 5.7e9, build: {bitstream_sha256: 'abcdef0123456789', timing: {WNS_ns: 4.757}}, resources: {'Total LUTs': lanes === 1 ? 354 : 3612, FFs: 318, 'DSP Blocks': 0, RAMB36: 0}, board_import: {key_id: 'fixture-key'}, limitations: ['Board fixture only'], ...overrides};
+}
+
+test('board-measured runs render as physical evidence with a measured lane comparison', async () => {
+  const a = await app(), one = boardReport(1), four = boardReport(4);
+  a.ui.state.runs = [one, four];
+  a.ui.renderResult(four);
+  const html = a.get('result').innerHTML;
+  assert.match(html, /PHYSICAL FPGA · BOARD MEASURED/);
+  assert.match(html, /MEASURED KERNEL CYCLES/);
+  assert.match(html, /4\.00× fewer kernel cycles/);
+  assert.match(html, /10\.2× the matmul LUTs/);
+  assert.match(html, /not a measured time/);
+  assert.doesNotMatch(html, /NOT HARDWARE MEASURED/);
+  assert.equal(a.ui.state.result, four);
+});
+
+test('simulation results link to their board runs and offer the FPGA handoff ZIP', async () => {
+  const a = await app(), sim = rtlReport({id: 'parent-1', evidence: 'rtl_simulation', lanes: 1});
+  a.ui.state.runs = [];
+  a.ui.renderResult(sim);
+  assert.match(a.get('result').innerHTML, /Not yet run on the KV260/);
+  assert.match(a.get('result').innerHTML, /\/api\/runs\/parent-1\/handoff\.zip/);
+  a.ui.state.runs = [boardReport(1)];
+  a.ui.renderResult(sim);
+  assert.match(a.get('result').innerHTML, /Measured on the KV260 · 512 cycles/);
+});
+
+test('board status is shown only from a fresh passing check', async () => {
+  const fresh = await app({status: {board: true, board_details: {available: true, checked_at: '2026-11-15T01:20:00Z'}}});
+  assert.match(fresh.get('target-state').textContent, /KV260 connected/);
+  const stale = await app({status: {board: false, board_details: {available: false, checked_at: '2026-11-15T00:00:00Z', reason: 'last board check is 900 s old'}}});
+  assert.match(stale.get('target-state').textContent, /not confirmed · last board check is 900 s old/);
+  const none = await app();
+  assert.match(none.get('target-state').textContent, /not checked/);
+});

@@ -1,4 +1,5 @@
 """Local SiliconOS workbench. Run: python3 server.py. Not a public production server."""
+import hashlib
 import json
 import os
 import re
@@ -10,22 +11,48 @@ from datetime import datetime, timezone
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse
-from siliconos import ai, asic, rtlgen, catalog, handoff
+from siliconos import ai, asic, rtlgen, catalog, handoff, board
 from siliconos.engine import explore, simulate, validate
 
 ROOT=Path(__file__).resolve().parent
 DB=ROOT/"data"/"siliconos.db"
+BOARD_CHECK=ROOT/"hw"/"matmul_board"/"results"/"board_check.json"
 RUN_LOCK=threading.Lock()
+BOARD_LOCK=threading.Lock()
+
+class _Connection(sqlite3.Connection):
+    """`with connect() as db:` commits/rolls back as before, then closes the file
+    (an unclosed SQLite file stays locked on Windows)."""
+    def __exit__(self,*exc):
+        try: return super().__exit__(*exc)
+        finally: self.close()
 
 def connect():
     DB.parent.mkdir(exist_ok=True)
-    db=sqlite3.connect(DB)
+    db=sqlite3.connect(DB,factory=_Connection)
     db.execute("CREATE TABLE IF NOT EXISTS runs (id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
     db.execute("CREATE TABLE IF NOT EXISTS events (at TEXT, name TEXT)")
     db.execute("CREATE TABLE IF NOT EXISTS pilots (email TEXT PRIMARY KEY, created_at TEXT, payload TEXT)")
     return db
 
 def now(): return datetime.now(timezone.utc).isoformat()
+
+def import_board_result(parent_id,envelope):
+    """Verify a signed KV260 result and save it as a separate board_measured child run.
+    Idempotent on runner_result_id; the parent run is never modified."""
+    with BOARD_LOCK:
+        with connect() as db: row=db.execute("SELECT payload FROM runs WHERE id=?",(parent_id,)).fetchone()
+        if not row: raise LookupError("Parent run not found")
+        wrapper=hashlib.sha256((ROOT/"hardware"/"matmul_axi.sv").read_bytes()).hexdigest()
+        child=board.accept(json.loads(row[0]),envelope,wrapper)
+        with connect() as db:
+            for (payload,) in db.execute("SELECT payload FROM runs WHERE payload LIKE ?",('%"board_measured"%',)):
+                existing=json.loads(payload)
+                if existing.get("runner_result_id")==child["runner_result_id"]:
+                    return {**existing,"already_imported":True}
+            db.execute("INSERT INTO runs VALUES (?,?)",(child["id"],json.dumps(child)))
+            db.execute("INSERT INTO events VALUES (?,?)",(now(),"/api/runs/board-result"))
+        return child
 
 def save_pilot(data):
     if data.get('consent') is not True:
@@ -56,7 +83,8 @@ class Handler(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         if path=="/api/status":
             import shutil
-            return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=False,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
+            board_details=board.board_status(BOARD_CHECK)
+            return self.reply(200,dict(ai=ai.configured(),simulator=bool(shutil.which("iverilog") and shutil.which("vvp")),board=board_details["available"],board_details=board_details,asic_synthesis=bool(shutil.which("yosys") and shutil.which("iverilog") and shutil.which("vvp"))))
         if path=="/api/catalog":
             return self.reply(200,{"blocks":catalog.blocks()})
         if path=="/api/runs":
@@ -91,11 +119,16 @@ class Handler(BaseHTTPRequestHandler):
         if origin and origin not in (f"http://localhost:{self.server.server_port}",f"http://127.0.0.1:{self.server.server_port}"):
             return self.reply(403,{"error":"Cross-origin requests are not accepted."})
         try:
+            path=urlparse(self.path).path
+            board_route=re.fullmatch(r'/api/runs/([a-f0-9-]{36})/board-result',path)
             length=int(self.headers.get("Content-Length","0"))
-            if not 0<length<=16384: raise ValueError("Invalid request size")
+            # A signed board result carries its implementation manifest and summary.
+            if not 0<length<=(524288 if board_route else 16384): raise ValueError("Invalid request size")
             data=json.loads(self.rfile.read(length))
             if not isinstance(data,dict): raise ValueError("Request must be an object")
-            path=urlparse(self.path).path
+            if board_route:
+                try: return self.reply(200,import_board_result(board_route.group(1),data))
+                except LookupError as error: return self.reply(404,{"error":str(error)})
             if path=="/api/explore": result=explore(data.get("spec"))
             elif path=="/api/spec": result=ai.generate(data.get("prompt"),data.get("target"))
             elif path=="/api/plan": result=catalog.plan(data.get("spec"),data.get("lanes"),data.get("block_id"))
